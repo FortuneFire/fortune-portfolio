@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-sign-in',
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.css']
 })
-export class SignInComponent implements OnInit {
+export class SignInComponent {
+  email = '';
+  password = '';
 
-  constructor() { }
-
-  ngOnInit(): void {
+  signIn() {
+    console.log('Sign in attempted', { email: this.email, password: this.password });
+    // Add your authentication logic here
   }
-
 }

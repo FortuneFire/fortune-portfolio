@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PortfolioService } from '../../services/portfolio.service';
+import { PortfolioService, Project } from '../../services/portfolio.service';
 
 @Component({
   selector: 'app-portfolio',
@@ -8,43 +8,44 @@ import { PortfolioService } from '../../services/portfolio.service';
 })
 export class PortfolioComponent implements OnInit {
 
-  selectedCard: any;
+  selectedCard: Project | null = null;
   selectedFilter = 'All';
-  projects = this.portfolioService.projects;
-  filteredProjects = this.projects;
+
+  projects: Project[] = [];
+  filteredProjects: Project[] = [];
+
+  project_categories: string[] = [];
+  project_filter_categories: string[] = [];
 
   constructor(private portfolioService: PortfolioService) { }
 
-  // projects!: [];
-
   ngOnInit(): void {
+    // Subscribe to the projects observable
+    this.portfolioService.projects$.subscribe((projects: Project[]) => {
+      this.projects = projects;
+      this.filteredProjects = projects;
+
+      // Extract unique categories
+      this.project_categories = Array.from(
+        new Set(this.projects.map(p => p.categories).flat())
+      );
+      this.project_filter_categories = ['All', ...this.project_categories];
+    });
   }
 
-  
-
-  project_categories = Array.from(new Set(this.projects.map(project => project.category).flat()));
-
-  project_filter_categories = ['All', ...this.project_categories];
-
-  onCategoryClick(project_category: string) {
-    this.selectedFilter = project_category;
-    if (project_category === 'All') {
-      this.filteredProjects = this.projects;
-    } else {
-      this.filteredProjects = this.projects.filter(project => project.category.includes(project_category));
-    }
+  onCategoryClick(category: string): void {
+    this.selectedFilter = category;
+    this.filteredProjects =
+      category === 'All'
+        ? this.projects
+        : this.projects.filter(p => p.categories.includes(category));
   }
 
- 
-  
-
-  onCardClick(card: any) {
-    console.log(card)
-    this.selectedCard = card;
+  onCardClick(project: Project): void {
+    this.selectedCard = project;
   }
-  backToCards() {
+
+  backToCards(): void {
     this.selectedCard = null;
   }
-
 }
-

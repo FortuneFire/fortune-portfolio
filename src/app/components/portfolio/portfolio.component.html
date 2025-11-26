@@ -1,18 +1,17 @@
 <div class="container">
-  <h2 class="page-title">Projects</h2>
-
+  <h2 class="page-title">Projects Fire</h2>
   <hr />
 
-  <!-- Filter -->
-  <section class="portfolio-tab">
-    <ul *ngIf="!selectedCard" id="filters" class="clearfix">
+  <!-- FILTER -->
+  <section class="portfolio-tab" *ngIf="projects?.length">
+    <ul *ngIf="!selectedCard" id="filters">
       <li
-        *ngFor="let project_category of project_filter_categories"
+        *ngFor="let category of project_filter_categories"
         class="filter"
-        data-filter=".snippet"
-        (click)="onCategoryClick(project_category)"
+        [class.active]="selectedFilter === category"
+        (click)="onCategoryClick(category)"
       >
-        {{ project_category }}
+        {{ category }}
       </li>
     </ul>
 
@@ -23,51 +22,69 @@
 
   <hr />
 
-  <!-- Portfolio Cards -->
-  <section>
-    <div class="card-container" *ngIf="!selectedCard">
+  <!-- GRID OF PROJECT CARDS -->
+  <section *ngIf="!selectedCard">
+    <div class="card-container">
       <div class="card" *ngFor="let project of filteredProjects">
-        <div class="content">
-          <div class="front" (click)="onCardClick(project)">
+        <div class="content" (click)="onCardClick(project)">
+          <div class="front">
             <img
               class="profile-img"
               width="100%"
-              src="{{ project.keyIMG }}"
-              alt="project-key-img"
+              [src]="project.keyIMG || 'https://picsum.photos/300/200?random'"
+              alt="{{ project.title || 'Project Image' }}"
             />
-            <h2>Project1</h2>
+            <h2>{{ project.title }}</h2>
+            <p>{{ project.highlight }}</p>
           </div>
-          <div class="back from-bottom" (click)="onCardClick(project)">
+
+          <div class="back from-bottom">
             <h2>Description</h2>
-            <p class="description">
-              {{ project.highlight }}
-            </p>
+            <p class="description">{{ project.highlight }}</p>
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="cardView" *ngIf="selectedCard">
-      <!-- <button class="back-to-cards" (click)="backToCards()">Back to Cards</button> -->
-      <h2 class="project-title">{{ selectedCard.title }}</h2>
-      <div class="cardVeiw-body">
-        <div class="project-details">
-          <h3>Project Description</h3>
-          <p>{{ selectedCard.description }}</p>
-          <h3>Project Description</h3>
-          
-          <ul class="skills">
-            <li *ngFor="let skill of selectedCard.skills" class="skill">
-            {{skill}}
-            </li>
-          </ul>
-        </div>
-        <div class="project-images">
-          <h3>Project Images</h3>
-        </div>
-      </div>
-
-      <!-- other details here -->
     </div>
   </section>
+
+  <!-- SINGLE PROJECT VIEW -->
+  <section class="cardView" *ngIf="selectedCard">
+    <h2 class="project-title">{{ selectedCard?.title }}</h2>
+
+    <div class="cardView-body">
+      <div class="project-details">
+        <h3>Project Description</h3>
+        <p>{{ selectedCard?.description }}</p>
+
+        <h3>Skills Used</h3>
+        <ul class="skills">
+          <li *ngFor="let skill of selectedCard?.skills || []" class="skill">
+            {{ skill }}
+          </li>
+        </ul>
+
+        <h3>Categories</h3>
+        <ul class="categories">
+          <li *ngFor="let cat of selectedCard?.categories || []">{{ cat }}</li>
+        </ul>
+      </div>
+
+      <div class="project-images">
+        <h3>Project Images</h3>
+        <div class="gallery">
+          <img
+            *ngFor="let img of selectedCard?.gallery || []"
+            [src]="img || 'https://picsum.photos/200/150?random'"
+            alt="Project Image"
+            width="150"
+            height="100"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div *ngIf="!projects?.length">
+    <p>No projects to display.</p>
+  </div>
 </div>
