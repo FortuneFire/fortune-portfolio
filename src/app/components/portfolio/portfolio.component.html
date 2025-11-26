@@ -2,16 +2,18 @@
   <h2 class="page-title">Projects Fire</h2>
   <hr />
 
-  <!-- FILTER -->
-  <section class="portfolio-tab" *ngIf="projects?.length">
-    <ul *ngIf="!selectedCard" id="filters">
+  
+
+    <!-- Filter -->
+  <section class="portfolio-tab">
+    <ul *ngIf="!selectedCard" id="filters" class="clearfix">
       <li
-        *ngFor="let category of project_filter_categories"
+        *ngFor="let project_category of project_filter_categories"
         class="filter"
-        [class.active]="selectedFilter === category"
-        (click)="onCategoryClick(category)"
+        data-filter=".snippet"
+        (click)="onCategoryClick(project_category)"
       >
-        {{ category }}
+        {{ project_category }}
       </li>
     </ul>
 
