@@ -4,7 +4,7 @@
     "highlight": "Key Highlight 1",
     "description": "Sample description for Project 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     "skills": ["Angular", "CSS", "HTML"],
-    "category": ["Web Development", "Web Design"],
+    "categories": ["Web Development", "Web Design"],
     "keyIMG": "https://picsum.photos/id/1011/400/300",
     "gallery": [
       "https://picsum.photos/id/1012/400/300",
@@ -16,7 +16,7 @@
     "highlight": "Key Highlight 2",
     "description": "Sample description for Project 2. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "skills": ["Photoshop", "Illustrator"],
-    "category": ["Graphic Design"],
+    "categories": ["Graphic Design"],
     "keyIMG": "https://picsum.photos/id/1021/400/300",
     "gallery": [
       "https://picsum.photos/id/1022/400/300",
@@ -28,7 +28,7 @@
     "highlight": "Key Highlight 3",
     "description": "Sample description for Project 3. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
     "skills": ["WordPress", "AdobeXD", "Illustrator"],
-    "category": ["Web Design", "Graphic Design"],
+    "categories": ["Web Design", "Graphic Design"],
     "keyIMG": "https://picsum.photos/id/1031/400/300",
     "gallery": [
       "https://picsum.photos/id/1032/400/300",
@@ -40,7 +40,7 @@
     "highlight": "Key Highlight 4",
     "description": "Sample description for Project 4. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.",
     "skills": ["Illustrator", "Photoshop"],
-    "category": ["Graphic Design"],
+    "categories": ["Graphic Design"],
     "keyIMG": "https://picsum.photos/id/1041/400/300",
     "gallery": [
       "https://picsum.photos/id/1042/400/300",
@@ -52,7 +52,7 @@
     "highlight": "Key Highlight 5",
     "description": "Sample description for Project 5. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.",
     "skills": ["Illustrator"],
-    "category": ["Graphic Design"],
+    "categories": ["Graphic Design"],
     "keyIMG": "https://picsum.photos/id/1051/400/300",
     "gallery": [
       "https://picsum.photos/id/1052/400/300",
@@ -64,7 +64,7 @@
     "highlight": "Key Highlight 6",
     "description": "Sample description for Project 6. Laboris nisi ut aliquip ex ea commodo consequat.",
     "skills": ["JavaScript", "CSS", "HTML", "Bootstrap"],
-    "category": ["Web Development", "Web Design"],
+    "categories": ["Web Development", "Web Design"],
     "keyIMG": "https://picsum.photos/id/1061/400/300",
     "gallery": [
       "https://picsum.photos/id/1062/400/300",
@@ -76,7 +76,7 @@
     "highlight": "Key Highlight 7",
     "description": "Sample description for Project 7. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.",
     "skills": ["CSS", "HTML", "JS", "Bootstrap"],
-    "category": ["Web Development", "Web Design"],
+    "categories": ["Web Development", "Web Design"],
     "keyIMG": "https://picsum.photos/id/1071/400/300",
     "gallery": [
       "https://picsum.photos/id/1072/400/300",
@@ -88,7 +88,7 @@
     "highlight": "Key Highlight 8",
     "description": "Sample description for Project 8. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
     "skills": ["CSS", "HTML", "JS", "AdobeXD"],
-    "category": ["Web Development", "Web Design"],
+    "categories": ["Web Development", "Web Design"],
     "keyIMG": "https://picsum.photos/id/1081/400/300",
     "gallery": [
       "https://picsum.photos/id/1082/400/300",

@@ -1,10 +1,13 @@
 <div class="container">
-  <h2 class="page-title">Projects Fire</h2>
+  <h2 class="page-title">Projects</h2>
   <hr />
 
   
 
-    <!-- Filter -->
+    
+
+
+     <!-- Filter -->
   <section class="portfolio-tab">
     <ul *ngIf="!selectedCard" id="filters" class="clearfix">
       <li
@@ -16,6 +19,7 @@
         {{ project_category }}
       </li>
     </ul>
+
 
     <button *ngIf="selectedCard" class="back-to-cards" (click)="backToCards()">
       Back to Projects
