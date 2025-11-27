@@ -1,74 +1,58 @@
-<!-- <div class="container">
-    <div class="grid">
-
-        <div class="heading-text-container">
-            <h1>Front-end Developer <br>& Web Designer</h1>
-        </div>
-
-        <div class="img-container">
-            <img src="../../../assets/images/paint.png" alt="profile picture" class="img-responsive">
-        </div>
-    
-        <div class="btn">
-            <button *ngFor="let button of buttons">
-                <a *ngIf="button === 'Portfolio'" routerLink="/portfolio">{{button}}</a>
-                <a *ngIf="button === 'Git Hub'" href="https://github.com/FortuneFire" target="_blank">{{button}}</a>
-                <a *ngIf="button === 'My Blog'" href="https://pronounced.hashnode.dev/" target="_blank">{{button}}</a>
-            </button>
-        </div>
-    </div>
-</div> -->
-
-
 <div class="container">
   <div class="grid">
 
+    <!-- Heading + Short Description -->
     <div class="heading-text-container">
-      <h1>Front-end Developer <br>& Web Designer</h1>
+      <h1>Cloud & Web <br>Solutions Developer</h1>
+      <p class="short-desc">
+        Crafting modern, responsive web experiences with clean design and efficient code.
+      </p>
     </div>
 
+    <!-- Profile Image -->
     <div class="img-container">
       <img src="../../../assets/images/paint.png" alt="profile picture" class="img-responsive">
     </div>
 
-    <!-- <div class="btn">
-      <button *ngFor="let button of buttons">
-        <a *ngIf="button === 'Portfolio'" routerLink="/portfolio">{{ button }}</a>
-        <a *ngIf="button === 'Git Hub'" href="https://github.com/FortuneFire" target="_blank">{{ button }}</a>
-        <a *ngIf="button === 'My Blog'" href="https://pronounced.hashnode.dev/" target="_blank">{{ button }}</a>
-      </button>
-    </div> -->
+    <!-- Buttons -->
+    <div class="btn">
+      <ng-container *ngFor="let button of buttons">
 
-   <div class="btn">
-  <ng-container *ngFor="let button of buttons">
+        <!-- Portfolio (internal route) -->
+        <a *ngIf="button === 'Portfolio'"
+           routerLink="/portfolio"
+           class="button-link">
+          {{ button }}
+        </a>
 
-    <!-- Portfolio (internal route) -->
-    <a *ngIf="button === 'Portfolio'"
-       routerLink="/portfolio"
-       class="button-link">
-      {{ button }}
-    </a>
+        <!-- GitHub (external link) -->
+        <a *ngIf="button === 'Git Hub'"
+           href="https://github.com/FortuneFire"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="button-link">
+          {{ button }}
+        </a>
 
-    <!-- GitHub (external link) -->
-    <a *ngIf="button === 'Git Hub'"
-       href="https://github.com/FortuneFire"
-       target="_blank"
-       rel="noopener noreferrer"
-       class="button-link">
-      {{ button }}
-    </a>
+        <!-- Blog (external link) -->
+        <a *ngIf="button === 'My Blog'"
+           href="https://pronounced.hashnode.dev/"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="button-link">
+          {{ button }}
+        </a>
 
-    <!-- Blog (external link) -->
-    <a *ngIf="button === 'My Blog'"
-       href="https://pronounced.hashnode.dev/"
-       target="_blank"
-       rel="noopener noreferrer"
-       class="button-link">
-      {{ button }}
-    </a>
+        <!-- Resume / CV Download -->
+        <a *ngIf="button === 'Resume'"
+           href="../../../assets/files/Future Me Resume.pdf"
+           download
+           class="button-link">
+          {{ button }}
+        </a>
 
-  </ng-container>
-</div>
+      </ng-container>
+    </div>
 
   </div>
 </div>

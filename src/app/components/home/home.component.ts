@@ -13,6 +13,7 @@ export class HomeComponent {
   buttons = [
     "Portfolio",
     "Git Hub",
-    "My Blog"
+    "My Blog",
+    "Resume"
   ];
 }

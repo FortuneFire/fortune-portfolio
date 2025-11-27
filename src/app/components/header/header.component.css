@@ -1,51 +1,72 @@
-nav{
+nav {
+    position: fixed; /* fixed at top */
+    top: 1rem; /* push it down from the top */
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* stay above other elements */
     max-width: 1600px;
-    margin: auto;
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 10vh;
+    background-color: rgba(255, 255, 255, 0); /* semi-transparent */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* subtle shadow */
+    padding: 0 2rem;
+    box-sizing: border-box;
+    backdrop-filter: blur(10px); /* optional: gives a glass effect */
+    border-radius: 8px; /* optional: soften edges */
 }
 
-a > img{
+/* Adjust top padding for body so content doesn't overlap nav */
+body {
+    padding-top: calc(10vh + 1rem); /* nav height + offset from top */
+}
+
+a > img {
     max-width: 15rem;
 }
 
-.navLinks{
+.navLinks {
     display: flex;
 }
 
-.navLinks div{
+.navLinks div {
     display: flex;
     align-items: center;
 }
 
-.navLinks div button{
+.navLinks div button {
     height: 2.5rem;
     width: 8rem;
-    margin: 0 0 0 1.5rem;
+    margin-left: 1.5rem;
     border: none;
     background-color: var(--red);
     color: #fff;
     box-shadow: none;
-    transition: box-shadow 0.3s ease;
+    transition: box-shadow 0.3s ease, background-color 0.3s ease;
+    border-radius: 4px;
 }
 
-.navLinks div button:hover{
+.navLinks div button:hover {
     background-color: var(--dark-gray);
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
     cursor: pointer;
 }
+
+/* Responsive */
 @media (max-width: 834px) {
-    nav{
+    nav {
         width: 100vw;
         padding: 0 1rem;
     }
 
-    a > img{
+    a > img {
         max-width: 10rem;
     }
-    .navLinks div button{
+
+    .navLinks div button {
         height: 2rem;
+        width: 6rem;
     }
 }
