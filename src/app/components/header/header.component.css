@@ -1,26 +1,38 @@
-nav {
-    position: fixed; /* fixed at top */
-    top: 1rem; /* push it down from the top */
+/* Wrapper keeps the nav centered even when fixed */
+.nav-wrapper {
+    position: fixed;
+    top: 1rem; /* push it down slightly */
     left: 0;
     width: 100%;
-    z-index: 1000; /* stay above other elements */
+    display: flex;
+    justify-content: center; /* centers the nav */
+    z-index: 1000;
+    pointer-events: none; /* allows clicks only on nav */
+}
+
+/* Actual navigation bar */
+nav {
+    pointer-events: auto; /* restore clickability */
+    width: 100%;
     max-width: 1600px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 10vh;
-    background-color: rgba(255, 255, 255, 0); /* semi-transparent */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* subtle shadow */
+
+    /* visual styling */
+    background-color: rgba(255, 255, 255, 0); /* transparent */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     padding: 0 2rem;
     box-sizing: border-box;
-    backdrop-filter: blur(10px); /* optional: gives a glass effect */
-    border-radius: 8px; /* optional: soften edges */
+    backdrop-filter: blur(10px); /* glassy effect */
+    border-radius: 8px;
 }
 
-/* Adjust top padding for body so content doesn't overlap nav */
+/* Prevent content from hiding under nav */
 body {
-    padding-top: calc(10vh + 1rem); /* nav height + offset from top */
+    padding-top: calc(10vh + 2rem);
 }
 
 a > img {
@@ -57,7 +69,7 @@ a > img {
 /* Responsive */
 @media (max-width: 834px) {
     nav {
-        width: 100vw;
+        width: 100%;
         padding: 0 1rem;
     }
 

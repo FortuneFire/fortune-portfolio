@@ -1,26 +1,21 @@
 <div class="container">
+  <!-- Page Title -->
   <h2 class="page-title">Projects</h2>
   <hr />
 
-  
-
-    
-
-
-     <!-- Filter -->
+  <!-- Filter Tabs -->
   <section class="portfolio-tab">
     <ul *ngIf="!selectedCard" id="filters" class="clearfix">
       <li
         *ngFor="let project_category of project_filter_categories"
         class="filter"
-        data-filter=".snippet"
         (click)="onCategoryClick(project_category)"
       >
         {{ project_category }}
       </li>
     </ul>
 
-
+    <!-- Back to Cards Button -->
     <button *ngIf="selectedCard" class="back-to-cards" (click)="backToCards()">
       Back to Projects
     </button>
@@ -31,22 +26,30 @@
   <!-- GRID OF PROJECT CARDS -->
   <section *ngIf="!selectedCard">
     <div class="card-container">
-      <div class="card" *ngFor="let project of filteredProjects">
-        <div class="content" (click)="onCardClick(project)">
+      <div
+        class="card-wrapper"
+        *ngFor="let project of filteredProjects"
+        [class.hidden]="
+          selectedFilter !== 'All' &&
+          !(project.categories ?? []).includes(selectedFilter)
+        "
+      >
+        <div class="card" (click)="onCardClick(project)">
+          <!-- Front of Card -->
           <div class="front">
             <img
               class="profile-img"
-              width="100%"
-              [src]="project.keyIMG || 'https://picsum.photos/300/200?random'"
-              alt="{{ project.title || 'Project Image' }}"
+              [src]="project.keyIMG || 'https://picsum.photos/300/300?random'"
+              alt="{{ project.title }}"
             />
             <h2>{{ project.title }}</h2>
             <p>{{ project.highlight }}</p>
           </div>
 
-          <div class="back from-bottom">
+          <!-- Back of Card -->
+          <div class="back">
             <h2>Description</h2>
-            <p class="description">{{ project.highlight }}</p>
+            <p class="description">{{ project.description }}</p>
           </div>
         </div>
       </div>
@@ -82,14 +85,13 @@
             *ngFor="let img of selectedCard?.gallery || []"
             [src]="img || 'https://picsum.photos/200/150?random'"
             alt="Project Image"
-            width="150"
-            height="100"
           />
         </div>
       </div>
     </div>
   </section>
 
+  <!-- No Projects Message -->
   <div *ngIf="!projects?.length">
     <p>No projects to display.</p>
   </div>
