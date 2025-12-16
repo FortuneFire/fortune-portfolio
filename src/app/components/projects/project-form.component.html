@@ -10,21 +10,25 @@
 
   <label>Category:</label>
   <div formArrayName="categories" class="categories-container">
-    <div *ngFor="let category of categories; let i = index" class="category">
-      <label class="checkbox-label">
-        <input type="checkbox" [formControlName]="i"> {{category}}
-      </label>
-    </div>
+    @for (category of categories; track category; let i = $index) {
+      <div class="category">
+        <label class="checkbox-label">
+          <input type="checkbox" [formControlName]="i"> {{category}}
+        </label>
+      </div>
+    }
   </div>
 
   <label>Skills:</label>
 
   <div formArrayName="skills" class="skills-container">
-    <div *ngFor="let skill of skills; let i = index" class="skills">
-      <label class="checkbox-label">
-        <input type="checkbox" [formControlName]="i"> {{skill}}
-      </label>
-    </div>
+    @for (skill of skills; track skill; let i = $index) {
+      <div class="skills">
+        <label class="checkbox-label">
+          <input type="checkbox" [formControlName]="i"> {{skill}}
+        </label>
+      </div>
+    }
   </div>
 
   <label>mainImage:</label>
@@ -33,8 +37,8 @@
     <input type="file" (change)="onFileSelected($event)" accept="image/*" class="file-input">
   </div>
 
-    <mat-label>Gallery</mat-label>
-    <input type="file" (change)="onGallerySelected($event)" accept="image/*" multiple>
+  <mat-label>Gallery</mat-label>
+  <input type="file" (change)="onGallerySelected($event)" accept="image/*" multiple>
 
   <button type="submit">Submit</button>
 </form>

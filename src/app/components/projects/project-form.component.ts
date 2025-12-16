@@ -1,14 +1,33 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { PortfolioService, Project } from '../../services/portfolio.service';
+
+// Angular Material Modules
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-project-form',
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    MatIconModule
+  ],
   templateUrl: './project-form.component.html',
   styleUrls: ['./project-form.component.css']
 })
 export class ProjectFormComponent implements OnInit {
-
   projectForm!: FormGroup;
 
   categories: string[] = ['Web Development', 'Web Design', 'Graphic Design'];
@@ -75,27 +94,24 @@ export class ProjectFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    // Get selected categories
     const selectedCategories: string[] = this.categoriesFormArray.value
-      .map((checked: boolean, i: number) => checked ? this.categories[i] : null)
-      .filter((v: string | null): v is string => v !== null);
+      .map((checked: boolean, i: number) => (checked ? this.categories[i] : null))
+      .filter((v: string | null) => v !== null) as string[];
 
-    // Get selected skills
     const selectedSkills: string[] = this.skillsFormArray.value
-      .map((checked: boolean, i: number) => checked ? this.skills[i] : null)
-      .filter((v: string | null): v is string => v !== null);
+      .map((checked: boolean, i: number) => (checked ? this.skills[i] : null))
+      .filter((v: string | null) => v !== null) as string[];
 
     const newProject: Project = {
       ...this.projectForm.value,
       categories: selectedCategories,
       skills: selectedSkills,
-      id: 0, // Service will assign a proper ID
-      gallery: [] // Can be converted to URLs later if needed
+      id: 0,
+      gallery: []
     };
 
     this.portfolioService.addProject(newProject);
 
-    // Reset form after submission
     this.projectForm.reset();
     this.gallery = [];
   }

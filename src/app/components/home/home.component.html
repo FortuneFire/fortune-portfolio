@@ -1,11 +1,13 @@
+
 <div class="container">
   <div class="grid">
 
     <!-- Heading + Short Description -->
     <div class="heading-text-container">
-      <h1>Cloud & Web Solutions Developer</h1>
+      <h1>Front-end Developer <br> & Web Designer</h1>
       <p class="short-desc">
-        Web development is where my curiosity and creativity meet. I enjoy designing and building applications that look great and function seamlessly. Every project gives me the chance to solve new challenges and sharpen my craft. I love what I do, and I bring that passion into every line of code.
+        Web development is where my curiosity and creativity meet. I enjoy designing and building applications that look great and function seamlessly.
+        Every project gives me the chance to solve new challenges and sharpen my craft. I love what I do, and I bring that passion into every line of code.
       </p>
     </div>
 
@@ -14,45 +16,7 @@
       <img src="../../../assets/images/paint.png" alt="profile picture" class="img-responsive">
     </div>
 
-    <!-- Buttons -->
-    <div class="btn">
-      <ng-container *ngFor="let button of buttons">
-
-        <!-- Portfolio (internal route) -->
-        <a *ngIf="button === 'Portfolio'"
-           routerLink="/portfolio"
-           class="button-link">
-          {{ button }}
-        </a>
-
-        <!-- GitHub (external link) -->
-        <a *ngIf="button === 'Git Hub'"
-           href="https://github.com/FortuneFire"
-           target="_blank"
-           rel="noopener noreferrer"
-           class="button-link">
-          {{ button }}
-        </a>
-
-        <!-- Blog (external link) -->
-        <a *ngIf="button === 'My Blog'"
-           href="https://pronounced.hashnode.dev/"
-           target="_blank"
-           rel="noopener noreferrer"
-           class="button-link">
-          {{ button }}
-        </a>
-
-        <!-- Resume / CV Download -->
-        <a *ngIf="button === 'Resume'"
-           href="../../../assets/files/Future Me Resume.pdf"
-           download
-           class="button-link">
-          {{ button }}
-        </a>
-
-      </ng-container>
-    </div>
+    <!-- Buttons --> <div class="btn"> @for (button of buttons; track button) { <!-- Portfolio (internal route) --> @if (button === 'Portfolio') { <a routerLink="/portfolio" class="button-link"> {{ button }} </a> } <!-- GitHub (external link) --> @if (button === 'Git Hub') { <a href="https://github.com/FortuneFire" target="_blank" rel="noopener noreferrer" class="button-link"> {{ button }} </a> } <!-- Blog (external link) --> @if (button === 'My Blog') { <a href="https://pronounced.hashnode.dev/" target="_blank" rel="noopener noreferrer" class="button-link"> {{ button }} </a> } <!-- Resume / CV Download --> @if (button === 'Resume') { <a href="../../../assets/files/Future Me Resume.pdf" download class="button-link"> {{ button }} </a> } } </div>
 
   </div>
 </div>

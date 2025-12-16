@@ -7,37 +7,42 @@
 }
 
 /* ---------------- CONTAINER ---------------- */
-.container{
+.container {
   max-width: 1600px;
   margin: 0 auto;
-  padding-top: 5rem;
+  padding: 5rem 1rem 2rem;
 }
 
-/* ---------------- HEADING ---------------- */
-.page-title{
+/* ---------------- PAGE TITLE ---------------- */
+.page-title {
   text-align: center;
   color: var(--dark-gray);
   font-size: 3rem;
-  padding: 2rem 0 0;
   text-transform: uppercase;
+  margin-bottom: 2rem;
 }
 
-hr{
+hr {
   margin: 3rem 0;
+  border: 0;
+  height: 1px;
+  background-color: var(--gray);
 }
 
 /* ---------------- PORTFOLIO FILTER ---------------- */
-.portfolio-tab ul{
+.portfolio-tab ul {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
   padding: 0;
   place-items: center;
+  margin-bottom: 1rem;
 }
 
 .portfolio-tab > ul > li {
   padding: 0;
-  width: 350px;
+  width: 100%;
+  max-width: 250px;
   height: 50px;
   background-color: var(--dark-gray);
   color: var(--white);
@@ -46,53 +51,74 @@ hr{
   align-items: center;
   justify-content: center;
   transition: 0.5s;
+  cursor: pointer;
+  border-radius: 6px;
 }
 
-.portfolio-tab > ul > li:hover{
+.portfolio-tab > ul > li:hover {
   background-color: var(--red);
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+
+/* ---------------- BACK TO CARDS BUTTON ---------------- */
+.back-to-cards {
+  width: 100%;
+  max-width: none;
+  margin: 1rem 0;
+  display: block;
+  height: 3rem;
+  border: none;
+  background-color: var(--red);
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: bold;
+  border-radius: 6px;
+  font-size: 1rem;
   cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.back-to-cards:hover {
+  background-color: var(--dark-gray);
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
 }
 
 /* ---------------- CARD GRID ---------------- */
 .card-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 4rem;
+  gap: 3rem;
   justify-content: center;
   padding-bottom: 4rem;
 }
 
-/* ---------------- CARD ---------------- */
 .card {
-  aspect-ratio: 1 / 1;        /* SQUARE CARD */
+  aspect-ratio: 1 / 1;
   width: 100%;
   border-radius: 12px;
   overflow: hidden;
   position: relative;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease;
 }
 
-.card .content {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  overflow: hidden;
+.card:hover {
+  transform: translateY(-5px);
 }
 
-/* ---------------- FRONT FACE ---------------- */
+/* FRONT FACE */
 .front {
   width: 100%;
   height: 100%;
   position: relative;
 }
 
-/* Full-cover image */
 .profile-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;          /* FILL the square image */
+  object-fit: cover;
   transition: 0.3s ease;
   display: block;
 }
@@ -101,7 +127,6 @@ hr{
   transform: scale(1.1);
 }
 
-/* Title + Highlight Overlay */
 .front h2,
 .front p {
   position: absolute;
@@ -111,21 +136,14 @@ hr{
   text-shadow: 1px 1px 6px rgba(0,0,0,0.8);
   z-index: 2;
   width: 90%;
-  margin: 0;
   text-align: center;
+  margin: 0;
 }
 
-.front h2 {
-  bottom: 2.5rem;
-  font-size: 1.4rem;
-}
+.front h2 { bottom: 2.5rem; font-size: 1.4rem; }
+.front p { bottom: 1rem; font-size: 1rem; }
 
-.front p {
-  bottom: 1rem;
-  font-size: 1rem;
-}
-
-/* ---------------- BACK FACE ---------------- */
+/* BACK FACE */
 .back {
   position: absolute;
   top: 100%;
@@ -139,97 +157,222 @@ hr{
   z-index: 3;
 }
 
-.card:hover .back {
-  top: 0;
+.card:hover .back { top: 0; }
+
+.back h2 { margin: 0 0 0.5rem 0; }
+.back .description { font-size: 0.9rem; }
+
+/* ---------------- SINGLE PROJECT VIEW ---------------- */
+.project-title {
+  color: var(--dark-gray);
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  /* text-decoration: underline var(--red) 3px; */
+  text-underline-offset: 3px;
 }
 
-.back h2 {
-  margin: 0 0 0.5rem 0;
+.cardView-body {
+  display: block;
+  margin-bottom: 2rem;
 }
 
-.back .description {
-  font-size: 0.9rem;
+/* ---------------- PROJECT DETAILS ---------------- */
+.project-details {
+  background-color: var(--light-gray);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  margin: 0 auto 2rem;
+  max-width: 700px;
+  border: 1px solid #e5e5e5;
 }
 
-/* ---------------- BACK TO CARDS BUTTON ---------------- */
-.back-to-cards{
-  width: 100%;
-  height: 2.5rem;
-  border: none;
+.project-details h3 {
+  font-size: 1.3rem;
+  color: var(--dark-gray);
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--red);
+  padding-bottom: 0.25rem;
+}
+
+.project-details p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--gray);
+  margin-bottom: 1rem;
+}
+
+/* SKILLS & CATEGORIES */
+.skills,
+.categories {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.skill,
+.category-badge {
   background-color: var(--red);
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  transition: 0.3s ease;
+  color: var(--white);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.back-to-cards:hover{
-  background-color: var(--dark-gray);
-  box-shadow: 0px 0px 15px rgb(0 0 0 / 50%);
+/* ---------------- PROJECT GALLERY ---------------- */
+
+/* ---------------- PROJECT IMAGES TITLE ---------------- */
+.project-images h3 {
+  font-size: 1.5rem;          /* Slightly larger than normal text */
+  color: var(--dark-gray);             /* Dark, elegant color */
+  margin-bottom: 1rem;        /* Space below the title */
+  font-weight: 600;           /* Medium-bold for emphasis */
+  border-bottom: 1px solid var(--red); /* Optional subtle underline */
+  padding-bottom: 0.25rem;    /* Space between text and underline */
+  text-transform: uppercase;  /* Optional for style */
+  letter-spacing: 1px;        /* Slight spacing for readability */
+  -webkit-text-stroke: 3px, red;
+}
+
+.project-images {
+  padding: 1rem 0;
+}
+
+.gallery-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.gallery {
+  display: flex;
+  gap: 2.5rem; /* increased spacing */
+  overflow-x: auto;
+  scroll-behavior: smooth;
+}
+
+.gallery img {
+  flex: 0 0 auto;
+  width: 200px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.gallery img:hover {
+  transform: scale(1.08);
+}
+
+/* ---------------- SCROLL BUTTONS ---------------- */
+.scroll-btn {
+  background: rgba(0,0,0,0.5);
+  color: var(--white);
+  border: none;
+  font-size: 2rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  position: absolute;
+  z-index: 5;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.scroll-btn.left { left: -20px; }
+.scroll-btn.right { right: -20px; }
+
+.scroll-btn:hover { background: var(--red); }
+
+/* ---------------- LIGHTBOX ---------------- */
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lightbox-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
   cursor: pointer;
 }
 
-/* ---------------- SINGLE PROJECT VIEW ---------------- */
-.project-title{ 
-  color: var(--dark-gray);
-  padding-bottom: 1rem;
-  text-decoration: underline var(--red) 2px;
-  text-underline-offset: 2px;
-}
-
-.cardView-body{
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 1rem;
-}
-
-.project-details{
-  background-color: var(--light-gray);
-  border-radius: 10px;
-  padding: 1rem;
-}
-
-.cardView-body>div>h3{
-  text-align: center;
-  color: var(--dark-gray);
-}
-
-/* ---------------- SKILLS ---------------- */
-.skills {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 150px);
-  gap: 1rem;
-  place-items: center;
-  justify-content: center;
-  padding: 0;
-}
-
-.skill {
-  height: 50px;
-  width: 150px;
-  background-color: #7a2324bc;
-  color: var(--white);
+.lightbox-content {
+  position: relative;
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* ---------------- PROJECT IMAGES ---------------- */
-.project-images{
-  padding: 1rem;
+.lightbox-content img {
+  max-width: 95vw;
+  max-height: 90vh;
+  border-radius: 12px;
+  object-fit: contain;
+  box-shadow: 0 0 25px rgba(0,0,0,0.6);
 }
 
-.gallery img {
-  width: 150px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 6px;
-  margin: 0.3rem;
+.close-btn {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
 }
+
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.6);
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.nav-btn.left { left: -70px; }
+.nav-btn.right { right: -70px; }
+
+.nav-btn:hover,
+.close-btn:hover { background: var(--red); }
 
 /* ---------------- RESPONSIVE ---------------- */
+@media only screen and (max-width: 900px) {
+  .gallery img { width: 150px; height: 100px; }
+}
+
 @media only screen and (max-width: 600px) {
-  .cardView-body{
-    grid-template-columns: 1fr;
-  }
+  .page-title { font-size: 2rem; }
+  .card-container { gap: 2rem; }
+  .gallery img { width: 120px; height: 80px; }
+  .nav-btn { width: 40px; height: 40px; font-size: 1.5rem; }
+  .scroll-btn { width: 30px; height: 30px; font-size: 1.2rem; }
 }
