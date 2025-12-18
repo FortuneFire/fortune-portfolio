@@ -1,17 +1,21 @@
 <div class="nav-wrapper">
   <nav>
     <a routerLink="/">
-      <img src="../../../assets/images/logo.png" frameborder="0">
+      <img src="../../../assets/images/logo.png" alt="logo">
     </a>
 
     <div class="navLinks">
-      
-        <div>
-          <a routerLink="/dashboard">
+      <div *ngIf="isLoggedIn$ | async; else loginBtn">
+        <a routerLink="/dashboard">
           <button class="dashboard">Manage Projects</button>
-          </a>
-        </div>
-      
+        </a>
+      </div>
+
+      <ng-template #loginBtn>
+        <a routerLink="/sign-in">
+          <button class="sign-in-btn">Sign In</button>
+        </a>
+      </ng-template>
     </div>
   </nav>
 </div>

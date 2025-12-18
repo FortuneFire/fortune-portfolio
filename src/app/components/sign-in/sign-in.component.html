@@ -1,21 +1,24 @@
-<div class="background">
-  <div class="shape"></div>
-  <div class="shape"></div>
-</div>
-
-<form (ngSubmit)="signIn()">
-  <h3>Login Here</h3>
-
-  <label for="email">Email</label>
-  <input type="text" id="email" placeholder="Email or Phone" [(ngModel)]="email" name="email">
-
-  <label for="password">Password</label>
-  <input type="password" id="password" placeholder="Password" [(ngModel)]="password" name="password">
-
-  <button type="submit">Log In</button>
-
-  <div class="social">
-    <div class="go"><i class="fab fa-google"></i> Google</div>
-    <div class="fb"><i class="fab fa-facebook"></i> Facebook</div>
+<div class="auth-page">
+  <div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
   </div>
-</form>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <h3>Admin Login</h3>
+
+    <label for="email">Email</label>
+    <input type="email" formControlName="email" placeholder="Email" id="email">
+
+    <label for="password">Password</label>
+    <input type="password" formControlName="password" placeholder="Password" id="password">
+
+    @if (errorMessage) {
+      <p class="error-msg">{{ errorMessage }}</p>
+    }
+
+    <button type="submit" [disabled]="loginForm.invalid || isLoading">
+      {{ isLoading ? 'Loading...' : 'Log In' }}
+    </button>
+  </form>
+</div>

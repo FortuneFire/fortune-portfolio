@@ -1,27 +1,5 @@
-// import { NgModule } from '@angular/core';
-// import { RouterModule, Routes } from '@angular/router';
-// import { HomeComponent } from './components/home/home.component';
-// import { PortfolioComponent } from './components/portfolio/portfolio.component';
-// import { DashboardComponent } from './components/dashboard/dashboard.component';
-// import { SignInComponent } from './components/sign-in/sign-in.component';
-
-// const routes: Routes = [
-//   { path: '', component: HomeComponent },
-//   { path: 'portfolio', component: PortfolioComponent },
-//   { path: 'dashboard', component: DashboardComponent },
-//   { path: 'sign-in', component: SignInComponent },
-//   { path: '**', redirectTo: '', pathMatch: 'full' }
-// ];
-
-// @NgModule({
-//   imports: [RouterModule.forRoot(routes)],
-//   exports: [RouterModule]
-// })
-// export class AppRoutingModule {}
-
-
-
 import { Routes } from '@angular/router';
+import { authGuard } from './auth/auth-guard'; 
 
 export const appRoutes: Routes = [
   {
@@ -34,7 +12,8 @@ export const appRoutes: Routes = [
   },
   {
     path: 'dashboard',
-    loadComponent: () => import('./components/dashboard/dashboard.component').then(m => m.DashboardComponent)
+    loadComponent: () => import('./components/dashboard/dashboard.component').then(m => m.DashboardComponent),
+    canActivate: [authGuard] 
   },
   {
     path: 'sign-in',

@@ -82,3 +82,35 @@ a > img {
         width: 6rem;
     }
 }
+
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.dashboard {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.sign-in-btn {
+  background-color: transparent;
+  color: #555;
+  border: 1px solid #ccc;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sign-in-btn:hover {
+  background-color: #f0f0f0;
+  border-color: #999;
+}

@@ -1,22 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router'; // <-- import RouterModule
+import { RouterModule } from '@angular/router';
+import { Auth, authState } from '@angular/fire/auth';
+import { Observable, map } from 'rxjs';
 
 @Component({
   selector: 'app-header',
-  standalone: true,               // make it standalone
-  imports: [CommonModule, RouterModule], // <-- add RouterModule here
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
-
-  loggedIn = false;
-
-  constructor() { }
-
-  ngOnInit(): void {
-    // You can initialize login status here if needed
-  }
-
+export class HeaderComponent {
+  private auth = inject(Auth);
+  
+  // Maps the authState to a simple true/false boolean
+  isLoggedIn$: Observable<boolean> = authState(this.auth).pipe(
+    map(user => !!user)
+  );
 }
