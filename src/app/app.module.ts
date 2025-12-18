@@ -19,7 +19,7 @@ import { HomeComponent } from './components/home/home.component';
 import { PortfolioComponent } from './components/portfolio/portfolio.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
-import { ProjectFormComponent } from './components/projects/project-form.component';
+import { ProjectFormComponent } from './components/projects-form/project-form.component';
 
 @NgModule({
   declarations: [

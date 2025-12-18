@@ -5,18 +5,13 @@
     </a>
 
     <div class="navLinks">
-      @if (loggedIn) {
+      
         <div>
-          <button class="dashboard">DashBoard</button>
-          <button class="dashboard">Sign Out</button>
+          <a routerLink="/dashboard">
+          <button class="dashboard">Manage Projects</button>
+          </a>
         </div>
-      }
-
-      @if (!loggedIn) {
-        <div>
-          <button class="dashboard">Sign In / Sign Up</button>
-        </div>
-      }
+      
     </div>
   </nav>
 </div>

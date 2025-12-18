@@ -1,0 +1,60 @@
+.manage-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+}
+
+.project-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.project-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.project-item:hover {
+  background-color: #f9f9f9;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.info strong {
+  font-size: 1.1rem;
+}
+
+.info span {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.btn-delete {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-delete:hover {
+  background-color: #cc0000;
+}
+
+.no-data {
+  text-align: center;
+  padding: 20px;
+  color: #999;
+}

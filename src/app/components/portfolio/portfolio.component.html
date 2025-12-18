@@ -1,138 +1,95 @@
 <div class="container">
 
-  <!-- PAGE TITLE -->
   <h2 class="page-title">Projects</h2>
   <hr />
 
-  <!-- FILTER TABS -->
   <section class="portfolio-tab">
-    @if (!selectedCard) {
-      <ul id="filters" class="clearfix">
-        @for (project_category of project_filter_categories; track project_category) {
-          <li
-            class="filter"
-            (click)="onCategoryClick(project_category)"
-            >
-            {{ project_category }}
-          </li>
-        }
-      </ul>
-    }
+    <ul id="filters" class="clearfix" *ngIf="!selectedCard">
+      <li
+        class="filter"
+        [class.active]="selectedFilter === project_category"
+        *ngFor="let project_category of project_filter_categories"
+        (click)="onCategoryClick(project_category)">
+        {{ project_category }}
+      </li>
+    </ul>
 
-    <!-- BACK TO PROJECTS BUTTON -->
-    @if (selectedCard) {
-      <button class="back-to-cards" (click)="backToCards()">
-        Back to Projects
-      </button>
-    }
+    <button class="back-to-cards" *ngIf="selectedCard" (click)="backToCards()">
+      Back to Projects
+    </button>
   </section>
 
   <hr />
 
-  <!-- GRID OF PROJECT CARDS -->
-  @if (!selectedCard) {
-    <section>
-      <div class="card-container">
-        @for (project of filteredProjects; track project) {
-          <div
-            class="card-wrapper"
-        [class.hidden]="
-          selectedFilter !== 'All' &&
-          !(project.categories ?? []).includes(selectedFilter)
-        "
-            >
-            <div class="card" (click)="onCardClick(project)">
-              <!-- FRONT OF CARD -->
-              <div class="front">
-                <img
-                  class="profile-img"
-                  [src]="project.keyIMG || 'https://picsum.photos/300/300?random'"
-                  [alt]="project.title"
-                  />
-                  <h2>{{ project.title }}</h2>
-                  <p>{{ project.highlight }}</p>
-                </div>
-                <!-- BACK OF CARD -->
-                <div class="back">
-                  <h2>Description</h2>
-                  <p class="description">{{ project.description }}</p>
-                </div>
-              </div>
-            </div>
-          }
-        </div>
-      </section>
-    }
-
-    <!-- SINGLE PROJECT VIEW -->
-    @if (selectedCard) {
-      <section class="cardView">
-        <h2 class="project-title">{{ selectedCard.title }}</h2>
-        <div class="cardView-body">
-          <!-- PROJECT DETAILS -->
-          <div class="project-details">
-            <h3>Project Description</h3>
-            <p>{{ selectedCard.description }}</p>
-            <h3>Skills Used</h3>
-            <ul class="skills">
-              @for (skill of selectedCard.skills || []; track skill) {
-                <li class="skill">
-                  {{ skill }}
-                </li>
-              }
-            </ul>
-            <h3>Categories</h3>
-            <ul class="categories">
-              @for (cat of selectedCard.categories || []; track cat) {
-                <li>
-                  {{ cat }} - ->
-                </li>
-              }
-            </ul>
+  <section *ngIf="!selectedCard">
+    <div class="card-container">
+      <div class="card-wrapper" *ngFor="let project of filteredProjects">
+        <div class="card" (click)="onCardClick(project)">
+          <div class="front">
+            <img
+              class="profile-img"
+              [src]="project.keyIMG || 'https://picsum.photos/300/300?random'"
+              [alt]="project.title">
+            <h2>{{ project.title }}</h2>
+            <p>{{ project.highlight }}</p>
           </div>
-          <!-- PROJECT GALLERY -->
-          <div class="project-images">
-            <h3>Project Images</h3>
-            <div class="gallery-wrapper">
-              <button class="scroll-btn left" (click)="scrollLeft()">&#10094;</button>
-              <div class="gallery" #gallery>
-                @for (img of selectedCard.gallery || []; track img; let i = $index) {
-                  <img
-                    [src]="img || 'https://picsum.photos/200/150?random'"
-                    [alt]="selectedCard.title + ' screenshot'"
-                    loading="lazy"
-                    (click)="openLightbox(i)"
-                    />
-                }
-              </div>
-              <button class="scroll-btn right" (click)="scrollRight()">&#10095;</button>
-            </div>
+          <div class="back">
+            <h2>Description</h2>
+            <p class="description">{{ project.description }}</p>
           </div>
         </div>
-      </section>
-    }
-
-    <!-- NO PROJECTS MESSAGE -->
-    @if (!projects?.length) {
-      <div>
-        <p>No projects to display.</p>
       </div>
-    }
-
-    <!-- LIGHTBOX MODAL -->
-    @if (lightboxOpen) {
-      <div class="lightbox">
-        <div class="lightbox-overlay" (click)="closeLightbox()"></div>
-        <div class="lightbox-content">
-          <button class="close-btn" (click)="closeLightbox()">&#10006;</button>
-          <button class="nav-btn left" (click)="prevImage()">&#10094;</button>
-          <img
-            [src]="selectedLightboxImage"
-            [alt]="selectedCard?.title"
-            />
-            <button class="nav-btn right" (click)="nextImage()">&#10095;</button>
-          </div>
-        </div>
-      }
-
     </div>
+  </section>
+
+  <section class="cardView" *ngIf="selectedCard">
+    <h2 class="project-title">{{ selectedCard.title }}</h2>
+    <div class="cardView-body">
+      <div class="project-details">
+        <h3>Project Description</h3>
+        <p>{{ selectedCard.description }}</p>
+
+        <h3>Skills Used</h3>
+        <ul class="skills">
+          <li class="skill" *ngFor="let skill of selectedCard.skills">{{ skill }}</li>
+        </ul>
+
+        <h3>Categories</h3>
+        <ul class="categories">
+          <li *ngFor="let cat of selectedCard.categories">{{ cat }}</li>
+        </ul>
+      </div>
+
+      <div class="project-images" *ngIf="selectedCard.gallery && selectedCard.gallery.length > 0">
+        <h3>Project Images</h3>
+        <div class="gallery-wrapper">
+          <button class="scroll-btn left" (click)="scrollLeft()">&#10094;</button>
+          <div class="gallery" #gallery>
+            <img
+              *ngFor="let img of selectedCard.gallery; let i = index"
+              [src]="img || 'https://picsum.photos/200/150?random'"
+              [alt]="selectedCard.title + ' screenshot'"
+              loading="lazy"
+              (click)="openLightbox(i)">
+          </div>
+          <button class="scroll-btn right" (click)="scrollRight()">&#10095;</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div *ngIf="projects.length === 0">
+    <p>No projects to display.</p>
+  </div>
+
+  <div class="lightbox" *ngIf="lightboxOpen">
+    <div class="lightbox-overlay" (click)="closeLightbox()"></div>
+    <div class="lightbox-content">
+      <button class="close-btn" (click)="closeLightbox()">&#10006;</button>
+      <button class="nav-btn left" (click)="prevImage()">&#10094;</button>
+      <img [src]="selectedLightboxImage" [alt]="selectedCard?.title">
+      <button class="nav-btn right" (click)="nextImage()">&#10095;</button>
+    </div>
+  </div>
+
+</div>

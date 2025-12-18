@@ -1,0 +1,57 @@
+<div class="form-wrapper">
+  <div class="form-container">
+    <form [formGroup]="projectForm" (ngSubmit)="onSubmit()" class="project-form">
+      <h2 class="form-header">Add New Project</h2>
+
+      <div class="input-group">
+        <label>Project Title</label>
+        <input type="text" formControlName="title" placeholder="e.g. Portfolio Website">
+      </div>
+
+      <div class="input-group">
+        <label>Highlight</label>
+        <input type="text" formControlName="highlight" placeholder="One-sentence summary">
+      </div>
+
+      <div class="input-group">
+        <label>Description</label>
+        <textarea formControlName="description" rows="4"></textarea>
+      </div>
+
+      <div class="selection-row">
+        <div class="selection-column">
+          <label>Categories</label>
+          <div formArrayName="categories" class="checkbox-list">
+            @for (category of categories; track category; let i = $index) {
+              <label class="check-container">
+                <input type="checkbox" [formControlName]="i"> {{category}}
+              </label>
+            }
+          </div>
+        </div>
+
+        <div class="selection-column">
+          <label>Skills</label>
+          <div formArrayName="skills" class="checkbox-list">
+            @for (skill of skills; track skill; let i = $index) {
+              <label class="check-container">
+                <input type="checkbox" [formControlName]="i"> {{skill}}
+              </label>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Main Image</label>
+        <input type="file" (change)="onFileSelected($event)" accept="image/*" class="file-btn">
+      </div>
+
+      <div class="button-row">
+        <button type="submit" class="submit-btn" [disabled]="projectForm.invalid">
+          Save Project
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

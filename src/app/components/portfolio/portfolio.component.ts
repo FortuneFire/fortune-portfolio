@@ -1,57 +1,64 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { PortfolioService, Project } from '../../services/portfolio.service';
+import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-portfolio',
   standalone: true,
+  imports: [CommonModule, AsyncPipe, NgForOf, NgIf],
   templateUrl: './portfolio.component.html',
-  styleUrls: ['./portfolio.component.css']
+  styleUrls: ['./portfolio.component.css'],
 })
 export class PortfolioComponent implements OnInit {
-  
   selectedCard: Project | null = null;
   selectedFilter = 'All';
 
   projects: Project[] = [];
   filteredProjects: Project[] = [];
-
-  project_categories: string[] = [];
   project_filter_categories: string[] = [];
 
-  @ViewChild('gallery', { static: false }) gallery!: ElementRef;
+  @ViewChild('gallery') gallery!: ElementRef;
 
-  // Lightbox state
   lightboxOpen = false;
   currentLightboxIndex = 0;
-  selectedLightboxImage: string = '';
+  selectedLightboxImage = '';
 
   constructor(private portfolioService: PortfolioService) {}
 
   ngOnInit(): void {
-    this.portfolioService.projects$.subscribe((projects: Project[]) => {
-      this.projects = projects || [];
-      this.filteredProjects = [...this.projects];
+    // Live subscription to your 'projects' collection
+    this.portfolioService.getProjects().subscribe({
+      next: (projects) => {
+        console.log('🔥 Firestore data:', projects);
 
-      // Extract unique categories
-      this.project_categories = Array.from(
-        new Set(this.projects.map(p => p.categories ?? []).flat())
-      );
+        this.projects = projects;
+        
+        // Sync filtered list with new incoming data
+        this.applyFilter();
 
-      // Add "All" as default filter
-      this.project_filter_categories = ['All', ...this.project_categories];
+        // Dynamically extract categories for filter tabs
+        const categories = projects.flatMap(p => p.categories ?? []);
+        this.project_filter_categories = [
+          'All',
+          ...Array.from(new Set(categories))
+        ];
+      },
+      error: (err) => console.error('❌ Firestore error:', err)
     });
   }
 
-  // ---------------- FILTER ----------------
   onCategoryClick(category: string): void {
     this.selectedFilter = category;
-    this.filteredProjects =
-      category === 'All'
-        ? this.projects
-        : this.projects.filter(p => (p.categories ?? []).includes(category));
+    this.applyFilter();
   }
 
-  // ---------------- CARD SELECTION ----------------
+  private applyFilter(): void {
+    this.filteredProjects = this.selectedFilter === 'All'
+      ? this.projects
+      : this.projects.filter(p => (p.categories ?? []).includes(this.selectedFilter));
+  }
+
   onCardClick(project: Project): void {
     this.selectedCard = project;
   }
@@ -61,16 +68,16 @@ export class PortfolioComponent implements OnInit {
     this.closeLightbox();
   }
 
-  // ---------------- GALLERY SCROLL ----------------
+  // --- GALLERY AND LIGHTBOX LOGIC ---
+
   scrollLeft(): void {
-    this.gallery.nativeElement.scrollBy({ left: -300, behavior: 'smooth' });
+    this.gallery?.nativeElement.scrollBy({ left: -300, behavior: 'smooth' });
   }
 
   scrollRight(): void {
-    this.gallery.nativeElement.scrollBy({ left: 300, behavior: 'smooth' });
+    this.gallery?.nativeElement.scrollBy({ left: 300, behavior: 'smooth' });
   }
 
-  // ---------------- LIGHTBOX ----------------
   openLightbox(index: number): void {
     if (!this.selectedCard?.gallery?.length) return;
     this.currentLightboxIndex = index;

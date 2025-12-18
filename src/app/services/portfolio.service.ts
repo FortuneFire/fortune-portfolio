@@ -1,10 +1,17 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core'; // 👈 Added inject
+import {
+  Firestore,
+  collection,
+  collectionData,
+  doc,
+  updateDoc,
+  deleteDoc,
+  addDoc
+} from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
-// Export the Project interface
 export interface Project {
-  id: number;
+  id?: string;
   title: string;
   highlight: string;
   description: string;
@@ -18,40 +25,29 @@ export interface Project {
   providedIn: 'root'
 })
 export class PortfolioService {
-  private _projects: Project[] = [];
-  private _projects$ = new BehaviorSubject<Project[]>([]);
-  projects$ = this._projects$.asObservable();
+  // Using inject() here fixes the "outside of an Injection context" warning
+  private firestore: Firestore = inject(Firestore);
 
-  constructor(private http: HttpClient) {
-    this.loadProjects();
+  getProjects(): Observable<Project[]> {
+    // Defining this inside the method ensures the instance is stable
+    const projectsCollection = collection(this.firestore, 'projects');
+    return collectionData(projectsCollection, { idField: 'id' }) as Observable<Project[]>;
   }
 
-  loadProjects() {
-    this.http.get<Project[]>('assets/data/projects.json').subscribe({
-      next: (projects) => {
-        this._projects = projects;
-        this._projects$.next(this._projects);
-      },
-      error: (err) => console.error('Failed to load projects:', err)
-    });
+  async addProject(project: Project): Promise<void> {
+    const projectsCollection = collection(this.firestore, 'projects');
+    await addDoc(projectsCollection, project);
   }
 
-  addProject(project: Project) {
-    project.id = this._projects.length ? Math.max(...this._projects.map(p => p.id)) + 1 : 1;
-    this._projects.push(project);
-    this._projects$.next(this._projects);
+  async updateProject(project: Project): Promise<void> {
+    if (!project.id) return;
+    const projectRef = doc(this.firestore, 'projects', project.id);
+    const { id, ...data } = project;
+    await updateDoc(projectRef, data as any);
   }
 
-  updateProject(updatedProject: Project) {
-    const index = this._projects.findIndex(p => p.id === updatedProject.id);
-    if (index > -1) {
-      this._projects[index] = updatedProject;
-      this._projects$.next(this._projects);
-    }
-  }
-
-  deleteProject(projectId: number) {
-    this._projects = this._projects.filter(p => p.id !== projectId);
-    this._projects$.next(this._projects);
+  async deleteProject(projectId: string): Promise<void> {
+    const projectRef = doc(this.firestore, 'projects', projectId);
+    await deleteDoc(projectRef);
   }
 }

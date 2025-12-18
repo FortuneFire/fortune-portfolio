@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProjectFormComponent } from '../projects/project-form.component';
-import { SignInComponent } from '../sign-in/sign-in.component';
+
+// Import the two main dashboard sub-components
+import { ProjectFormComponent } from '../projects-form/project-form.component'; // Ensure path is correct
+import { ManageProjectsComponent } from '../manage-projects/manage-projects'; 
 
 @Component({
   selector: 'app-dashboard',
@@ -9,17 +11,23 @@ import { SignInComponent } from '../sign-in/sign-in.component';
   imports: [
     CommonModule,
     ProjectFormComponent,
-    SignInComponent
+    ManageProjectsComponent
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  // Logic to toggle between views
+  showAddProject = true;
+  showManageProjects = false;
 
   constructor() { }
 
-  ngOnInit(): void {
-    // Initialization logic here
-  }
+  ngOnInit(): void { }
 
+  // Quick methods to switch views
+  toggleView(view: 'add' | 'manage'): void {
+    this.showAddProject = (view === 'add');
+    this.showManageProjects = (view === 'manage');
+  }
 }

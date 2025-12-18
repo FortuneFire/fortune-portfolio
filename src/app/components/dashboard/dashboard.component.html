@@ -1,5 +1,21 @@
+<div class="dashboard-container">
+  <nav class="dashboard-nav">
+    <button (click)="toggleView('add')" [class.active]="showAddProject">
+      Add New Project
+    </button>
+    <button (click)="toggleView('manage')" [class.active]="showManageProjects">
+      Manage Projects
+    </button>
+  </nav>
 
-<app-project-form></app-project-form>
-  <hr>
-  <app-sign-in></app-sign-in>
-  
+  <hr />
+
+  <!-- Conditional rendering -->
+  <div *ngIf="showAddProject">
+    <app-project-form *ngIf="showAddProject"></app-project-form>
+  </div>
+
+  <div *ngIf="showManageProjects">
+    <app-manage-projects *ngIf="showManageProjects"></app-manage-projects>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<div class="manage-container">
+  <h3>Current Projects</h3>
+  
+  <div class="project-list">
+    <div class="project-item" *ngFor="let project of projects">
+      <div class="info">
+        <strong>{{ project.title }}</strong>
+        <span>{{ project.categories.join(', ') }}</span>
+      </div>
+      
+      <div class="actions">
+        <button class="btn-delete" (click)="onDelete(project.id)">Delete</button>
+      </div>
+    </div>
+
+    <div *ngIf="projects.length === 0" class="no-data">
+      No projects found in database.
+    </div>
+  </div>
+</div>

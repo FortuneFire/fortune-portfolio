@@ -1,4 +1,3 @@
-// src/main.ts
 import { enableProdMode, importProvidersFrom } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
@@ -11,6 +10,10 @@ import { MatInputModule } from '@angular/material/input';
 import { AppComponent } from './app/app.component';
 import { appRoutes } from './app/app.routes';
 import { environment } from './environments/environment';
+
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 
 if (environment.production) {
   enableProdMode();
@@ -26,7 +29,9 @@ bootstrapApplication(AppComponent, {
       ReactiveFormsModule,
       MatFormFieldModule,
       MatInputModule
-    )
+    ),
+    provideFirebaseApp(() => initializeApp(environment.firebase)), // initialize Firebase
+    provideAuth(() => getAuth()), // inject Auth
+    provideFirestore(() => getFirestore()) // inject Firestore
   ]
-}).catch(err => console.error(err));
-
+}).catch(err => console.error('Bootstrap error:', err));
