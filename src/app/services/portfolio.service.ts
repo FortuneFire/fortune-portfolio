@@ -45,6 +45,16 @@ export class PortfolioService {
     const { id, ...data } = project;
     await updateDoc(projectRef, data as any);
   }
+  // Inside your PortfolioService class
+private editingProject: Project | null = null;
+
+setEditingProject(project: Project | null) {
+  this.editingProject = project;
+}
+
+getEditingProject() {
+  return this.editingProject;
+}
 
   async deleteProject(projectId: string): Promise<void> {
     const projectRef = doc(this.firestore, 'projects', projectId);

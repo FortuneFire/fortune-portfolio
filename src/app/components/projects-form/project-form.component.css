@@ -101,3 +101,55 @@ input:focus, textarea:focus {
   background-color: #ccc;
   cursor: not-allowed;
 }
+
+.file-btn {
+  padding: 10px 0;
+  font-size: 0.85rem;
+}
+
+.file-count {
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: -10px;
+  margin-bottom: 15px;
+  font-style: italic;
+}
+
+/* Make button look active during upload */
+.submit-btn:disabled {
+  background-color: #a0a0a0;
+  cursor: wait;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ffffff;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  animation: rotation 1s linear infinite;
+  margin-right: 8px;
+}
+
+@keyframes rotation {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.project-highlight-name {
+  color: var(--red, #e53935);
+  font-weight: 800;
+  font-style: italic;
+  margin-left: 5px;
+}
+
+/* Optional: Add a subtle fade-in for the header when switching projects */
+.form-header {
+  animation: slideIn 0.4s ease-out;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
+}

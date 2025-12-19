@@ -13,7 +13,7 @@
 
     <!-- Profile Image -->
     <div class="img-container">
-      <img src="../../../assets/images/paint.png" alt="profile picture" class="img-responsive">
+      <img src="../../../assets/images/fortune.png" alt="profile picture" class="img-responsive">
     </div>
 
     <!-- Buttons --> <div class="btn"> @for (button of buttons; track button) { <!-- Portfolio (internal route) --> @if (button === 'Portfolio') { <a routerLink="/portfolio" class="button-link"> {{ button }} </a> } <!-- GitHub (external link) --> @if (button === 'Git Hub') { <a href="https://github.com/FortuneFire" target="_blank" rel="noopener noreferrer" class="button-link"> {{ button }} </a> } <!-- Blog (external link) --> @if (button === 'My Blog') { <a href="https://pronounced.hashnode.dev/" target="_blank" rel="noopener noreferrer" class="button-link"> {{ button }} </a> } <!-- Resume / CV Download --> @if (button === 'Resume') { <a href="../../../assets/files/Future Me Resume.pdf" download class="button-link"> {{ button }} </a> } } </div>

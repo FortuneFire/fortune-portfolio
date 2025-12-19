@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-// Import the two main dashboard sub-components
-import { ProjectFormComponent } from '../projects-form/project-form.component'; // Ensure path is correct
-import { ManageProjectsComponent } from '../manage-projects/manage-projects'; 
+import { ProjectFormComponent } from '../projects-form/project-form.component';
+import { ManageProjectsComponent } from '../manage-projects/manage-projects';
+import { PortfolioService } from '../../services/portfolio.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,17 +16,29 @@ import { ManageProjectsComponent } from '../manage-projects/manage-projects';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  // Logic to toggle between views
-  showAddProject = true;
-  showManageProjects = false;
+  private portfolioService = inject(PortfolioService);
 
-  constructor() { }
+  // Default to showing the list
+  showAddProject = false;
+  showManageProjects = true;
 
   ngOnInit(): void { }
 
-  // Quick methods to switch views
   toggleView(view: 'add' | 'manage'): void {
-    this.showAddProject = (view === 'add');
-    this.showManageProjects = (view === 'manage');
+    if (view === 'add') {
+      // If manually clicking "Add New", clear the editing state
+      this.portfolioService.setEditingProject(null);
+      this.showAddProject = true;
+      this.showManageProjects = false;
+    } else {
+      this.showAddProject = false;
+      this.showManageProjects = true;
+    }
+  }
+
+  // This method handles the event from the Manage component
+  handleEditRequest() {
+    this.showAddProject = true;
+    this.showManageProjects = false;
   }
 }

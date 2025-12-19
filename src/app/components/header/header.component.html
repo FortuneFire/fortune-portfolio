@@ -5,10 +5,12 @@
     </a>
 
     <div class="navLinks">
-      <div *ngIf="isLoggedIn$ | async; else loginBtn">
+      <div *ngIf="isLoggedIn$ | async; else loginBtn" class="auth-actions">
         <a routerLink="/dashboard">
           <button class="dashboard">Manage Projects</button>
         </a>
+        
+        <button (click)="logout()" class="sign-out-btn">Sign Out</button>
       </div>
 
       <ng-template #loginBtn>

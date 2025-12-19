@@ -1,57 +1,107 @@
 <div class="form-wrapper">
   <div class="form-container">
     <form [formGroup]="projectForm" (ngSubmit)="onSubmit()" class="project-form">
-      <h2 class="form-header">Add New Project</h2>
+      
+
+      <h2 class="form-header">
+  @if (editingId && existingData) {
+    Editing: <span class="project-highlight-name">{{ existingData.title }}</span>
+  } @else {
+    Add New Project
+  }
+</h2>
 
       <div class="input-group">
-        <label>Project Title</label>
-        <input type="text" formControlName="title" placeholder="e.g. Portfolio Website">
+        <label for="title">Project Title</label>
+        <input id="title" type="text" formControlName="title" placeholder="e.g. E-Commerce Platform">
       </div>
 
       <div class="input-group">
-        <label>Highlight</label>
-        <input type="text" formControlName="highlight" placeholder="One-sentence summary">
+        <label for="highlight">Highlight</label>
+        <input id="highlight" type="text" formControlName="highlight" placeholder="One-sentence summary for the card view">
       </div>
 
       <div class="input-group">
-        <label>Description</label>
-        <textarea formControlName="description" rows="4"></textarea>
+        <label for="description">Full Description</label>
+        <textarea id="description" formControlName="description" rows="5" placeholder="Describe the project goals, challenges, and results..."></textarea>
       </div>
 
       <div class="selection-row">
         <div class="selection-column">
-          <label>Categories</label>
+          <label>Project Categories</label>
           <div formArrayName="categories" class="checkbox-list">
-            @for (category of categories; track category; let i = $index) {
+            @for (cat of categories; track cat; let i = $index) {
               <label class="check-container">
-                <input type="checkbox" [formControlName]="i"> {{category}}
+                <input type="checkbox" [formControlName]="i"> 
+                <span class="custom-check"></span>
+                {{cat}}
               </label>
             }
           </div>
         </div>
 
         <div class="selection-column">
-          <label>Skills</label>
+          <label>Tech Stack / Skills</label>
           <div formArrayName="skills" class="checkbox-list">
             @for (skill of skills; track skill; let i = $index) {
               <label class="check-container">
-                <input type="checkbox" [formControlName]="i"> {{skill}}
+                <input type="checkbox" [formControlName]="i"> 
+                <span class="custom-check"></span>
+                {{skill}}
               </label>
             }
           </div>
         </div>
       </div>
 
-      <div class="input-group">
-        <label>Main Image</label>
-        <input type="file" (change)="onFileSelected($event)" accept="image/*" class="file-btn">
+      <div class="image-section">
+        
+        <div class="input-group">
+          <label>Main Project Image (Thumbnail)</label>
+          <div class="file-input-wrapper">
+            <input type="file" (change)="onFileSelected($event)" accept="image/*" class="file-btn">
+            
+            @if (keyImagePreview) {
+              <div class="preview-box">
+                <img [src]="keyImagePreview" alt="Project Preview">
+                <div class="preview-info">
+                  <p>{{ keyImageFile ? 'New Image Selected' : 'Current Saved Image' }}</p>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label>Gallery Images (Multiple)</label>
+          <input type="file" (change)="onGallerySelected($event)" accept="image/*" multiple class="file-btn">
+          
+          @if (galleryFiles.length > 0) {
+            <div class="gallery-status">
+              <span class="status-badge">{{ galleryFiles.length }} new files ready to upload</span>
+            </div>
+          }
+          
+          @if (editingId && existingData?.gallery?.length) {
+            <p class="existing-count">Project currently has {{ existingData?.gallery?.length }} images in gallery.</p>
+          }
+        </div>
       </div>
 
       <div class="button-row">
-        <button type="submit" class="submit-btn" [disabled]="projectForm.invalid">
-          Save Project
+        <button type="submit" class="submit-btn" [disabled]="projectForm.invalid || isUploading">
+          @if (isUploading) {
+            <span class="spinner"></span> Processing...
+          } @else {
+            {{ editingId ? 'Update Project' : 'Save Project' }}
+          }
+        </button>
+
+        <button type="button" class="cancel-btn" (click)="resetForm()">
+          Cancel
         </button>
       </div>
+
     </form>
   </div>
 </div>

@@ -1,116 +1,116 @@
-/* Wrapper keeps the nav centered even when fixed */
+/* --- NAV WRAPPER & CONTAINER --- */
 .nav-wrapper {
-    position: fixed;
-    top: 1rem; /* push it down slightly */
-    left: 0;
-    width: 100%;
-    display: flex;
-    justify-content: center; /* centers the nav */
-    z-index: 1000;
-    pointer-events: none; /* allows clicks only on nav */
+  position: fixed;
+  top: 1.5rem; /* Slightly more breathing room from the top */
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 1000;
+  pointer-events: none;
+  padding: 0 1rem; /* Prevents edge-to-edge on mobile */
+  box-sizing: border-box;
 }
 
-/* Actual navigation bar */
 nav {
-    pointer-events: auto; /* restore clickability */
-    width: 100%;
-    max-width: 1600px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 10vh;
+  pointer-events: auto;
+  width: 100%;
+  max-width: 1400px; /* Standard professional container width */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.15rem 2rem;
+  box-sizing: border-box;
 
-    /* visual styling */
-    background-color: rgba(255, 255, 255, 0); /* transparent */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    padding: 0 2rem;
-    box-sizing: border-box;
-    backdrop-filter: blur(10px); /* glassy effect */
-    border-radius: 8px;
+  /* Glassmorphism Effect */
+  background: rgba(255, 255, 255, 0.7); /* Slight white tint */
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 16px; /* Smoother rounded corners */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
 }
 
-/* Prevent content from hiding under nav */
-body {
-    padding-top: calc(10vh + 2rem);
+/* --- LOGO --- */
+nav a img {
+  max-width: 12rem;
+  height: auto;
+  display: block;
+  transition: transform 0.3s ease;
 }
 
-a > img {
-    max-width: 15rem;
+nav a:hover img {
+  transform: scale(1.02);
 }
 
-.navLinks {
-    display: flex;
-}
-
-.navLinks div {
-    display: flex;
-    align-items: center;
-}
-
-.navLinks div button {
-    height: 2.5rem;
-    width: 8rem;
-    margin-left: 1.5rem;
-    border: none;
-    background-color: var(--red);
-    color: #fff;
-    box-shadow: none;
-    transition: box-shadow 0.3s ease, background-color 0.3s ease;
-    border-radius: 4px;
-}
-
-.navLinks div button:hover {
-    background-color: var(--dark-gray);
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
-    cursor: pointer;
-}
-
-/* Responsive */
-@media (max-width: 834px) {
-    nav {
-        width: 100%;
-        padding: 0 1rem;
-    }
-
-    a > img {
-        max-width: 10rem;
-    }
-
-    .navLinks div button {
-        height: 2rem;
-        width: 6rem;
-    }
-}
-
-
+/* --- NAVIGATION LINKS & BUTTONS --- */
 .navLinks {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
+.auth-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Base Button Style */
+.navLinks button {
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 400;
+  padding: 0.6rem 1.2rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+}
+
+/* Manage Projects (Primary) */
 .dashboard {
-  background-color: #ff4d4d;
-  color: white;
+  background: var(--red);
+  color: #fff;
   border: none;
-  padding: 8px 16px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(229, 57, 53, 0.25);
 }
 
-.sign-in-btn {
-  background-color: transparent;
-  color: #555;
-  border: 1px solid #ccc;
-  padding: 8px 16px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.3s ease;
+.dashboard:hover {
+  background: var(--dark-gray);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
-.sign-in-btn:hover {
-  background-color: #f0f0f0;
-  border-color: #999;
+/* Sign Out / Sign In (Secondary) */
+.sign-out-btn, .sign-in-btn {
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--dark-gray);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.sign-out-btn:hover, .sign-in-btn:hover {
+  background: rgba(0, 0, 0, 0.08);
+  border-color: var(--dark-gray);
+}
+
+/* --- MOBILE RESPONSIVENESS --- */
+@media (max-width: 834px) {
+  .nav-wrapper {
+    top: 0.5rem;
+  }
+  
+  nav {
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+  }
+
+  nav a img {
+    max-width: 8rem;
+  }
+
+  .navLinks button {
+    padding: 0.75rem 1rem;
+    font-size: 0.75rem;
+  }
 }

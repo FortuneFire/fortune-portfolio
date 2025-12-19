@@ -10,12 +10,14 @@
 
   <hr />
 
-  <!-- Conditional rendering -->
-  <div *ngIf="showAddProject">
+  <div class="view-content">
+    
     <app-project-form *ngIf="showAddProject"></app-project-form>
-  </div>
 
-  <div *ngIf="showManageProjects">
-    <app-manage-projects *ngIf="showManageProjects"></app-manage-projects>
+    <app-manage-projects 
+      *ngIf="showManageProjects" 
+      (editRequested)="handleEditRequest()">
+    </app-manage-projects>
+
   </div>
 </div>

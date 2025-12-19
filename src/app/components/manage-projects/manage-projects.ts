@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject, Output, EventEmitter } from '@angular/core'; 
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { PortfolioService, Project } from '../../services/portfolio.service';
 
 @Component({
@@ -10,9 +11,13 @@ import { PortfolioService, Project } from '../../services/portfolio.service';
   styleUrls: ['./manage-projects.css']
 })
 export class ManageProjectsComponent implements OnInit {
-  projects: Project[] = [];
+  // Use the inject() function for all dependencies
+  private router = inject(Router);
+  private portfolioService = inject(PortfolioService);
 
-  constructor(private portfolioService: PortfolioService) {}
+  @Output() editRequested = new EventEmitter<void>();
+
+  projects: Project[] = [];
 
   ngOnInit(): void {
     // Get live data from Firestore
@@ -30,5 +35,14 @@ export class ManageProjectsComponent implements OnInit {
         .then(() => console.log('Project deleted'))
         .catch(err => console.error('Delete error:', err));
     }
+  }
+
+  onEdit(project: Project): void {
+    // 1. Store the project in the service state
+   
+    this.portfolioService.setEditingProject(project);
+    
+    // 2. Tell the dashboard to switch to the form view
+    this.editRequested.emit();
   }
 }
