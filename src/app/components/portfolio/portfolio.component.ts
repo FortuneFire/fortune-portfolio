@@ -2,6 +2,8 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PortfolioService, Project } from '../../services/portfolio.service';
 import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { marked } from 'marked';
 
 @Component({
   selector: 'app-portfolio',
@@ -24,14 +26,16 @@ export class PortfolioComponent implements OnInit {
   currentLightboxIndex = 0;
   selectedLightboxImage = '';
 
-  constructor(private portfolioService: PortfolioService) {}
+  constructor(
+  private portfolioService: PortfolioService,
+  private sanitizer: DomSanitizer
+) {}
 
   ngOnInit(): void {
     // Live subscription to your 'projects' collection
     this.portfolioService.getProjects().subscribe({
       next: (projects) => {
-        console.log('🔥 Firestore data:', projects);
-
+        
         this.projects = projects;
         
         // Sync filtered list with new incoming data
@@ -103,4 +107,13 @@ export class PortfolioComponent implements OnInit {
       (this.currentLightboxIndex + 1) % this.selectedCard.gallery.length;
     this.selectedLightboxImage = this.selectedCard.gallery[this.currentLightboxIndex];
   }
+
+  renderMarkdown(text: string | undefined): SafeHtml {
+  if (!text) return '';
+   const html: string = marked.parse(text, { async: false }); 
+
+  return this.sanitizer.bypassSecurityTrustHtml(html);
 }
+}
+
+

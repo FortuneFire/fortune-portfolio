@@ -24,7 +24,7 @@ export class ProjectFormComponent implements OnInit {
 
   // Master Data
   categories: string[] = ['Web Development', 'Web Design', 'Graphic Design', 'Mobile App'];
-  skills: string[] = ['Angular', 'CSS', 'HTML', 'JS', 'Firebase', 'TypeScript', 'Node.js'];
+  skills: string[] = ['Angular', 'CSS', 'HTML', 'JS', 'Firebase', 'TypeScript', 'Node.js', 'WordPress'];
 
   // File Handling
   keyImageFile: File | null = null;

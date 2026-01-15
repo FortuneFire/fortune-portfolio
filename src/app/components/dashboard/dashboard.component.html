@@ -4,19 +4,17 @@
       Add New Project
     </button>
     <button (click)="toggleView('manage')" [class.active]="showManageProjects">
-      Manage Projects
+      Edit / Delete Projects
     </button>
   </nav>
 
   <hr />
 
   <div class="view-content">
-    
+
     <app-project-form *ngIf="showAddProject"></app-project-form>
 
-    <app-manage-projects 
-      *ngIf="showManageProjects" 
-      (editRequested)="handleEditRequest()">
+    <app-manage-projects *ngIf="showManageProjects" (editRequested)="handleEditRequest()">
     </app-manage-projects>
 
   </div>

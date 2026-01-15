@@ -7,6 +7,8 @@
 
 .dashboard-nav {
   display: flex;
+  justify-content: center; 
+  align-items: center;     
   gap: 1rem;
   margin-bottom: 2rem;
 }
@@ -19,8 +21,9 @@
   cursor: pointer;
   font-weight: 600;
   transition: all 0.2s ease;
-}
 
+  color: var(--dark-gray); 
+}
 .dashboard-nav button.active {
   background: var(--red);
   color: #fff;
@@ -36,11 +39,12 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.dashboard-nav button.active {
-  /* color: #e53935; Your red color */
-  /* border-bottom: 2px solid #e53935; */
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

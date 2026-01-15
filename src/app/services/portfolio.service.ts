@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core'; // 👈 Added inject
+import { Injectable, inject } from '@angular/core';
 import {
   Firestore,
   collection,
@@ -8,6 +8,7 @@ import {
   deleteDoc,
   addDoc
 } from '@angular/fire/firestore';
+import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 import { Observable } from 'rxjs';
 
 export interface Project {
@@ -25,11 +26,10 @@ export interface Project {
   providedIn: 'root'
 })
 export class PortfolioService {
-  // Using inject() here fixes the "outside of an Injection context" warning
   private firestore: Firestore = inject(Firestore);
+  private storage = getStorage(); // 🔹 Storage reference
 
   getProjects(): Observable<Project[]> {
-    // Defining this inside the method ensures the instance is stable
     const projectsCollection = collection(this.firestore, 'projects');
     return collectionData(projectsCollection, { idField: 'id' }) as Observable<Project[]>;
   }
@@ -45,19 +45,37 @@ export class PortfolioService {
     const { id, ...data } = project;
     await updateDoc(projectRef, data as any);
   }
-  // Inside your PortfolioService class
-private editingProject: Project | null = null;
-
-setEditingProject(project: Project | null) {
-  this.editingProject = project;
-}
-
-getEditingProject() {
-  return this.editingProject;
-}
 
   async deleteProject(projectId: string): Promise<void> {
     const projectRef = doc(this.firestore, 'projects', projectId);
     await deleteDoc(projectRef);
+  }
+
+  // 🔹 File upload
+  async uploadFile(file: File, path: string): Promise<string> {
+    const storageRef = ref(this.storage, path);
+    await uploadBytes(storageRef, file);
+    return getDownloadURL(storageRef);
+  }
+
+  // 🔹 File delete
+  async deleteFile(url: string): Promise<void> {
+    try {
+      const storageRef = ref(this.storage, url);
+      await deleteObject(storageRef);
+    } catch (err) {
+      console.error('Error deleting file:', err);
+    }
+  }
+
+  // ----- EDIT STATE -----
+  private editingProject: Project | null = null;
+
+  setEditingProject(project: Project | null) {
+    this.editingProject = project;
+  }
+
+  getEditingProject() {
+    return this.editingProject;
   }
 }

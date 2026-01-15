@@ -35,7 +35,8 @@
           </div>
           <div class="back">
             <h2>Description</h2>
-            <p class="description">{{ project.description }}</p>
+            <!-- <p class="project-description description">{{ project.description }}</p> -->
+            <p [innerHTML]="renderMarkdown(project.description)" class="project-description"></p>
           </div>
         </div>
       </div>
@@ -47,7 +48,8 @@
     <div class="cardView-body">
       <div class="project-details">
         <h3>Project Description</h3>
-        <p>{{ selectedCard.description }}</p>
+        <!-- <p class="project-description">{{ selectedCard.description }}</p> -->
+        <p [innerHTML]="renderMarkdown(selectedCard.description)" class="project-description"></p>
 
         <h3>Skills Used</h3>
         <ul class="skills">
