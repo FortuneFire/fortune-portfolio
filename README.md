@@ -1,12 +1,11 @@
 # Fortune Portfolio
 
-A professional, maintainable portfolio website designed to showcase expertise in web development, web design, and graphic design. This project focuses on high usability, clean architecture, and practical implementation.
+A personal portfolio website built to display web development and design projects. The application is built with Angular and Firebase, functioning as a content management system for project data and media.
 
 ---
 
-## Overview
-
-This repository houses a full-stack personal portfolio built with **Angular** and **Firebase**. Unlike a static site, this serves as a lightweight content management system, allowing for dynamic project updates and structured content delivery.
+🔗 Live Project
+fortune-portfolio-b56b3.web.app
 
 ---
 
