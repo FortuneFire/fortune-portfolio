@@ -1,40 +1,50 @@
-# Fortune Portfolio: A Showcase of Web Dev, Design, and Graphics
+# Fortune Portfolio
 
-Welcome to my Portfolio Website! Get ready to embark on an exciting journey through the captivating world of web development, web design, and graphic design. This portfolio showcases my craftsmanship and creativity, utilizing the power of Angular, JS, TypeScript, CSS, HTML, and a Firebase backend.
+A professional, maintainable portfolio website designed to showcase expertise in web development, web design, and graphic design. This project focuses on high usability, clean architecture, and practical implementation.
 
-## Technologies Used
+---
 
-• Angular
-• JavaScript (JS)
-• TypeScript
-• CSS
-• HTML
-• Firebase backend
+## Overview
 
-## Features that Make this Website Rock! 🚀
+This repository houses a full-stack personal portfolio built with **Angular** and **Firebase**. Unlike a static site, this serves as a lightweight content management system, allowing for dynamic project updates and structured content delivery.
 
-#### Intuitive User Interface
-Prepare to be amazed by the seamless and intuitive user interface. It's like riding a roller coaster of delightful interactions, making your browsing experience a joyous adventure.
+---
 
-#### Clean Design
-The meticulously crafted design ensures your eyes feast on visually stunning layouts and captivating aesthetics. Get ready to be blown away by the sheer elegance and simplicity of our clean design.
+## 🛠 Tech Stack
 
-#### Easy Access to My Profiles
-To ensure easy access to my GitHub repository, LinkedIn profile, and my personal blog website, I have included quick links on my profiles. These links allow visitors to connect with me and explore my work with just a single click. 
+| Category | Technology |
+| --- | --- |
+| **Framework** | Angular |
+| **Languages** | TypeScript, JavaScript, HTML5, CSS3 |
+| **Backend/Hosting** | Firebase Firestore (NoSQL) |
+| **Media Hosting** | Firebase Storage |
+| **Authentication** | Firebase Auth |
 
-#### Effortless Project Management
-The convenient forms take the hassle out of creating and loading new projects. With just a few clicks, a user can effortlessly upload projects to the portfolio. One can manage projects or potfolio items with ease using the edit and delete functionality on the manage projects page!
+---
 
-#### Filterable Grid Project Cards
-Want to explore projects that tickle your fancy? The filterable grid with project cards has got you covered! Discover projects based on the skills used and let your curiosity run wild!
+## ✨ Key Features
 
-#### Dive Deep into Projects
-Immerse yourself in each project's captivating story! Our single project view unveils a treasure trove of details: project descriptions, the technology and skills involved, and a gallery packed with videos and pictures. And, for the ultimate experience, quick links are provided to view the project in its full live glory!
+### 🖥️ User Interface & Design
 
-## Feedback and Contact
+* **Minimalist Aesthetic:** A clean, responsive layout that prioritizes readability and content structure.
+* **Intuitive Navigation:** Designed with predictable interactions to reduce user friction.
+* **Fully Responsive:** Optimized for a seamless experience across mobile, tablet, and desktop devices.
 
-I value your feedback and suggestions. If you have any questions, comments, or would like to discuss potential collaborations, please feel free to reach out to me. 
+### 📁 Project Management (CMS)
 
-Thank you for visiting my portfolio website repo! I hope you enjoy exploring my projects and witnessing my passion for web development, web design, and graphic design.
+* **CRUD Operations:** Directly create, edit, and delete projects through integrated forms.
+* **Smart Filtering:** Quickly discover relevant work by filtering projects by specific skills or technologies.
+* **Deep Dive Views:** Dedicated project pages featuring descriptions, tech stacks, media galleries (images/videos), and live links.
 
-Happy browsing!
+### 🔗 Connectivity
+
+* **Professional Integration:** One-click access to GitHub, LinkedIn, and a personal blog.
+* **Dynamic Updates:** Content can be updated in real-time without redeploying the codebase.
+
+---
+
+## 💬 Feedback & Contact
+
+I’m always open to feedback or discussing potential collaborations. If you have any questions or just want to say hi, feel free to reach out via:
+
+* **LinkedIn:** www.linkedin.com/in/fortune-mlilo
