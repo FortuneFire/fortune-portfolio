@@ -1,50 +1,255 @@
-.dashboard-container {
-  padding: 2rem;
-  margin-top: 10rem;
-  max-width: 1200px;
-  margin-inline: auto;
-}
 
-.dashboard-nav {
+
+/* ============================
+   WELCOME SECTION
+============================ */
+
+.welcome-section {
   display: flex;
-  justify-content: center; 
-  align-items: center;     
-  gap: 1rem;
-  margin-bottom: 2rem;
+  flex-direction: column;
+  gap: 10px;
+
+  padding-bottom: 10px;
 }
 
-.dashboard-nav button {
-  padding: 0.8rem 1.5rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  background: #f5f5f5;
-  cursor: pointer;
+/* Main Welcome Text */
+
+.welcome-text {
+  font-size: clamp(1.8rem, 3vw, 2.3rem);
   font-weight: 600;
-  transition: all 0.2s ease;
 
-  color: var(--dark-gray); 
-}
-.dashboard-nav button.active {
-  background: var(--red);
-  color: #fff;
-  border-color: var(--red);
+  color: var(--dark-gray);
 }
 
-.dashboard-nav button:hover {
-  transform: translateY(-2px);
+/* Description */
+
+.welcome-description {
+  color: var(--gray);
+  font-size: 1rem;
+  max-width: 600px;
 }
 
-.view-content {
-  animation: fadeIn 0.3s ease-in-out;
+/* Message */
+
+.welcome-message {
+  font-size: 0.95rem;
+  color: var(--red);
+  font-weight: 500;
+}
+/* ============================
+   DASHBOARD OVERVIEW
+============================ */
+
+.dashboard-overview {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
+/* Welcome Text */
+
+.welcome-text {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 600;
+  color: var(--dark-gray);
+}
+
+/* ============================
+   DASHBOARD CARDS GRID
+============================ */
+
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 25px;
+}
+
+/* ============================
+   CARD STYLING
+============================ */
+
+.dashboard-card {
+  position: relative;
+
+  padding: 28px;
+
+  border-radius: 18px !important;
+
+  text-align: center;
+
+  background: white;
+
+  box-shadow:
+    0 5px 20px rgba(0,0,0,0.04),
+    0 2px 6px rgba(0,0,0,0.02);
+
+  transition: all 0.35s ease;
+
+  cursor: pointer;
+
+  overflow: hidden;
+}
+
+/* Hover Effects */
+
+.dashboard-card:hover {
+  transform: translateY(-8px) scale(1.02);
+
+  box-shadow:
+    0 18px 45px rgba(0,0,0,0.08);
+}
+
+/* Click Feedback */
+
+.dashboard-card:active {
+  transform: scale(0.97);
+}
+
+/* Icon Styling */
+
+.dashboard-card mat-icon {
+  font-size: 42px;
+  height: 42px;
+  width: 42px;
+
+  color: var(--red);
+
+  margin-bottom: 18px;
+}
+
+/* Titles */
+
+.dashboard-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+  color: var(--dark-gray);
+}
+
+/* Text */
+
+.dashboard-card p {
+  color: var(--gray);
+  font-size: 0.95rem;
+  margin-bottom: 22px;
+}
+
+/* ============================
+   PREMIUM BACKGROUND GLOW
+============================ */
+
+.dashboard-overview::before {
+  content: "";
+
+  position: absolute;
+  right: -250px;
+  top: -250px;
+
+  width: 600px;
+  height: 600px;
+
+  background: rgba(122,35,37,0.06);
+
+  filter: blur(140px);
+
+  z-index: -1;
+}
+
+/* ============================
+   RESPONSIVE
+============================ */
+
+@media (max-width: 768px) {
+
+  .welcome-text {
+    font-size: 1.5rem;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  .dashboard-cards {
+    grid-template-columns: 1fr;
   }
+
+}
+
+
+/* ============================
+   STATS SECTION
+============================ */
+
+.stats-section {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.section-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--dark-gray);
+}
+
+/* ============================
+   STATS GRID
+============================ */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+/* ============================
+   STAT CARDS
+============================ */
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  padding: 22px;
+
+  border-radius: 18px;
+
+  background: white;
+
+  box-shadow:
+    0 6px 20px rgba(0,0,0,0.04),
+    0 2px 8px rgba(0,0,0,0.02);
+
+  transition: all 0.35s ease;
+
+  cursor: default;
+}
+
+/* Hover Effect */
+
+.stat-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+}
+
+/* Icons */
+
+.stat-card mat-icon {
+  font-size: 40px;
+  height: 40px;
+  width: 40px;
+
+  color: var(--red);
+}
+
+/* Numbers */
+
+.stat-info h3 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--dark-gray);
+}
+
+/* Labels */
+
+.stat-info p {
+  color: var(--gray);
+  font-size: 0.9rem;
 }

@@ -2,28 +2,19 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-dashboard-layout',
   standalone: true,
   imports: [
     CommonModule,
     RouterModule,
-    MatCardModule,
     MatButtonModule,
     MatIconModule
   ],
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  templateUrl: './dashboard-layout.component.html',
+  styleUrls: ['./dashboard-layout.component.css']
 })
-export class DashboardComponent {
-
-  // Temporary user data (Future profile system ready)
-  user = {
-    name: "Fortune Mlilo"
-  };
-
-}
+export class DashboardLayoutComponent {}

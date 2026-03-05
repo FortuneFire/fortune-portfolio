@@ -1,20 +1,35 @@
-/* You can add global styles to this file, and also import other style files */
+/* Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Design Tokens */
 :root {
-    --light-gray: #BCB9B9;
-    --gray: #6F7072;
-    --dark-gray: #525252;
-    --red: #7A2325;
-    --white: #EAE5E5;
-  }
 
-body{
-    background-color: #EAE5E5;
+  /* Colors */
+  --light-gray: #BCB9B9;
+  --gray: #6F7072;
+  --dark-gray: #525252;
+
+  --red: #7A2325;
+  --white: #EAE5E5;
+
+  /* Backgrounds */
+  --bg-main: #EAE5E5;
+  --bg-sidebar: #1f1f1f;
+
+  /* Layout */
+  --sidebar-width: 250px;
+
+  /* Effects */
+  --shadow-soft: 0 8px 32px rgba(0,0,0,0.08);
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Body */
+html, body {
+  height: 100%;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: var(--bg-main);
+}

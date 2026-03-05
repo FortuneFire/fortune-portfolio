@@ -1,0 +1,83 @@
+
+<div class="dashboard-layout">
+
+  <!-- Sidebar -->
+  <aside class="dashboard-sidebar">
+
+    <!-- Logo -->
+    <div class="logo">
+      <mat-icon>dashboard</mat-icon>
+      <span>Dashboard</span>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="sidebar-nav">
+    
+        <!-- Public Links -->
+      <div class="secondary-nav">
+
+        <a mat-button routerLink="/portfolio">
+          <mat-icon>folder</mat-icon>
+          Portfolio
+        </a>
+
+        <a mat-button routerLink="/">
+          <mat-icon>undo</mat-icon>
+          Back to Home
+        </a>
+
+      </div>
+
+      <!-- Divider -->
+      <div class="nav-divider"></div>
+
+      <!-- Primary Navigation -->
+      <div class="primary-nav">
+
+        <a mat-button routerLink="/dashboard"
+           routerLinkActive="active"
+           [routerLinkActiveOptions]="{exact:true}">
+
+          <span class="indicator"></span>
+          <mat-icon>home</mat-icon>
+          Overview
+        </a>
+
+        <a mat-button routerLink="/dashboard/add"
+           routerLinkActive="active">
+
+          <span class="indicator"></span>
+          <mat-icon>add</mat-icon>
+          Add Project
+        </a>
+
+        <a mat-button routerLink="/dashboard/manage"
+           routerLinkActive="active">
+
+          <span class="indicator"></span>
+          <mat-icon>edit</mat-icon>
+          Manage Projects
+        </a>
+
+                <a mat-button routerLink="">
+          <mat-icon>account_circle</mat-icon>
+          Users
+        </a>
+
+        <a mat-button routerLink="">
+          <mat-icon>settings</mat-icon>
+          Settings
+        </a>
+
+      </div>    
+
+    </nav>
+
+  </aside>
+
+  <!-- Main Content -->
+  <main class="dashboard-content">
+    <router-outlet></router-outlet>
+  </main>
+
+</div>

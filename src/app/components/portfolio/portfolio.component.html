@@ -30,13 +30,13 @@
               class="profile-img"
               [src]="project.keyIMG || 'https://picsum.photos/300/300?random'"
               [alt]="project.title">
-            <h2>{{ project.title }}</h2>
-            <p>{{ project.highlight }}</p>
+            <!-- <h2>{{ project.title }}</h2> -->
+            <!-- <p>{{ project.highlight }}</p> -->
           </div>
           <div class="back">
-            <h2>Description</h2>
+            <h3>{{ project.title }}</h3>
             <!-- <p class="project-description description">{{ project.description }}</p> -->
-            <p [innerHTML]="renderMarkdown(project.description)" class="project-description"></p>
+            <!-- <p [innerHTML]="renderMarkdown(project.description)" class="project-description"></p> -->
           </div>
         </div>
       </div>

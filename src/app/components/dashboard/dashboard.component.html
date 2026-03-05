@@ -1,21 +1,103 @@
-<div class="dashboard-container">
-  <nav class="dashboard-nav">
-    <button (click)="toggleView('add')" [class.active]="showAddProject">
-      Add New Project
-    </button>
-    <button (click)="toggleView('manage')" [class.active]="showManageProjects">
-      Edit / Delete Projects
-    </button>
-  </nav>
+<div class="dashboard-overview">
 
-  <hr />
 
-  <div class="view-content">
+  <div class="welcome-section">
 
-    <app-project-form *ngIf="showAddProject"></app-project-form>
+  <h1 class="welcome-text">
+    Welcome back, {{ user.name }} 👋 
+  </h1>
 
-    <app-manage-projects *ngIf="showManageProjects" (editRequested)="handleEditRequest()">
-    </app-manage-projects>
+  <p class="welcome-description">
+    Manage your projects, track portfolio performance, and grow your digital presence.
+  </p>
+
+  <p class="welcome-message">
+    Keep building amazing things today.
+  </p>
+
+</div>
+
+  <div class="stats-section">
+
+  <h2 class="section-title">Overview</h2>
+
+  <div class="stats-grid">
+
+    <div class="stat-card">
+      <mat-icon>folder</mat-icon>
+
+      <div class="stat-info">
+        <h3>12</h3>
+        <p>Total Projects</p>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <mat-icon>visibility</mat-icon>
+
+      <div class="stat-info">
+        <h3>1.2K</h3>
+        <p>Portfolio Views</p>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <mat-icon>check_circle</mat-icon>
+
+      <div class="stat-info">
+        <h3>8</h3>
+        <p>Active Projects</p>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <mat-icon>trending_up</mat-icon>
+
+      <div class="stat-info">
+        <h3>92%</h3>
+        <p>Success Rate</p>
+      </div>
+    </div>
 
   </div>
+
+</div>
+
+  <div class="dashboard-cards">
+
+  <!-- Projects -->
+  <div class="dashboard-card clickable"
+       routerLink="/dashboard/manage">
+
+    <mat-icon>folder</mat-icon>
+
+    <h3>Projects</h3>
+    <p>Manage your portfolio projects</p>
+
+  </div>
+
+  <!-- Add Project -->
+  <div class="dashboard-card clickable"
+       routerLink="/dashboard/add">
+
+    <mat-icon>add</mat-icon>
+
+    <h3>Add Project</h3>
+    <p>Create a new portfolio project</p>
+
+  </div>
+
+  <!-- Portfolio -->
+  <div class="dashboard-card clickable"
+       routerLink="/portfolio">
+
+    <mat-icon>public</mat-icon>
+
+    <h3>Portfolio</h3>
+    <p>View public portfolio page</p>
+
+  </div>
+
+</div>
+
 </div>
