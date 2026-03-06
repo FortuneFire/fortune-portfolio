@@ -49,6 +49,7 @@
 .heading-text-container h1 {
   font-size: 2.8rem;
   margin: 0;
+  line-height: 1.4;
 }
 
 .heading-text-container p.short-desc {
@@ -112,6 +113,17 @@
   cursor: pointer;
 }
 
+/* hide menu button */
+.menu-btn {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 200;
+  display: none;
+  background: white;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+}
+
 /* ---------------- RESPONSIVE ---------------- */
 @media (max-width: 834px) {
   .grid {
@@ -123,24 +135,41 @@
     padding-top: 3rem;
   }
 
+  .container {
+  padding: 0; 
+  }
+
   .heading-text-container h1 {
-    font-size: 4rem;
+    font-size: 3rem;
     padding: 0 1rem;
+    line-height: 1.2;
   }
 
   .heading-text-container p.short-desc {
-    font-size: 1rem;
+    font-size: 0.95rem;
     padding: 0 1rem;
   }
 
   .img-responsive {
-    width: 90%;
+    width: 100%;
     padding-bottom: 1.5rem;
+  }
+
+  .menu-btn {
+    display: block;
+    background-color: var(--red);
+    color: #fff;
   }
 
   .btn {
     gap: 0.5rem;
     padding: 0.5rem;
+    transform: translateY(100%);
+    transition: transform 0.4s ease;
+  }
+
+  .btn.show {
+    transform: translateY(0);
   }
 
   .btn a {
@@ -163,6 +192,6 @@
   }
 
   .img-responsive {
-    width: 80%;
+    width: 100%;
   }
 }

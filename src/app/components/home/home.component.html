@@ -4,20 +4,46 @@
 
     <!-- Heading + Short Description -->
     <div class="heading-text-container">
-      <h1>Wed Developer & Designer</h1>
+      <h1>Web Developer & Designer</h1>
       <p class="short-desc">
-         Web development is where my curiosity and creativity meet. I design and build websites that are thoughtful, responsive, and built to perform. 
-    I enjoy understanding how things work beneath the surface, refining structure, improving speed, and solving the small details that make a big difference. 
-    Each project is a chance to learn something new and build something better.
+          I operate at the intersection of design and development, with a strong focus on building clean, reliable web experiences. I’m naturally curious about how systems work beneath the surface and focus on improving performance, refining structure, and resolving the technical details that support better business workflows and outcomes.
+          <br>
+          Explore my portfolio to see what I’ve been building.
       </p>
     </div>
 
     <!-- Profile Image -->
     <div class="img-container">
       <img src="../../../assets/images/fortune.png" alt="profile picture" class="img-responsive">
-    </div>
+    </div> 
 
-    <!-- Buttons --> <div class="btn"> @for (button of buttons; track button) { <!-- Portfolio (internal route) --> @if (button === 'Portfolio') { <a routerLink="/portfolio" class="button-link"> {{ button }} </a> } <!-- GitHub (external link) --> @if (button === 'Git Hub') { <a href="https://github.com/FortuneFire" target="_blank" rel="noopener noreferrer" class="button-link"> {{ button }} </a> } <!-- Blog (external link) --> @if (button === 'My Blog') { <a href="https://pronounced.hashnode.dev/" target="_blank" rel="noopener noreferrer" class="button-link"> {{ button }} </a> } <!-- Resume / CV Download --> @if (button === 'Resume') { <a href="../../../assets/files/Future Me Resume.pdf" download class="button-link"> {{ button }} </a> } } </div>
+    
+    <!-- Mobile Menu Button -->
+<button mat-icon-button class="menu-btn" (click)="toggleMenu()">
+  <mat-icon>{{ showHidden() ? 'close' : 'menu' }}</mat-icon>
+</button>
+
+    <!-- Buttons --> 
+    <div class="btn" [class.show]="showHidden()"> 
+      @for (button of buttons; track button) { 
+        <!-- Portfolio (internal route) --> 
+        @if (button === 'Portfolio') { 
+          <a routerLink="/portfolio" class="button-link"> {{ button }} </a> 
+        } 
+        <!-- GitHub (external link) --> 
+        @if (button === 'Git Hub') { 
+          <a href="https://github.com/FortuneFire" target="_blank" rel="noopener noreferrer" class="button-link"> {{ button }} </a> 
+        } 
+        <!-- Blog (external link) --> 
+        @if (button === 'My Blog') { 
+          <a href="https://pronounced.hashnode.dev/" target="_blank" rel="noopener noreferrer" class="button-link"> {{ button }} </a> 
+        } 
+        <!-- Resume / CV Download --> 
+        @if (button === 'Resume') { 
+          <a href="../../../assets/files/Future Me Resume.pdf" download class="button-link"> {{ button }} </a> 
+        } 
+      } 
+    </div>
 
   </div>
 </div>
