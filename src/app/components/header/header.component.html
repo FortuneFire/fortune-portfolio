@@ -1,23 +1,100 @@
-<div class="nav-wrapper">
+<!-- ===============================
+     DESKTOP NAV
+================================ -->
+<div class="nav-wrapper desktop-nav">
   <nav>
-    <a routerLink="/">
+
+    <!-- LOGO -->
+    <a routerLink="/" class="logo">
       <img src="../../../assets/images/logo.png" alt="logo">
     </a>
 
+    <!-- DESKTOP ACTIONS -->
     <div class="navLinks">
+
+      <!-- LOGGED IN -->
       <div *ngIf="isLoggedIn$ | async; else loginBtn" class="auth-actions">
+
         <a routerLink="/dashboard">
-          <button class="dashboard">Manage Projects</button>
+          <button class="btn primary nav-btn">
+            Manage Projects
+          </button>
         </a>
-        
-        <button (click)="logout()" class="sign-out-btn">Sign Out</button>
+
+        <button
+          (click)="logout()"
+          class="btn secondary nav-btn sign-out-btn">
+          Sign Out
+        </button>
+
       </div>
 
+      <!-- LOGGED OUT -->
       <ng-template #loginBtn>
         <a routerLink="/sign-in">
-          <button class="sign-in-btn">Sign In</button>
+          <button class="btn secondary nav-btn sign-in-btn">
+            Sign In
+          </button>
         </a>
       </ng-template>
+
     </div>
+
   </nav>
+</div>
+
+
+<!-- ===============================
+     MOBILE NAV
+================================ -->
+<div class="mobile-nav-wrapper">
+
+  <!-- TOP BAR -->
+  <div class="mobile-nav-bar">
+
+    <!-- CENTER LOGO -->
+    <a routerLink="/" class="mobile-logo">
+      <img src="../../../assets/images/logo.png" alt="logo">
+    </a>
+
+    <!-- TOGGLE BUTTON -->
+    <button class="nav-toggle" (click)="toggleMobileNav()">
+      <span [class.open]="mobileNavOpen">❮</span>
+    </button>
+
+  </div>
+
+  <!-- DRAWER -->
+  <div class="mobile-drawer" [class.open]="mobileNavOpen">
+
+    <!-- LOGGED IN -->
+    <ng-container *ngIf="isLoggedIn$ | async; else mobileLogin">
+
+      <a routerLink="/dashboard" (click)="closeMobileNav()">
+        <button class="btn primary nav-btn">
+          Manage Projects
+        </button>
+      </a>
+
+      <button
+        (click)="logout(); closeMobileNav()"
+        class="btn secondary nav-btn sign-out-btn">
+        Sign Out
+      </button>
+
+    </ng-container>
+
+    <!-- LOGGED OUT -->
+    <ng-template #mobileLogin>
+
+      <a routerLink="/sign-in" (click)="closeMobileNav()">
+        <button class="btn secondary nav-btn sign-in-btn">
+          Sign In
+        </button>
+      </a>
+
+    </ng-template>
+
+  </div>
+
 </div>

@@ -1,48 +1,75 @@
-
 <div class="container">
   <div class="grid">
 
-    <!-- Heading + Short Description -->
+    <!-- =========================
+         HERO TEXT
+    ========================== -->
     <div class="heading-text-container">
-      <h1>Web Developer & Designer</h1>
+      <h1>Web Developer</h1>
+
       <p class="short-desc">
-          I operate at the intersection of design and development, with a strong focus on building clean, reliable web experiences. I’m naturally curious about how systems work beneath the surface and focus on improving performance, refining structure, and resolving the technical details that support better business workflows and outcomes.
-          <br>
-          Explore my portfolio to see what I’ve been building.
+        Web Developer focused on building responsive, high-performance websites and client-facing platforms. I turn ideas into clean, practical digital experiences that are easy to use and reliable. I work from planning to deployment, with a focus on usability, performance, and maintainable code. My design and development background helps me create simple, intuitive interfaces that support real business needs.
+        <br><br>
+        Take a look at my portfolio to see what I’ve been working on.
       </p>
     </div>
 
-    <!-- Profile Image -->
+    <!-- =========================
+         PROFILE IMAGE
+    ========================== -->
     <div class="img-container">
-      <img src="../../../assets/images/fortune.png" alt="profile picture" class="img-responsive">
-    </div> 
+      <img
+        src="../../../assets/images/fortune.png"
+        alt="profile picture"
+        class="img-responsive"
+      />
+    </div>
 
-    
-    <!-- Mobile Menu Button -->
-<button mat-icon-button class="menu-btn" (click)="toggleMenu()">
-  <mat-icon>{{ showHidden() ? 'close' : 'menu' }}</mat-icon>
-</button>
+    <!-- =========================
+         MOBILE MENU TOGGLE
+    ========================== -->
+    <button
+      mat-icon-button
+      class="menu-btn"
+      (click)="toggleMenu()"
+      aria-label="Toggle menu"
+    >
+      <mat-icon>
+        {{ showHidden() ? 'close' : 'menu' }}
+      </mat-icon>
+    </button>
 
-    <!-- Buttons --> 
-    <div class="btn" [class.show]="showHidden()"> 
-      @for (button of buttons; track button) { 
-        <!-- Portfolio (internal route) --> 
-        @if (button === 'Portfolio') { 
-          <a routerLink="/portfolio" class="button-link"> {{ button }} </a> 
-        } 
-        <!-- GitHub (external link) --> 
-        @if (button === 'Git Hub') { 
-          <a href="https://github.com/FortuneFire" target="_blank" rel="noopener noreferrer" class="button-link"> {{ button }} </a> 
-        } 
-        <!-- Blog (external link) --> 
-        @if (button === 'My Blog') { 
-          <a href="https://pronounced.hashnode.dev/" target="_blank" rel="noopener noreferrer" class="button-link"> {{ button }} </a> 
-        } 
-        <!-- Resume / CV Download --> 
-        @if (button === 'Resume') { 
-          <a href="../../../assets/files/Future Me Resume.pdf" download class="button-link"> {{ button }} </a> 
-        } 
-      } 
+    <!-- =========================
+         ACTION BUTTONS (GLOBAL SYSTEM)
+    ========================== -->
+    <div class="home-actions" [class.show]="showHidden()">
+
+      <a routerLink="/portfolio" class="btn primary">
+        Portfolio
+      </a>
+
+      <a routerLink="/about" class="btn primary">
+        About
+      </a>
+
+      <a
+        href="https://github.com/FortuneFire"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn primary"
+      >
+        GitHub
+      </a>
+
+      <a
+        href="https://pronounced.hashnode.dev/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn primary"
+      >
+        Blog
+      </a>
+
     </div>
 
   </div>

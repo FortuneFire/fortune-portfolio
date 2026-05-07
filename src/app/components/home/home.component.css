@@ -1,197 +1,234 @@
-/* :root {
-  --dark-gray: #333;
-  --gray: #666;
-  --red: #e53935;
-} */
-
-/* ---------------- CONTAINER ---------------- */
+/* ===============================
+   PAGE CONTAINER
+================================ */
 .container {
-  max-width: 1600px;
-  min-height: 100vh; /* Changed from height to min-height */
+
+  max-width: 100%;
+  min-height: 100vh;
+
+  background-color: var(--bg-alt);
+
   margin: 0 auto;
   padding: 2rem;
-  box-sizing: border-box;
-  
-  /* NEW: Use flex to center the grid within the viewport */
-  display: flex;
-  flex-direction: column;
-  justify-content: center; 
-}
 
-/* ---------------- GRID LAYOUT ---------------- */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-  grid-template-areas:
-    "heading img";
-  /* Removed "btn btn" from areas because buttons are fixed bottom */
-  
-  width: 100%;
-  align-items: center; /* Vertically centers content within the grid rows */
-  justify-content: center; /* Horizontally centers the grid columns */
-  gap: 2rem;
-  
-  /* IMPORTANT: Remove the fixed height calculation so it centers naturally */
-  height: auto; 
-}
-/* ---------------- HEADLINE ---------------- */
-.heading-text-container {
-  grid-area: heading;
-  color: var(--dark-gray);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+
+  box-sizing: border-box;
+
+}
+
+/* ===============================
+   GRID LAYOUT (HERO)
+================================ */
+.grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 3rem;
+
+  align-items: center;
+
+  max-width: 1600px;
+  width: 100%;
+
+  margin: 0 auto; /* 🔥 THIS centers it horizontally */
+}
+
+/* ===============================
+   HERO TEXT
+================================ */
+.heading-text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
   padding: 1rem;
-  text-align: left;
 }
 
 .heading-text-container h1 {
-  font-size: 2.8rem;
+  font-size: clamp(2.5rem, 4vw, 4.2rem);
+  line-height: 1.1;
+
   margin: 0;
-  line-height: 1.4;
+
+  color: var(--dark-gray);
+  letter-spacing: -0.02em;
 }
 
-.heading-text-container p.short-desc {
-  margin-top: 1rem;
-  font-size: 1.2rem;
+.short-desc {
+  margin-top: 1.5rem;
+
+  font-size: 1.1rem;
+  line-height: 1.8;
+
   color: var(--gray);
-  line-height: 1.4;
+
+  max-width: 600px;
 }
 
-/* ---------------- IMAGE ---------------- */
+/* ===============================
+   IMAGE SECTION
+================================ */
 .img-container {
-  grid-area: img;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end; /* Changed from center to flex-end */
-  height: 100%;          /* Ensures the container fills the grid area */
-}
-
-.img-responsive {
-  max-width: 80%;
-  height: auto;
-  display: block;        /* Removes small bottom whitespace gaps */
-}
-
-/* ---------------- BUTTONS ---------------- */
-.btn {
-  position: fixed;
-  bottom: 0; /* stick to bottom of screen */
-  left: 0;
-  width: 100%; /* full width */
-  display: flex;
-  justify-content: center;
-  gap: 1rem; /* space between buttons */
-  padding: 0.5rem 1rem;
-
-  background-color: rgba(255, 255, 255, 0.068); /* semi-transparent */
-  backdrop-filter: blur(10px); 
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-  z-index: 100;
-  flex-wrap: wrap;
-}
-
-.btn a {
-  flex: 1 1 200px; /* minimum width 200px, grow as needed */
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1rem 0;
-  background-color: var(--gray);
-  color: #fff;
-  text-decoration: none;
-  text-transform: uppercase;
-  font-size: 1.2rem;
-  border-radius: 4px;
-  transition: all 0.3s ease;
+
+  position: relative;
 }
 
-.btn a:hover {
-  background-color: var(--red);
-  box-shadow: 0 0 15px rgba(0,0,0,0.3);
-  cursor: pointer;
+.img-responsive {
+  width: 85%;
+  /* max-width: 420px; */
+
+  /* border-radius: 20px; */
+
+  /* box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.12),
+    0 10px 25px rgba(0, 0, 0, 0.08); */
+
+  transition: transform 0.4s ease;
 }
 
-/* hide menu button */
+.img-responsive:hover {
+  transform: translateY(-6px) scale(1.02);
+}
+
+/* ===============================
+   ACTION BUTTON BAR (GLOBAL BTN SYSTEM)
+================================ */
+.home-actions {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  padding: 0.9rem 1rem;
+
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(14px);
+
+  box-shadow: 0 -12px 30px rgba(0, 0, 0, 0.08);
+
+  z-index: 100;
+}
+
+/* BUTTON SIZE CONTROL ONLY (GLOBAL STYLE HANDLES LOOK) */
+.home-actions .btn {
+  flex: 1 1 180px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 0.9rem 1rem;
+  font-size: 1rem;
+
+  border-radius: 12px;
+}
+
+/* ===============================
+   MOBILE MENU BUTTON
+================================ */
+
 .menu-btn {
   position: fixed;
-  bottom: 1rem;
-  right: 1rem;
-  z-index: 200;
-  display: none;
-  background: white;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+  bottom: 1.2rem;
+  right: 1.2rem;
+
+  z-index: 999;
+
+  width: 52px;
+  height: 52px;
+
+  border-radius: 16px;
+
+  background: var(--gradient-primary);
+
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  border: 1px solid rgba(255, 255, 255, 0.25);
+
+  color: #fff;
+
+  box-shadow:
+    0 16px 35px rgba(0, 0, 0, 0.18),
+    0 6px 14px rgba(0, 0, 0, 0.10);
+
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+
+  /* 🔥 IMPORTANT: perfect centering */
+  display: grid;
+  place-items: center;
+
+  padding: 0;
 }
 
-/* ---------------- RESPONSIVE ---------------- */
+/* ===============================
+   MAT ICON PERFECT CENTER FIX
+================================ */
+.menu-btn mat-icon {
+  font-size: 22px;
+
+  /* kill default inline alignment issues */
+  width: 22px;
+  height: 22px;
+  line-height: 1;
+
+  display: block;
+
+  /* ensures optical centering in Material icons */
+  transform: translateY(0.5px);
+}
+
+
+/* ===============================
+   RESPONSIVE
+================================ */
 @media (max-width: 834px) {
   .grid {
     grid-template-columns: 1fr;
-    grid-template-areas:
-      "heading"
-      "img";
-    height: auto; /* allow scrolling if needed */
-    padding-top: 3rem;
+    text-align: center;
+    gap: 2rem;
   }
 
-  .container {
-  padding: 0; 
+  .heading-text-container {
+    align-items: center;
   }
 
-  .heading-text-container h1 {
-    font-size: 3rem;
-    padding: 0 1rem;
-    line-height: 1.2;
-  }
-
-  .heading-text-container p.short-desc {
-    font-size: 0.95rem;
-    padding: 0 1rem;
+  .short-desc {
+    text-align: center;
   }
 
   .img-responsive {
     width: 100%;
-    padding-bottom: 1.5rem;
+    max-width: 320px;
   }
 
   .menu-btn {
     display: block;
-    background-color: var(--red);
-    color: #fff;
   }
 
-  .btn {
-    gap: 0.5rem;
-    padding: 0.5rem;
+  /* slide-up action bar */
+  .home-actions {
     transform: translateY(100%);
     transition: transform 0.4s ease;
   }
 
-  .btn.show {
+  .home-actions.show {
     transform: translateY(0);
   }
 
-  .btn a {
-    font-size: 1rem;
-    padding: 0.8rem 0;
-  }
-}
-
-/* Medium laptops */
-@media only screen
-  and (min-device-width: 1280px)
-  and (max-device-width: 1440px) {
-
-  .heading-text-container {
-    padding: 3rem;
-  }
-
-  .heading-text-container h1 {
-    font-size: 4rem;
-  }
-
-  .img-responsive {
-    width: 100%;
+  .home-actions .btn {
+    font-size: 0.95rem;
   }
 }

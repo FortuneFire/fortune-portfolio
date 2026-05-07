@@ -1,97 +1,272 @@
-<div class="container">
+<div class="portfolio-page">
 
-  <h2 class="page-title">Projects</h2>
-  <hr />
-
-  <section class="portfolio-tab">
-    <ul id="filters" class="clearfix" *ngIf="!selectedCard">
-      <li
-        class="filter"
-        [class.active]="selectedFilter === project_category"
-        *ngFor="let project_category of project_filter_categories"
-        (click)="onCategoryClick(project_category)">
-        {{ project_category }}
-      </li>
-    </ul>
-
-    <button class="back-to-cards" *ngIf="selectedCard" (click)="backToCards()">
-      Back to Projects
+  <!-- ================= HERO ================= -->
+  <section class="project-hero" *ngIf="selectedCard">
+    <button class="back-link" (click)="backToCards()">
+      ← Back to Projects
     </button>
+
+    <div class="hero-grid">
+
+      <!-- LEFT -->
+      <div class="hero-content">
+        <h1>{{ selectedCard.title }}</h1>
+
+        <p class="hero-subtitle">
+          {{ selectedCard.highlight || 'A modern digital solution built with performance, usability and scalability in mind.' }}
+        </p>
+
+        <div class="hero-actions">
+          <a *ngIf="selectedCard.liveUrl" [href]="selectedCard.liveUrl" target="_blank" class="btn primary">
+            View Live
+          </a>
+
+          <a *ngIf="selectedCard.githubUrl" [href]="selectedCard.githubUrl" target="_blank" class="btn secondary">
+            View Code
+          </a>
+        </div>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="hero-image">
+        <img
+          [src]="selectedCard.keyIMG || 'https://picsum.photos/1200/800'"
+          [alt]="selectedCard.title">
+      </div>
+
+    </div>
   </section>
 
-  <hr />
-
+  <!-- ================= PROJECT GRID ================= -->
   <section *ngIf="!selectedCard">
-    <div class="card-container">
-      <div class="card-wrapper" *ngFor="let project of filteredProjects">
-        <div class="card" (click)="onCardClick(project)">
-          <div class="front">
-            <img
-              class="profile-img"
-              [src]="project.keyIMG || 'https://picsum.photos/300/300?random'"
-              [alt]="project.title">
-            <!-- <h2>{{ project.title }}</h2> -->
-            <!-- <p>{{ project.highlight }}</p> -->
-          </div>
-          <div class="back">
-            <h3>{{ project.title }}</h3>
-            <!-- <p class="project-description description">{{ project.description }}</p> -->
-            <!-- <p [innerHTML]="renderMarkdown(project.description)" class="project-description"></p> -->
-          </div>
+
+    <div class="portfolio-header">
+      <h2>Projects</h2>
+
+      <ul id="filters">
+        <li
+          class="filter"
+          [class.active]="selectedFilter === project_category"
+          *ngFor="let project_category of project_filter_categories"
+          (click)="onCategoryClick(project_category)">
+          {{ project_category }}
+        </li>
+      </ul>
+    </div>
+
+    <div class="projects-grid">
+
+      <div
+        class="project-card"
+        *ngFor="let project of filteredProjects"
+        (click)="onCardClick(project)">
+
+        <div class="project-image">
+          <img
+            [src]="project.keyIMG || 'https://picsum.photos/500/500'"
+            [alt]="project.title">
         </div>
+
+        <div class="project-overlay">
+          <h3>{{ project.title }}</h3>
+
+          <p>
+            {{ project.highlight || 'Modern web experience with scalable architecture.' }}
+          </p>
+
+          <span class="view-project">
+            View Project →
+          </span>
+        </div>
+
       </div>
+
     </div>
   </section>
 
-  <section class="cardView" *ngIf="selectedCard">
-    <h2 class="project-title">{{ selectedCard.title }}</h2>
-    <div class="cardView-body">
-      <div class="project-details">
-        <h3>Project Description</h3>
-        <!-- <p class="project-description">{{ selectedCard.description }}</p> -->
-        <p [innerHTML]="renderMarkdown(selectedCard.description)" class="project-description"></p>
+  <!-- ================= SINGLE PROJECT ================= -->
+  <section class="project-layout" *ngIf="selectedCard">
 
-        <h3>Skills Used</h3>
-        <ul class="skills">
-          <li class="skill" *ngFor="let skill of selectedCard.skills">{{ skill }}</li>
-        </ul>
+    <!-- QUICK INFO -->
+    <div class="quick-info">
 
-        <h3>Categories</h3>
-        <ul class="categories">
-          <li *ngFor="let cat of selectedCard.categories">{{ cat }}</li>
-        </ul>
+      <div class="info-item">
+        <span class="label">Role</span>
+        <span class="value">Developer</span>
       </div>
 
-      <div class="project-images" *ngIf="selectedCard.gallery && selectedCard.gallery.length > 0">
-        <h3>Project Images</h3>
-        <div class="gallery-wrapper">
-          <button class="scroll-btn left" (click)="scrollLeft()">&#10094;</button>
-          <div class="gallery" #gallery>
-            <img
-              *ngFor="let img of selectedCard.gallery; let i = index"
-              [src]="img || 'https://picsum.photos/200/150?random'"
-              [alt]="selectedCard.title + ' screenshot'"
-              loading="lazy"
-              (click)="openLightbox(i)">
-          </div>
-          <button class="scroll-btn right" (click)="scrollRight()">&#10095;</button>
-        </div>
+      <div class="info-item">
+        <span class="label">Stack</span>
+
+        <span class="value">
+          {{ selectedCard.skills?.join(' • ') }}
+        </span>
       </div>
+
+      <div class="info-item">
+        <span class="label">Categories</span>
+
+        <span class="value">
+          {{ selectedCard.categories?.join(' • ') }}
+        </span>
+      </div>
+
     </div>
+
+    <!-- HIGHLIGHTS -->
+    <div class="highlights-section">
+
+      <div class="highlight-card">
+        <h4>Responsive Design</h4>
+        <p>Optimized for all modern devices and screen sizes.</p>
+      </div>
+
+      <div class="highlight-card">
+        <h4>Modern UI</h4>
+        <p>Clean user experience with scalable interface patterns.</p>
+      </div>
+
+      <div class="highlight-card">
+        <h4>Performance Focused</h4>
+        <p>Fast-loading architecture with optimized assets.</p>
+      </div>
+
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="project-content-grid">
+
+      <!-- LEFT -->
+      <div class="project-text">
+
+        <div class="content-block">
+          <h3>About the Project</h3>
+
+          <div
+            [innerHTML]="renderMarkdown(selectedCard.description)"
+            class="project-description">
+          </div>
+        </div>
+
+        <div class="content-block">
+          <h3>Tech Stack</h3>
+
+          <div class="tech-stack">
+            <span *ngFor="let skill of selectedCard.skills">
+              {{ skill }}
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT -->
+      <div class="sticky-preview">
+
+        <div class="preview-card">
+          <img
+            [src]="selectedCard.keyIMG || 'https://picsum.photos/600/800'"
+            [alt]="selectedCard.title">
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- GALLERY -->
+    <div
+      class="gallery-section"
+      *ngIf="selectedCard.gallery && selectedCard.gallery.length > 0">
+
+      <div class="section-header">
+        <h3>Project Gallery</h3>
+      </div>
+
+      <div class="gallery-grid">
+
+        <div
+          class="gallery-item"
+          *ngFor="let img of selectedCard.gallery; let i = index"
+          (click)="openLightbox(i)">
+
+          <img
+            [src]="img || 'https://picsum.photos/400/300'"
+            [alt]="selectedCard.title">
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- VALUE -->
+    <div class="value-section">
+
+      <h3>What This Project Demonstrates</h3>
+
+      <div class="value-grid">
+
+        <div class="value-item">
+          ✔️ Scalable component architecture
+        </div>
+
+        <div class="value-item">
+         ✔️ Modern responsive UI patterns
+        </div>
+
+        <div class="value-item">
+          ✔️ Frontend performance optimization
+        </div>
+
+        <div class="value-item">
+          ✔️ Strong UX-focused development
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- CTA -->
+    <div class="project-cta">
+
+      <div>
+        <h2>Like this project?</h2>
+        <p>Let’s build something powerful together.</p>
+      </div>
+
+      <a href="/contact" class="btn primary project-cta-btn">
+        Start a Project
+      </a>
+
+    </div>
+
   </section>
 
-  <div *ngIf="projects.length === 0">
-    <p>No projects to display.</p>
-  </div>
-
+  <!-- LIGHTBOX -->
   <div class="lightbox" *ngIf="lightboxOpen">
+
     <div class="lightbox-overlay" (click)="closeLightbox()"></div>
+
     <div class="lightbox-content">
-      <button class="close-btn" (click)="closeLightbox()">&#10006;</button>
-      <button class="nav-btn left" (click)="prevImage()">&#10094;</button>
-      <img [src]="selectedLightboxImage" [alt]="selectedCard?.title">
-      <button class="nav-btn right" (click)="nextImage()">&#10095;</button>
+
+      <button class="close-btn" (click)="closeLightbox()">
+        ✕
+      </button>
+
+      <button class="nav-btn left" (click)="prevImage()">
+        ❮
+      </button>
+
+      <img
+        [src]="selectedLightboxImage"
+        [alt]="selectedCard?.title">
+
+      <button class="nav-btn right" (click)="nextImage()">
+        ❯
+      </button>
+
     </div>
+
   </div>
 
 </div>

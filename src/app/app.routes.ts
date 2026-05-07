@@ -3,6 +3,7 @@
 // import { DashboardLayoutComponent } from './layouts/dashboard-layout/dashboard-layout.component';
 
 // import { HomeComponent } from './components/home/home.component';
+import { About } from './components/about/about';
 // import { PortfolioComponent } from './components/portfolio/portfolio.component';
 // import { SignInComponent } from './components/sign-in/sign-in.component';
 // import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -59,6 +60,7 @@ export const appRoutes: Routes = [
     component: PublicLayoutComponent,
     children: [
       { path: '', component: HomeComponent },
+      { path: 'about', component: About },
       { path: 'portfolio', component: PortfolioComponent },
       { path: 'sign-in', component: SignInComponent }
     ]

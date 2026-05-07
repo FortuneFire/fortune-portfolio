@@ -1,49 +1,65 @@
-/* --- NAV WRAPPER & CONTAINER --- */
-.nav-wrapper {
+/* ===============================
+   DESKTOP NAV WRAPPER
+================================ */
+.desktop-nav {
   position: fixed;
-  top: 1.5rem; /* Slightly more breathing room from the top */
+  top: 1.5rem;
   left: 0;
   width: 100%;
+
   display: flex;
   justify-content: center;
+
   z-index: 1000;
   pointer-events: none;
-  padding: 0 1rem; /* Prevents edge-to-edge on mobile */
+
+  padding: 0 1rem;
   box-sizing: border-box;
 }
 
-nav {
+/* ===============================
+   DESKTOP NAV CONTAINER
+================================ */
+.desktop-nav nav {
   pointer-events: auto;
+
   width: 100%;
-  max-width: 1400px; /* Standard professional container width */
+  max-width: 1400px;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.15rem 2rem;
-  box-sizing: border-box;
 
-  /* Glassmorphism Effect */
-  background: rgba(255, 255, 255, 0.7); /* Slight white tint */
-  backdrop-filter: blur(12px) saturate(180%);
-  -webkit-backdrop-filter: blur(12px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 16px; /* Smoother rounded corners */
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  padding: 0.55rem 2rem;
+
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(18px) saturate(180%);
+
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 18px;
+
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.10),
+    0 8px 25px rgba(0, 0, 0, 0.06);
 }
 
-/* --- LOGO --- */
-nav a img {
-  max-width: 12rem;
+/* ===============================
+   LOGO (RESTORED FIX)
+================================ */
+.desktop-nav .logo img {
+  max-width: 11rem;
   height: auto;
   display: block;
   transition: transform 0.3s ease;
 }
 
-nav a:hover img {
-  transform: scale(1.02);
+.desktop-nav .logo img:hover {
+  transform: scale(1.03);
 }
 
-/* --- NAVIGATION LINKS & BUTTONS --- */
+/* ===============================
+   NAV LINKS
+================================ */
 .navLinks {
   display: flex;
   align-items: center;
@@ -56,61 +72,282 @@ nav a:hover img {
   gap: 0.75rem;
 }
 
-/* Base Button Style */
+/* ===============================
+   NAV BUTTON BASE
+================================ */
 .navLinks button {
-  font-family: inherit;
   font-size: 0.85rem;
-  font-weight: 400;
-  padding: 0.6rem 1.2rem;
-  border-radius: 10px;
+  font-weight: 600;
+
+  padding: 0.65rem 1.2rem;
+
+  border-radius: 12px;
+
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   white-space: nowrap;
+
+  transition: all 0.25s ease;
 }
 
-/* Manage Projects (Primary) */
+/* ===============================
+   PRIMARY BUTTON
+================================ */
 .dashboard {
-  background: var(--red);
+  background: var(--gradient-primary);
   color: #fff;
+
   border: none;
-  box-shadow: 0 4px 12px rgba(229, 57, 53, 0.25);
+
+  box-shadow: 0 10px 25px rgba(229, 57, 53, 0.25);
 }
 
 .dashboard:hover {
-  background: var(--dark-gray);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
 }
 
-/* Sign Out / Sign In (Secondary) */
-.sign-out-btn, .sign-in-btn {
-  background: rgba(0, 0, 0, 0.04);
+/* ===============================
+   SIGN IN
+================================ */
+.sign-in-btn {
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--primary);
+
+  border: 1px solid rgba(139, 30, 63, 0.25);
+
+  box-shadow: 0 6px 14px rgba(139, 30, 63, 0.10);
+}
+
+.sign-in-btn:hover {
+  background: rgba(255, 255, 255, 0.95);
+
+  border-color: rgba(139, 30, 63, 0.5);
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 14px 30px rgba(139, 30, 63, 0.18);
+}
+
+/* ===============================
+   SIGN OUT
+================================ */
+.sign-out-btn {
+  background: rgba(0, 0, 0, 0.03);
   color: var(--dark-gray);
-  border: 1px solid rgba(0, 0, 0, 0.1);
+
+  border: 1px solid rgba(0, 0, 0, 0.12);
+
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.06);
 }
 
-.sign-out-btn:hover, .sign-in-btn:hover {
-  background: rgba(0, 0, 0, 0.08);
-  border-color: var(--dark-gray);
+.sign-out-btn:hover {
+  background: rgba(0, 0, 0, 0.06);
+
+  border-color: rgba(0, 0, 0, 0.2);
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
 }
 
-/* --- MOBILE RESPONSIVENESS --- */
+/* ===============================
+   MOBILE NAV WRAPPER
+================================ */
+.mobile-nav-wrapper {
+  display: none;
+}
+
+/* ===============================
+   MOBILE NAV BAR
+================================ */
+.mobile-nav-bar {
+  position: fixed;
+  top: 1rem;
+  left: 0;
+  width: 100%;
+  z-index: 2000;
+
+  display: flex;
+  justify-content: center;
+
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+
+/* INNER CONTAINER (REAL NAV SURFACE) */
+.mobile-nav-bar-inner {
+  width: 100%;
+  max-width: 1400px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+
+  padding: 0.85rem 1rem;
+
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 16px;
+
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.10),
+    0 6px 20px rgba(0, 0, 0, 0.06);
+}
+
+/* ===============================
+   LOGO (CENTERED FOCUS)
+================================ */
+.mobile-logo {
+  padding: 0.4rem 1rem;
+
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.92);
+
+  border: 1px solid rgba(0, 0, 0, 0.08);
+
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.10);
+}
+
+.mobile-logo img {
+  height: 60px;   /* FIX: prevents oversized logo */
+  width: auto;
+  display: block;
+  transition: transform 0.25s ease;
+}
+
+.mobile-logo img:hover {
+  transform: scale(1.05);
+}
+
+/* ===============================
+   TOGGLE BUTTON (RIGHT EDGE)
+================================ */
+.nav-toggle {
+  position: absolute;
+  right: 1rem;
+
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 100%;
+
+  border: 1px solid rgba(0, 0, 0, 0.08);
+
+  background: rgba(255, 255, 255, 0.8);
+
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+}
+
+.nav-toggle:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.nav-toggle span {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.nav-toggle span.open {
+  transform: rotate(180deg);
+}
+
+/* ===============================
+   MOBILE DRAWER (IMPROVED UX)
+================================ */
+.mobile-drawer {
+  position: fixed;
+  top: 5.5rem;
+  right: -100%;
+
+  width: 82%;
+  max-width: 340px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  padding: 1.5rem;
+
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(22px) saturate(180%);
+
+  border-radius: 18px 0 0 18px;
+
+  box-shadow:
+    -20px 30px 70px rgba(0, 0, 0, 0.18);
+
+  transition: right 0.35s ease;
+
+  z-index: 1500;
+}
+
+/* OPEN STATE */
+.mobile-drawer.open {
+  right: 0;
+}
+
+/* ===============================
+   DRAWER BUTTONS
+================================ */
+.mobile-drawer .btn {
+  width: 100%;
+
+  justify-content: center;
+
+  padding: 0.95rem 1rem;
+
+  border-radius: 12px;
+
+  font-weight: 600;
+}
+
+/* ===============================
+   BACKDROP (OPTIONAL BUT RECOMMENDED)
+================================ */
+.mobile-drawer::before {
+  content: "";
+
+  position: fixed;
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.25);
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition: opacity 0.3s ease;
+}
+
+.mobile-drawer.open::before {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ===============================
+   RESPONSIVE SWITCH
+================================ */
 @media (max-width: 834px) {
-  .nav-wrapper {
-    top: 0.5rem;
-  }
-  
-  nav {
-    padding: 0.5rem 1rem;
-    border-radius: 12px;
+  .desktop-nav {
+    display: none !important;
   }
 
-  nav a img {
-    max-width: 8rem;
-  }
-
-  .navLinks button {
-    padding: 0.75rem 1rem;
-    font-size: 0.75rem;
+  .mobile-nav-wrapper {
+    display: block;
   }
 }
