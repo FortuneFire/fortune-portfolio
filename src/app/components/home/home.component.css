@@ -162,13 +162,12 @@
     0 16px 35px rgba(0, 0, 0, 0.18),
     0 6px 14px rgba(0, 0, 0, 0.10);
 
+  /* Hide by default, only show on mobile */
+  display: none;
+
   cursor: pointer;
 
   transition: all 0.25s ease;
-
-  /* 🔥 IMPORTANT: perfect centering */
-  display: grid;
-  place-items: center;
 
   padding: 0;
 }
@@ -203,6 +202,8 @@
 
   .heading-text-container {
     align-items: center;
+    padding: 0;
+    margin: 6rem 0 0 0;
   }
 
   .short-desc {
@@ -215,7 +216,8 @@
   }
 
   .menu-btn {
-    display: block;
+    display: grid;
+    place-items: center;
   }
 
   /* slide-up action bar */

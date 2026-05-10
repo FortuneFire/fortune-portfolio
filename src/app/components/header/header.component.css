@@ -177,11 +177,11 @@
 /* INNER CONTAINER (REAL NAV SURFACE) */
 .mobile-nav-bar-inner {
   width: 100%;
-  max-width: 1400px;
 
   display: flex;
   align-items: center;
   justify-content: center;
+  
 
   position: relative;
 
