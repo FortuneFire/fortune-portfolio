@@ -240,7 +240,17 @@
 
     </div>
 
+    <button
+  class="floating-back-btn"
+  [class.show]="showBackButton"
+  (click)="backToCards()"
+>
+  ← Back to Projects
+</button>
+
   </section>
+
+  
 
   <!-- LIGHTBOX -->
   <div class="lightbox" *ngIf="lightboxOpen">

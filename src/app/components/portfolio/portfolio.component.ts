@@ -4,6 +4,7 @@ import { PortfolioService, Project } from '../../services/portfolio.service';
 import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { marked } from 'marked';
+import { HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-portfolio',
@@ -114,6 +115,21 @@ export class PortfolioComponent implements OnInit {
 
   return this.sanitizer.bypassSecurityTrustHtml(html);
 }
+
+showBackButton = true; // Temporarily always visible for debugging
+
+@HostListener('window:scroll', [])
+onWindowScroll(): void {
+  const scrollY =
+    window.pageYOffset ||
+    document.documentElement.scrollTop ||
+    document.body.scrollTop ||
+    0;
+
+  // Only show back button when a project is selected AND user has scrolled
+  this.showBackButton = this.selectedCard !== null && scrollY > 250;
+}
+
 }
 
 
