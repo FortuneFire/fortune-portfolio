@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PortfolioService, Project } from '../../services/portfolio.service';
 import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
@@ -13,13 +13,14 @@ import { HostListener } from '@angular/core';
   templateUrl: './portfolio.component.html',
   styleUrls: ['./portfolio.component.css'],
 })
-export class PortfolioComponent implements OnInit {
+export class PortfolioComponent implements OnInit, OnDestroy {
   selectedCard: Project | null = null;
   selectedFilter = 'All';
 
   projects: Project[] = [];
   filteredProjects: Project[] = [];
   project_filter_categories: string[] = [];
+  private portfolioSubscription: any;
 
   @ViewChild('gallery') gallery!: ElementRef;
 
@@ -34,7 +35,7 @@ export class PortfolioComponent implements OnInit {
 
   ngOnInit(): void {
     // Live subscription to your 'projects' collection
-    this.portfolioService.getProjects().subscribe({
+    this.portfolioSubscription = this.portfolioService.getProjects().subscribe({
       next: (projects) => {
         
         this.projects = projects;
@@ -128,6 +129,13 @@ onWindowScroll(): void {
 
   // Only show back button when a project is selected AND user has scrolled
   this.showBackButton = this.selectedCard !== null && scrollY > 250;
+}
+
+ngOnDestroy(): void {
+  // Clean up subscription to prevent memory leak
+  if (this.portfolioSubscription) {
+    this.portfolioSubscription.unsubscribe();
+  }
 }
 
 }
