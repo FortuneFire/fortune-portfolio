@@ -53,6 +53,11 @@
   --surface: rgba(255,255,255,0.85);
   --surface-solid: #FFFFFF;
 
+  --dashboard-metric: #eaf0f8;
+  --dashboard-action: #fff3e7;
+  --dashboard-action-strong: #ffead9;
+  --dashboard-border: rgba(31, 41, 55, 0.08);
+
   --bg-sidebar: #111827;
 
   /* =================================
