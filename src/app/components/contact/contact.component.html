@@ -1,0 +1,96 @@
+<section class="contact-page">
+  <section class="contact-hero container">
+    <div class="contact-intro">
+      <span class="section-tag">Contact</span>
+      <h1>Let's Chat</h1>
+      <p>
+        Have a project in mind, a collaboration idea, or a question about my work?
+        Send a message and I'll get back to you as soon as I can.
+      </p>
+
+      <div class="contact-details" aria-label="Contact details">
+        <a href="mailto:hello@fortunemlilo.com" class="contact-detail">
+          <span class="detail-icon" aria-hidden="true">@</span>
+          <span>
+            <small>Email me</small>
+            fmlilo@outlook.com
+          </span>
+        </a>
+        <span class="contact-detail">
+          <span class="detail-icon" aria-hidden="true">+</span>
+          <span>
+            <small>Based in</small>
+            Cape Town, South Africa
+          </span>
+        </span>
+      </div>
+    </div>
+
+    <div class="contact-card glass-card">
+      @if (!submitted) {
+        <div class="form-heading">
+          <span class="form-kicker">Start a conversation</span>
+          <h2>Tell me about your project</h2>
+          <p>Share a few details and I'll come back to you with the next steps.</p>
+        </div>
+
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" novalidate>
+          <div class="field">
+            <label for="name">Name</label>
+            <input
+              id="name"
+              type="text"
+              formControlName="name"
+              placeholder="Your name"
+              autocomplete="name"
+            >
+            @if (name?.touched && name?.invalid) {
+              <p class="field-error">Please enter your name.</p>
+            }
+          </div>
+
+          <div class="field">
+            <label for="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+            >
+            @if (email?.touched && email?.invalid) {
+              <p class="field-error">Please enter a valid email address.</p>
+            }
+          </div>
+
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea
+              id="message"
+              formControlName="message"
+              placeholder="Tell me a little about what you have in mind..."
+              rows="6"
+            ></textarea>
+            @if (message?.touched && message?.invalid) {
+              <p class="field-error">Please write a short message (at least 10 characters).</p>
+            }
+          </div>
+
+          <button type="submit" class="btn primary submit-btn">
+            <span>Send Message</span>
+            <span class="submit-arrow" aria-hidden="true">&#8594;</span>
+          </button>
+        </form>
+      } @else {
+        <div class="success-state">
+          <span class="section-tag">Sent</span>
+          <h2>Thanks for reaching out.</h2>
+          <p>Your message is ready — I'll be in touch soon.</p>
+          <button type="button" class="btn secondary" (click)="sendAnother()">
+            Send another message
+          </button>
+        </div>
+      }
+    </div>
+  </section>
+</section>

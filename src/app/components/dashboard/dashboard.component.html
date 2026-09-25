@@ -1,103 +1,69 @@
 <div class="dashboard-overview">
-
-
   <div class="welcome-section">
-
-  <h1 class="welcome-text">
-    Welcome back, {{ user.name }} 👋 
-  </h1>
-
-  <p class="welcome-description">
-    Manage your projects, track portfolio performance, and grow your digital presence.
-  </p>
-
-  <p class="welcome-message">
-    Keep building amazing things today.
-  </p>
-
-</div>
+    <div>
+      <p class="eyebrow">Workspace overview</p>
+      <h1 class="welcome-text">Welcome back, {{ user.name }}</h1>
+      <p class="welcome-description">Manage your projects, track portfolio performance, and grow your digital presence.</p>
+    </div>
+    <div class="welcome-status"><span class="status-dot"></span>All systems healthy</div>
+  </div>
 
   <div class="stats-section">
-
-  <h2 class="section-title">Overview</h2>
-
-  <div class="stats-grid">
-
-    <div class="stat-card">
-      <mat-icon>folder</mat-icon>
-
-      <div class="stat-info">
-        <h3>12</h3>
-        <p>Total Projects</p>
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Performance snapshot</p>
+        <h2 class="section-title">Your portfolio at a glance</h2>
       </div>
+      <span class="updated-label">Updated just now</span>
     </div>
 
-    <div class="stat-card">
-      <mat-icon>visibility</mat-icon>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon"><mat-icon>folder_copy</mat-icon></div>
+        <div class="stat-info">
+          <p>Total Projects</p>
+          <h3>12</h3>
+          <span class="trend positive"><mat-icon>trending_up</mat-icon> 16.8% <small>vs last month</small></span>
+        </div>
+      </div>
 
-      <div class="stat-info">
-        <h3>1.2K</h3>
-        <p>Portfolio Views</p>
+      <div class="stat-card">
+        <div class="stat-icon"><mat-icon>visibility</mat-icon></div>
+        <div class="stat-info">
+          <p>Portfolio Views</p>
+          <h3>1.2K</h3>
+          <span class="trend positive"><mat-icon>trending_up</mat-icon> 24.5% <small>vs last month</small></span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon"><mat-icon>trending_up</mat-icon></div>
+        <div class="stat-info">
+          <p>Success Rate</p>
+          <h3>92%</h3>
+          <span class="trend positive"><mat-icon>arrow_upward</mat-icon> 4.2% <small>vs last month</small></span>
+        </div>
       </div>
     </div>
-
-    <div class="stat-card">
-      <mat-icon>check_circle</mat-icon>
-
-      <div class="stat-info">
-        <h3>8</h3>
-        <p>Active Projects</p>
-      </div>
-    </div>
-
-    <div class="stat-card">
-      <mat-icon>trending_up</mat-icon>
-
-      <div class="stat-info">
-        <h3>92%</h3>
-        <p>Success Rate</p>
-      </div>
-    </div>
-
   </div>
-
-</div>
 
   <div class="dashboard-cards">
+    <a class="dashboard-card" routerLink="/dashboard/manage">
+      <span class="action-icon"><mat-icon>folder_copy</mat-icon></span>
+      <span class="action-copy"><strong>Projects</strong><small>Manage your portfolio projects</small></span>
+      <mat-icon class="action-arrow">arrow_forward</mat-icon>
+    </a>
 
-  <!-- Projects -->
-  <div class="dashboard-card clickable"
-       routerLink="/dashboard/manage">
+    <a class="dashboard-card primary-action" routerLink="/dashboard/add">
+      <span class="action-icon"><mat-icon>add</mat-icon></span>
+      <span class="action-copy"><strong>Add Project</strong><small>Create a new portfolio project</small></span>
+      <mat-icon class="action-arrow">arrow_forward</mat-icon>
+    </a>
 
-    <mat-icon>folder</mat-icon>
-
-    <h3>Projects</h3>
-    <p>Manage your portfolio projects</p>
-
+    <a class="dashboard-card" routerLink="/portfolio">
+      <span class="action-icon"><mat-icon>public</mat-icon></span>
+      <span class="action-copy"><strong>Portfolio</strong><small>View your public portfolio</small></span>
+      <mat-icon class="action-arrow">open_in_new</mat-icon>
+    </a>
   </div>
-
-  <!-- Add Project -->
-  <div class="dashboard-card clickable"
-       routerLink="/dashboard/add">
-
-    <mat-icon>add</mat-icon>
-
-    <h3>Add Project</h3>
-    <p>Create a new portfolio project</p>
-
-  </div>
-
-  <!-- Portfolio -->
-  <div class="dashboard-card clickable"
-       routerLink="/portfolio">
-
-    <mat-icon>public</mat-icon>
-
-    <h3>Portfolio</h3>
-    <p>View public portfolio page</p>
-
-  </div>
-
-</div>
-
 </div>

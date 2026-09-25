@@ -44,6 +44,7 @@ import { DashboardLayoutComponent } from './layouts/dashboard-layout/dashboard-l
 import { HomeComponent } from './components/home/home.component';
 import { PortfolioComponent } from './components/portfolio/portfolio.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
+import { ContactComponent } from './components/contact/contact.component';
 
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ProjectFormComponent } from './components/projects-form/project-form.component';
@@ -62,6 +63,7 @@ export const appRoutes: Routes = [
       { path: '', component: HomeComponent },
       { path: 'about', component: About },
       { path: 'portfolio', component: PortfolioComponent },
+      { path: 'contact', component: ContactComponent },
       { path: 'sign-in', component: SignInComponent }
     ]
   },

@@ -12,6 +12,12 @@
     <!-- DESKTOP ACTIONS -->
     <div class="navLinks">
 
+      <a routerLink="/contact">
+        <button type="button" class="btn primary nav-btn">
+          Let's Chat
+        </button>
+      </a>
+
       <!-- LOGGED IN -->
       <div *ngIf="isLoggedIn$ | async; else loginBtn" class="auth-actions">
 
@@ -49,23 +55,26 @@
 ================================ -->
 <div class="mobile-nav-wrapper">
 
-  <!-- TOP BAR -->
   <div class="mobile-nav-bar">
-
-    <!-- CENTER LOGO -->
-    <a routerLink="/" class="mobile-logo">
-      <img src="../../../assets/images/logo.png" alt="logo">
+    <a routerLink="/contact" class="mobile-cta" (click)="closeMobileNav()">
+      <span>Let's Chat</span>
+      <span class="mobile-cta-arrow" aria-hidden="true">&#8594;</span>
     </a>
 
-    <!-- TOGGLE BUTTON -->
-    <button class="nav-toggle" (click)="toggleMobileNav()">
-      <span [class.open]="mobileNavOpen">❮</span>
+    <button class="nav-toggle" type="button" (click)="toggleMobileNav()" aria-label="Toggle navigation menu">
+      <span [class.open]="mobileNavOpen">&#10094;</span>
     </button>
 
   </div>
 
   <!-- DRAWER -->
   <div class="mobile-drawer" [class.open]="mobileNavOpen">
+
+    <a routerLink="/contact" (click)="closeMobileNav()">
+      <button type="button" class="btn primary nav-btn">
+        Let's Chat
+      </button>
+    </a>
 
     <!-- LOGGED IN -->
     <ng-container *ngIf="isLoggedIn$ | async; else mobileLogin">
