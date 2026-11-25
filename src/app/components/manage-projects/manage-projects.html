@@ -19,57 +19,99 @@
       <p>No projects found.</p>
     </div>
 
-    <div class="project-card" *ngFor="let project of projects">
+    <!-- DRAG AND DROP LIST -->
+    <div
+      class="project-list-items"
+      cdkDropList
+      [cdkDropListData]="projects"
+      (cdkDropListDropped)="dropProject($event)"
+      [cdkDropListDisabled]="isReordering"
+    >
 
-      <div class="project-thumbnail">
-        <img
-          *ngIf="project.keyIMG"
-          [src]="project.keyIMG"
-          [alt]="project.title"
-        />
+      <div
+        class="project-card"
+        *ngFor="let project of projects"
+        cdkDrag
+        [cdkDragData]="project"
+        [cdkDragDisabled]="isReordering"
+      >
 
-        <div class="image-placeholder" *ngIf="!project.keyIMG">
-          No image
-        </div>
-      </div>
-
-      <div class="project-info">
-        <h3>{{ project.title }}</h3>
-
-        <p class="project-highlight" *ngIf="project.highlight">
-          {{ project.highlight }}
-        </p>
-
-        <div class="project-categories" *ngIf="project.categories?.length">
-          <span *ngFor="let category of project.categories">
-            {{ category }}
-          </span>
-        </div>
-
-        <p class="project-skills" *ngIf="project.skills?.length">
-          {{ project.skills.join(', ') }}
-        </p>
-      </div>
-
-      <div class="project-actions">
+        <!-- DRAG HANDLE -->
         <button
           type="button"
-          class="btn btn-edit"
-          (click)="editProject(project)"
+          class="project-drag-handle"
+          cdkDragHandle
+          [disabled]="isReordering"
+          aria-label="Drag to reorder project"
+          title="Drag to reorder"
         >
-          Edit
+          <span aria-hidden="true">⠿</span>
         </button>
 
-        <button
-          type="button"
-          class="btn btn-delete"
-          (click)="deleteProject(project.id)"
-        >
-          Delete
-        </button>
+        <!-- DRAG PLACEHOLDER -->
+        <div class="project-card-placeholder" *cdkDragPlaceholder></div>
+
+        <div class="project-thumbnail">
+          <img
+            *ngIf="project.keyIMG"
+            [src]="project.keyIMG"
+            [alt]="project.title"
+          />
+
+          <div class="image-placeholder" *ngIf="!project.keyIMG">
+            No image
+          </div>
+        </div>
+
+        <div class="project-info">
+          <h3>{{ project.title }}</h3>
+
+          <p class="project-highlight" *ngIf="project.highlight">
+            {{ project.highlight }}
+          </p>
+
+          <div class="project-categories" *ngIf="project.categories?.length">
+            <span *ngFor="let category of project.categories">
+              {{ category }}
+            </span>
+          </div>
+
+          <p class="project-skills" *ngIf="project.skills?.length">
+            {{ project.skills.join(', ') }}
+          </p>
+        </div>
+
+        <div class="project-actions">
+          <button
+            type="button"
+            class="btn btn-edit"
+            (click)="editProject(project)"
+            [disabled]="isReordering"
+          >
+            Edit
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-delete"
+            (click)="deleteProject(project.id)"
+            [disabled]="isReordering"
+          >
+            Delete
+          </button>
+        </div>
+
       </div>
-
     </div>
+
+    <p class="reorder-hint" *ngIf="projects.length > 1">
+      Drag the handle to change project order.
+    </p>
+
+    <p class="reordering-message" *ngIf="isReordering">
+      Saving project order...
+    </p>
+
   </section>
 
   <!-- EDIT PROJECT -->

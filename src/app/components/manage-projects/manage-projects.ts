@@ -8,6 +8,12 @@ import {
   FormArray
 } from '@angular/forms';
 
+import {
+  CdkDragDrop,
+  DragDropModule,
+  moveItemInArray
+} from '@angular/cdk/drag-drop';
+
 import { PortfolioService, Project } from '../../services/portfolio.service';
 
 /**
@@ -69,7 +75,12 @@ const SKILLS_CATALOGUE: { category: string; skills: string[] }[] = [
 @Component({
   selector: 'app-manage-projects',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    DragDropModule
+  ],
   templateUrl: './manage-projects.html',
   styleUrls: ['./manage-projects.css']
 })
@@ -82,6 +93,7 @@ export class ManageProjectsComponent implements OnInit {
   projectForm!: FormGroup;
 
   isUploading = false;
+  isReordering = false;
 
   // Main image
   keyImageFile: File | null = null;
@@ -105,10 +117,15 @@ export class ManageProjectsComponent implements OnInit {
     this.loadProjects();
   }
 
+  // -----------------------------
+  // Load projects
+  // -----------------------------
+
   loadProjects(): void {
     this.portfolioService.getProjects().subscribe({
       next: data => {
         this.projects = data;
+
         // Invalidate both pools to include new data from DB
         this.invalidateCategoryPool();
         this.invalidateSkillPool();
@@ -118,6 +135,51 @@ export class ManageProjectsComponent implements OnInit {
       }
     });
   }
+
+  // -----------------------------
+  // Drag-and-drop project ordering
+  // -----------------------------
+
+  async dropProject(event: CdkDragDrop<Project[]>): Promise<void> {
+    if (this.isReordering || event.previousIndex === event.currentIndex) {
+      return;
+    }
+
+    // Preserve the original ordering in case saving fails
+    const previousProjects = [...this.projects];
+
+    // Optimistically update the UI
+    moveItemInArray(
+      this.projects,
+      event.previousIndex,
+      event.currentIndex
+    );
+
+    // Assign sequential order values
+    this.projects = this.projects.map((project, index) => ({
+      ...project,
+      order: index
+    }));
+
+    this.isReordering = true;
+
+    try {
+      await this.portfolioService.saveProjectOrder(this.projects);
+    } catch (err) {
+      console.error('Error saving project order:', err);
+
+      // Restore previous ordering if persistence fails
+      this.projects = previousProjects;
+
+      alert('Failed to save project order. Your previous ordering has been restored.');
+    } finally {
+      this.isReordering = false;
+    }
+  }
+
+  // -----------------------------
+  // Edit project
+  // -----------------------------
 
   editProject(project: Project): void {
     this.selectedProject = project;
@@ -205,6 +267,7 @@ export class ManageProjectsComponent implements OnInit {
     if (!this.projectForm?.get('categories')) return [];
 
     const search = this.categorySearch.trim().toLowerCase();
+
     const selectedKeys = new Set(
       this.categories.controls.map(control =>
         String(control.value ?? '').toLowerCase().trim()
@@ -220,7 +283,9 @@ export class ManageProjectsComponent implements OnInit {
 
   isCategorySelected(cat: string): boolean {
     if (!this.projectForm?.get('categories')) return false;
+
     const key = cat.toLowerCase().trim();
+
     return this.categories.controls.some(
       control => String(control.value ?? '').toLowerCase().trim() === key
     );
@@ -228,7 +293,9 @@ export class ManageProjectsComponent implements OnInit {
 
   get canAddCustomCategory(): boolean {
     const search = this.categorySearch.trim();
+
     if (!search || this.isCategorySelected(search)) return false;
+
     return !this.buildCategoryPool().has(search.toLowerCase());
   }
 
@@ -239,6 +306,7 @@ export class ManageProjectsComponent implements OnInit {
 
   addCategory(value: string): void {
     const cat = value.trim();
+
     if (!cat || this.isCategorySelected(cat)) return;
 
     this.categories.push(this.fb.control(cat));
@@ -247,9 +315,11 @@ export class ManageProjectsComponent implements OnInit {
 
   addCustomCategory(): void {
     const cat = this.categorySearch.trim();
+
     if (!cat || !this.canAddCustomCategory) return;
 
     const key = cat.toLowerCase();
+
     if (!this.customCategories.some(c => c.toLowerCase() === key)) {
       this.customCategories.push(cat);
       this.invalidateCategoryPool();
@@ -264,7 +334,9 @@ export class ManageProjectsComponent implements OnInit {
 
   onCategorySearchEnter(): void {
     if (!this.categorySearch.trim()) return;
+
     const topMatch = this.filteredCategories[0];
+
     if (topMatch) {
       this.addCategory(topMatch);
     } else {
@@ -288,6 +360,7 @@ export class ManageProjectsComponent implements OnInit {
     for (const group of SKILLS_CATALOGUE) {
       for (const name of group.skills) {
         const key = name.toLowerCase();
+
         if (!pool.has(key)) pool.set(key, name);
       }
     }
@@ -295,12 +368,14 @@ export class ManageProjectsComponent implements OnInit {
     for (const project of this.projects) {
       for (const skill of project.skills || []) {
         const key = (skill || '').toLowerCase().trim();
+
         if (key && !pool.has(key)) pool.set(key, skill);
       }
     }
 
     for (const skill of this.customSkills) {
       const key = skill.toLowerCase().trim();
+
       if (key && !pool.has(key)) pool.set(key, skill);
     }
 
@@ -317,6 +392,7 @@ export class ManageProjectsComponent implements OnInit {
     if (!this.projectForm?.get('skills')) return [];
 
     const search = this.skillSearch.trim().toLowerCase();
+
     const selectedKeys = new Set(
       this.skills.controls.map(control =>
         String(control.value ?? '').toLowerCase().trim()
@@ -332,7 +408,9 @@ export class ManageProjectsComponent implements OnInit {
 
   isSkillSelected(skill: string): boolean {
     if (!this.projectForm?.get('skills')) return false;
+
     const key = skill.toLowerCase().trim();
+
     return this.skills.controls.some(
       control => String(control.value ?? '').toLowerCase().trim() === key
     );
@@ -340,7 +418,9 @@ export class ManageProjectsComponent implements OnInit {
 
   get canAddCustomSkill(): boolean {
     const search = this.skillSearch.trim();
+
     if (!search || this.isSkillSelected(search)) return false;
+
     return !this.buildSkillPool().has(search.toLowerCase());
   }
 
@@ -351,16 +431,20 @@ export class ManageProjectsComponent implements OnInit {
 
   addSkill(value: string): void {
     const skill = value.trim();
+
     if (!skill || this.isSkillSelected(skill)) return;
+
     this.skills.push(this.fb.control(skill));
     this.skillSearch = '';
   }
 
   addCustomSkill(): void {
     const skill = this.skillSearch.trim();
+
     if (!skill || !this.canAddCustomSkill) return;
 
     const key = skill.toLowerCase();
+
     if (!this.customSkills.some(s => s.toLowerCase() === key)) {
       this.customSkills.push(skill);
       this.invalidateSkillPool();
@@ -375,7 +459,9 @@ export class ManageProjectsComponent implements OnInit {
 
   onSkillSearchEnter(): void {
     if (!this.skillSearch.trim()) return;
+
     const topMatch = this.filteredSkills[0];
+
     if (topMatch) {
       this.addSkill(topMatch);
     } else {
@@ -402,9 +488,11 @@ export class ManageProjectsComponent implements OnInit {
     this.keyImageFile = file;
 
     const reader = new FileReader();
+
     reader.onload = () => {
       this.keyImagePreview = reader.result as string;
     };
+
     reader.readAsDataURL(file);
   }
 
@@ -431,9 +519,11 @@ export class ManageProjectsComponent implements OnInit {
 
   removeGalleryImage(index: number): void {
     const url = this.gallery.at(index)?.value;
+
     if (url) {
       this.removedGalleryImages.push(url);
     }
+
     this.gallery.removeAt(index);
   }
 
@@ -469,6 +559,7 @@ export class ManageProjectsComponent implements OnInit {
 
   async saveProject(): Promise<void> {
     if (!this.selectedProject || !this.selectedProject.id) return;
+
     if (this.projectForm.invalid) {
       alert('Please complete the required fields.');
       return;
@@ -483,7 +574,11 @@ export class ManageProjectsComponent implements OnInit {
       if (this.keyImageFile) {
         const fileName = `${Date.now()}_${this.keyImageFile.name}`;
         const path = `projects/${projectId}/keyIMG/${fileName}`;
-        keyImgUrl = await this.portfolioService.uploadFile(this.keyImageFile, path);
+
+        keyImgUrl = await this.portfolioService.uploadFile(
+          this.keyImageFile,
+          path
+        );
       }
 
       let galleryUrls: string[] = this.gallery.controls.map(c => c.value);
@@ -493,9 +588,11 @@ export class ManageProjectsComponent implements OnInit {
           this.galleryFiles.map((file, index) => {
             const fileName = `${Date.now()}_${index}_${file.name}`;
             const path = `projects/${projectId}/gallery/${fileName}`;
+
             return this.portfolioService.uploadFile(file, path);
           })
         );
+
         galleryUrls = [...galleryUrls, ...uploadedUrls];
       }
 
@@ -506,8 +603,8 @@ export class ManageProjectsComponent implements OnInit {
         title: formValue.title,
         highlight: formValue.highlight,
         description: formValue.description,
-        categories: formValue.categories, // FormArray of strings
-        skills: formValue.skills,         // FormArray of strings
+        categories: formValue.categories,
+        skills: formValue.skills,
         keyIMG: keyImgUrl,
         gallery: galleryUrls
       };
@@ -517,7 +614,11 @@ export class ManageProjectsComponent implements OnInit {
       const imagesToDelete = [...this.removedGalleryImages];
       const previousKeyImage = this.selectedProject.keyIMG;
 
-      if (this.keyImageFile && previousKeyImage && previousKeyImage !== keyImgUrl) {
+      if (
+        this.keyImageFile &&
+        previousKeyImage &&
+        previousKeyImage !== keyImgUrl
+      ) {
         imagesToDelete.push(previousKeyImage);
       }
 
@@ -528,6 +629,7 @@ export class ManageProjectsComponent implements OnInit {
       );
 
       alert('Project updated successfully!');
+
       this.cancelEdit();
       this.loadProjects();
 
@@ -554,7 +656,9 @@ export class ManageProjectsComponent implements OnInit {
 
     try {
       await this.portfolioService.deleteProject(projectId);
+
       alert('Project deleted successfully.');
+
       this.loadProjects();
     } catch (err) {
       console.error('Error deleting project:', err);

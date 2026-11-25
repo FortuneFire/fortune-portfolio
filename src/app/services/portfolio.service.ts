@@ -8,7 +8,8 @@ import {
   getDoc,
   updateDoc,
   deleteDoc,
-  addDoc
+  addDoc,
+  writeBatch
 } from '@angular/fire/firestore';
 
 import {
@@ -20,6 +21,7 @@ import {
 } from '@angular/fire/storage';
 
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 // ----- PROJECT MODEL -----
 
@@ -32,6 +34,7 @@ export interface Project {
   skills: string[];
   keyIMG?: string;
   gallery?: string[];
+  order?: number;
 }
 
 @Injectable({
@@ -46,9 +49,18 @@ export class PortfolioService {
   getProjects(): Observable<Project[]> {
     const projectsCollection = collection(this.firestore, 'projects');
 
-    return collectionData(projectsCollection, {
+    return (collectionData(projectsCollection, {
       idField: 'id'
-    }) as Observable<Project[]>;
+    }) as Observable<Project[]>).pipe(
+      map(projects =>
+        projects.sort((a, b) => {
+          const orderA = a.order ?? Number.MAX_SAFE_INTEGER;
+          const orderB = b.order ?? Number.MAX_SAFE_INTEGER;
+
+          return orderA - orderB;
+        })
+      )
+    );
   }
 
   // ----- ADD PROJECT -----
@@ -85,6 +97,28 @@ export class PortfolioService {
     };
 
     await updateDoc(projectRef, data);
+  }
+
+  // ----- SAVE PROJECT ORDER -----
+
+  async saveProjectOrder(projects: Project[]): Promise<void> {
+    const batch = writeBatch(this.firestore);
+
+    projects.forEach((project, index) => {
+      if (!project.id) {
+        throw new Error(
+          'Cannot save project order: A project ID is missing.'
+        );
+      }
+
+      const projectRef = doc(this.firestore, 'projects', project.id);
+
+      batch.update(projectRef, {
+        order: index
+      });
+    });
+
+    await batch.commit();
   }
 
   // ----- DELETE PROJECT AND ASSOCIATED IMAGES -----
