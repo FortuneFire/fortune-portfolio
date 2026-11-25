@@ -1,135 +1,486 @@
-<div class="manage-container">
-  <h3>Current Projects</h3>
+<div class="manage-projects">
 
-  <div class="project-list">
+  <div class="page-header">
+    <div>
+      <h1>Manage Projects</h1>
+      <p>Manage your portfolio projects, images, categories and skills.</p>
+    </div>
+  </div>
 
-    <!-- PROJECT LIST -->
-    <div class="project-item"
-         *ngFor="let project of projects"
-         [class.editing]="selectedProject?.id === project.id">
+  <!-- PROJECT LIST -->
+  <section class="projects-list" *ngIf="!selectedProject">
 
-      <!-- MAIN INFO ROW -->
-      <div class="project-main-info">
-        <div class="thumbnail">
-          <img [src]="project.keyIMG || 'https://picsum.photos/60?random'" 
-               [alt]="project.title">
-        </div>
+    <div class="section-heading">
+      <h2>Your Projects</h2>
+      <span class="project-count">{{ projects.length }} projects</span>
+    </div>
 
-        <div class="info">
-          <strong>{{ project.title }}</strong>
-          <span>{{ project.categories.join(', ') }}</span>
-        </div>
+    <div class="empty-state" *ngIf="projects.length === 0">
+      <p>No projects found.</p>
+    </div>
 
-        <!-- ACTION BUTTONS (hidden while editing this project) -->
-        <div class="actions" *ngIf="selectedProject?.id !== project.id">
-          <button class="btn-edit" (click)="editProject(project)">Edit</button>
-          <button class="btn-delete" (click)="deleteProject(project.id)">Delete</button>
+    <div class="project-card" *ngFor="let project of projects">
+
+      <div class="project-thumbnail">
+        <img
+          *ngIf="project.keyIMG"
+          [src]="project.keyIMG"
+          [alt]="project.title"
+        />
+
+        <div class="image-placeholder" *ngIf="!project.keyIMG">
+          No image
         </div>
       </div>
 
-      <!-- EDIT FORM -->
-      <div class="edit-form" *ngIf="selectedProject?.id === project.id">
+      <div class="project-info">
+        <h3>{{ project.title }}</h3>
 
-        <form [formGroup]="projectForm" (ngSubmit)="saveProject()">
+        <p class="project-highlight" *ngIf="project.highlight">
+          {{ project.highlight }}
+        </p>
 
-          <label>Title</label>
-          <input formControlName="title">
+        <div class="project-categories" *ngIf="project.categories?.length">
+          <span *ngFor="let category of project.categories">
+            {{ category }}
+          </span>
+        </div>
 
-          <label>Highlight</label>
-          <input formControlName="highlight">
+        <p class="project-skills" *ngIf="project.skills?.length">
+          {{ project.skills.join(', ') }}
+        </p>
+      </div>
 
-          <label>Description</label>
-          <textarea formControlName="description"></textarea>
+      <div class="project-actions">
+        <button
+          type="button"
+          class="btn btn-edit"
+          (click)="editProject(project)"
+        >
+          Edit
+        </button>
 
-          <!-- CATEGORIES -->
-          <label>Categories</label>
-          <div class="form-array">
-            <span *ngFor="let cat of categories.controls; let i = index">
-              {{ cat.value }}
-              <button type="button" (click)="categories.removeAt(i)">×</button>
-            </span>
+        <button
+          type="button"
+          class="btn btn-delete"
+          (click)="deleteProject(project.id)"
+        >
+          Delete
+        </button>
+      </div>
 
-            <input #newCat placeholder="Add category">
-            <button type="button"
-                    (click)="addCategory(newCat.value); newCat.value=''">
-              Add
-            </button>
+    </div>
+  </section>
+
+  <!-- EDIT PROJECT -->
+  <section class="edit-section" *ngIf="selectedProject">
+
+    <div class="section-heading">
+      <div>
+        <h2>Edit Project</h2>
+        <p>Update your project information below.</p>
+      </div>
+
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="cancelEdit()"
+        [disabled]="isUploading"
+      >
+        Back to Projects
+      </button>
+    </div>
+
+    <form [formGroup]="projectForm" (ngSubmit)="saveProject()">
+
+      <!-- BASIC INFORMATION -->
+      <div class="form-section">
+        <h3>Project Information</h3>
+
+        <div class="form-group">
+          <label for="title">Project Title</label>
+          <input
+            id="title"
+            type="text"
+            formControlName="title"
+            placeholder="Enter project title"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="highlight">Project Highlight</label>
+          <input
+            id="highlight"
+            type="text"
+            formControlName="highlight"
+            placeholder="Short project summary"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea
+            id="description"
+            formControlName="description"
+            rows="6"
+            placeholder="Describe the project..."
+          ></textarea>
+        </div>
+      </div>
+
+      <!-- CATEGORIES -->
+      <div class="form-section">
+        <h3>Categories</h3>
+
+        <div class="skills-section">
+
+          <label for="category-search">Search and add categories</label>
+
+          <div class="skills-search">
+
+            <div class="search-input-wrapper">
+              <span class="search-icon">⌕</span>
+
+              <input
+                id="category-search"
+                type="text"
+                [(ngModel)]="categorySearch"
+                [ngModelOptions]="{ standalone: true }"
+                placeholder="Search categories or add a custom category..."
+                (keydown.enter)="$event.preventDefault(); onCategorySearchEnter()"
+                autocomplete="off"
+              />
+            </div>
+
+            <!-- SEARCH RESULTS -->
+            <div
+              class="skills-dropdown"
+              *ngIf="categorySearch.trim()"
+            >
+
+              <button
+                type="button"
+                class="skill-option"
+                *ngFor="let cat of filteredCategories"
+                (click)="addCategory(cat)"
+              >
+                <span>{{ cat }}</span>
+                <span class="add-label">+ Add</span>
+              </button>
+
+              <!-- CUSTOM CATEGORY -->
+              <button
+                type="button"
+                class="skill-option custom-skill"
+                *ngIf="canAddCustomCategory"
+                (click)="addCustomCategory()"
+              >
+                <span>Add custom category: "{{ categorySearch.trim() }}"</span>
+                <span class="add-label">+</span>
+              </button>
+
+              <!-- ALREADY SELECTED -->
+              <div
+                class="no-skills-found"
+                *ngIf="categoryAlreadySelected"
+              >
+                This category is already selected.
+              </div>
+
+              <!-- NO RESULTS -->
+              <div
+                class="no-skills-found"
+                *ngIf="
+                  filteredCategories.length === 0 &&
+                  !canAddCustomCategory &&
+                  !categoryAlreadySelected
+                "
+              >
+                No matching categories found.
+              </div>
+
+            </div>
           </div>
 
-          <!-- SKILLS -->
-          <label>Skills</label>
-          <div class="form-array">
-            <span *ngFor="let skill of skills.controls; let i = index">
-              {{ skill.value }}
-              <button type="button" (click)="skills.removeAt(i)">×</button>
-            </span>
-
-            <input #newSkill placeholder="Add skill">
-            <button type="button"
-                    (click)="addSkill(newSkill.value); newSkill.value=''">
-              Add
-            </button>
+          <!-- SELECTED CATEGORIES HEADER -->
+          <div class="selected-skills-header">
+            Selected Categories ({{ categories.length }})
           </div>
 
-          <!-- KEY IMAGE UPLOAD -->
-          <label>Main Project Image</label>
-          <input type="file" (change)="onKeyImageSelected($event)">
+          <!-- SELECTED CATEGORIES -->
+          <div class="selected-skills" *ngIf="categories.length > 0">
 
-          <div class="preview" *ngIf="keyImagePreview">
-            <img [src]="keyImagePreview" alt="Key Image Preview">
-          </div>
+            <span
+              class="skill-chip"
+              *ngFor="let category of categories.controls; let i = index"
+            >
+              {{ category.value }}
 
-          <!-- GALLERY SECTION -->
-          <label>Gallery Images</label>
-
-          <div class="gallery">
-
-            <!-- Existing Gallery Images -->
-            <div class="gallery-item"
-                 *ngFor="let img of gallery.controls; let i = index">
-
-              <img [src]="img.value"
-                   [alt]="project.title + ' image ' + (i+1)">
-
-              <button type="button"
-                      (click)="removeGalleryImage(i)">
+              <button
+                type="button"
+                (click)="removeCategory(i)"
+                [attr.aria-label]="'Remove ' + category.value"
+              >
                 ×
               </button>
-            </div>
-
-            <!-- Upload new gallery images -->
-            <input type="file"
-                   multiple
-                   (change)="onGallerySelected($event)">
-
-            <div class="upload-info" *ngIf="galleryFiles.length">
-              {{ galleryFiles.length }} new image(s) selected
-            </div>
+            </span>
 
           </div>
 
-          <!-- ACTION BUTTONS -->
-          <div class="form-actions">
-            <button type="submit" [disabled]="isUploading">
-              {{ isUploading ? 'Saving...' : 'Save Changes' }}
-            </button>
+          <!-- EMPTY SELECTED STATE -->
+          <p class="empty-hint" *ngIf="categories.length === 0">
+            No categories selected yet. Search above to add one.
+          </p>
 
-            <button type="button" (click)="cancelEdit()">
-              Cancel
+          <p class="help-text">
+            Search and select categories, or type a custom category and press Enter.
+          </p>
+
+        </div>
+      </div>
+
+      <!-- SKILLS -->
+      <div class="form-section">
+        <h3>Skills and Technologies</h3>
+
+        <div class="skills-section">
+
+          <label for="skill-search">Search and add skills</label>
+
+          <div class="skills-search">
+
+            <div class="search-input-wrapper">
+              <span class="search-icon">⌕</span>
+
+              <input
+                id="skill-search"
+                type="text"
+                [(ngModel)]="skillSearch"
+                [ngModelOptions]="{ standalone: true }"
+                placeholder="Search skills or add a custom skill..."
+                (keydown.enter)="$event.preventDefault(); onSkillSearchEnter()"
+                autocomplete="off"
+              />
+            </div>
+
+            <!-- SEARCH RESULTS -->
+            <div
+              class="skills-dropdown"
+              *ngIf="skillSearch.trim()"
+            >
+
+              <button
+                type="button"
+                class="skill-option"
+                *ngFor="let skill of filteredSkills"
+                (click)="addSkill(skill)"
+              >
+                <span>{{ skill }}</span>
+                <span class="add-label">+ Add</span>
+              </button>
+
+              <!-- CUSTOM SKILL -->
+              <button
+                type="button"
+                class="skill-option custom-skill"
+                *ngIf="canAddCustomSkill"
+                (click)="addCustomSkill()"
+              >
+                <span>Add custom skill: "{{ skillSearch.trim() }}"</span>
+                <span class="add-label">+</span>
+              </button>
+
+              <!-- ALREADY SELECTED -->
+              <div
+                class="no-skills-found"
+                *ngIf="skillAlreadySelected"
+              >
+                This skill is already selected.
+              </div>
+
+              <!-- NO RESULTS -->
+              <div
+                class="no-skills-found"
+                *ngIf="
+                  filteredSkills.length === 0 &&
+                  !canAddCustomSkill &&
+                  !skillAlreadySelected
+                "
+              >
+                No matching skills found.
+              </div>
+
+            </div>
+          </div>
+
+          <!-- SELECTED SKILLS HEADER -->
+          <div class="selected-skills-header">
+            Selected Skills ({{ skills.length }})
+          </div>
+
+          <!-- SELECTED SKILLS -->
+          <div class="selected-skills" *ngIf="skills.length > 0">
+
+            <span
+              class="skill-chip"
+              *ngFor="let skill of skills.controls; let i = index"
+            >
+              {{ skill.value }}
+
+              <button
+                type="button"
+                (click)="removeSkill(i)"
+                [attr.aria-label]="'Remove ' + skill.value"
+              >
+                ×
+              </button>
+            </span>
+
+          </div>
+
+          <!-- EMPTY SELECTED STATE -->
+          <p class="empty-hint" *ngIf="skills.length === 0">
+            No skills selected yet. Search above to add one.
+          </p>
+
+          <p class="help-text">
+            Search and select multiple skills, or type a custom skill and press Enter.
+          </p>
+
+        </div>
+      </div>
+
+      <!-- MAIN IMAGE -->
+      <div class="form-section">
+        <h3>Main Project Image</h3>
+
+        <div class="image-upload">
+
+          <div class="main-image-preview" *ngIf="keyImagePreview">
+            <img
+              [src]="keyImagePreview"
+              alt="Project main image preview"
+            />
+          </div>
+
+          <div class="image-placeholder" *ngIf="!keyImagePreview">
+            No main image selected
+          </div>
+
+          <div class="upload-controls">
+            <label for="key-image" class="upload-label">
+              Choose Main Image
+            </label>
+
+            <input
+              id="key-image"
+              type="file"
+              accept="image/*"
+              (change)="onKeyImageSelected($event)"
+            />
+
+            <p class="help-text">
+              Selecting a new image will replace the current main image.
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- GALLERY -->
+      <div class="form-section">
+        <h3>Project Gallery</h3>
+
+        <p class="help-text">
+          Add or remove additional project images.
+        </p>
+
+        <div class="gallery-grid">
+
+          <!-- EXISTING GALLERY IMAGES -->
+          <div
+            class="gallery-item"
+            *ngFor="let image of gallery.controls; let i = index"
+          >
+            <img
+              [src]="image.value"
+              alt="Project gallery image"
+            />
+
+            <button
+              type="button"
+              class="remove-image"
+              (click)="removeGalleryImage(i)"
+              aria-label="Remove gallery image"
+            >
+              ×
             </button>
           </div>
 
-        </form>
+          <!-- NEW GALLERY IMAGES -->
+          <div
+            class="gallery-item new-gallery-item"
+            *ngFor="let file of galleryFiles; let i = index"
+          >
+            <img
+              [src]="previewUrl(file)"
+              [alt]="file.name"
+            />
+
+            <button
+              type="button"
+              class="remove-image"
+              (click)="removeNewGalleryImage(i)"
+              aria-label="Remove selected image"
+            >
+              ×
+            </button>
+
+            <span class="new-image-label">New</span>
+          </div>
+
+        </div>
+
+        <div class="gallery-upload">
+          <label for="gallery-images" class="upload-label">
+            Add Gallery Images
+          </label>
+
+          <input
+            id="gallery-images"
+            type="file"
+            accept="image/*"
+            multiple
+            (change)="onGallerySelected($event)"
+          />
+        </div>
 
       </div>
-      <!-- END EDIT FORM -->
 
-    </div>
-    <!-- END PROJECT ITEM -->
+      <!-- FORM ACTIONS -->
+      <div class="form-actions">
 
-    <div *ngIf="projects.length === 0" class="no-data">
-      No projects found in database.
-    </div>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="cancelEdit()"
+          [disabled]="isUploading"
+        >
+          Cancel
+        </button>
 
-  </div>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="isUploading || projectForm.invalid"
+        >
+          {{ isUploading ? 'Saving...' : 'Save Changes' }}
+        </button>
+
+      </div>
+
+    </form>
+  </section>
+
 </div>

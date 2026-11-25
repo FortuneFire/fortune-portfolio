@@ -78,6 +78,139 @@ input:focus, textarea:focus {
   accent-color: #ff4d4d;
 }
 
+/* ---------- SKILLS SELECTOR ---------- */
+.skills-section {
+  position: relative;
+}
+
+.skills-search {
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.search-input-wrapper {
+  position: relative;
+}
+
+.search-input-wrapper input {
+  width: 100%;
+  box-sizing: border-box;
+  /* Extra padding on the right for the search icon */
+  padding: 12px 40px 12px 12px;
+}
+
+.search-icon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+  pointer-events: none;
+  font-size: 20px;
+}
+
+.skills-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 100;
+  max-height: 220px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.skill-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px 14px;
+  border: none;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #333;
+  transition: background 0.2s;
+}
+
+.skill-option:hover {
+  background: #f9f9f9;
+}
+
+.add-label {
+  color: #ff4d4d;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.custom-skill {
+  border-top: 1px solid #eee;
+  font-weight: 600;
+}
+
+.no-skills-found {
+  padding: 10px 14px;
+  color: #888;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.selected-skills-header {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #777;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 14px;
+  margin-bottom: 8px;
+}
+
+.selected-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skill-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: #ff4d4d1a; /* Light transparent red */
+  color: #d32f2f;        /* Dark red text */
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.skill-chip button {
+  border: none;
+  background: transparent;
+  color: inherit;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.skill-chip button:hover {
+  opacity: 1;
+}
+
+.empty-hint {
+  font-size: 0.85rem;
+  color: #999;
+  font-style: italic;
+  margin: 0;
+}
+
 /* ---------- IMAGE PREVIEWS ---------- */
 .image-section {
   margin-top: 20px;
@@ -172,4 +305,12 @@ input:focus, textarea:focus {
 @keyframes rotation {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 600px) {
+  .selection-row {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
 }

@@ -1,15 +1,14 @@
 <div class="form-wrapper">
   <div class="form-container">
     <form [formGroup]="projectForm" (ngSubmit)="onSubmit()" class="project-form">
-      
 
       <h2 class="form-header">
-  @if (editingId && existingData) {
-    Editing: <span class="project-highlight-name">{{ existingData.title }}</span>
-  } @else {
-    Add New Project
-  }
-</h2>
+        @if (editingId && existingData) {
+          Editing: <span class="project-highlight-name">{{ existingData.title }}</span>
+        } @else {
+          Add New Project
+        }
+      </h2>
 
       <div class="input-group">
         <label for="title">Project Title</label>
@@ -27,40 +26,154 @@
       </div>
 
       <div class="selection-row">
+        <!-- UPDATED CATEGORIES SECTION -->
         <div class="selection-column">
           <label>Project Categories</label>
-          <div formArrayName="categories" class="checkbox-list">
-            @for (cat of categories; track cat; let i = $index) {
-              <label class="check-container">
-                <input type="checkbox" [formControlName]="i"> 
-                <span class="custom-check"></span>
-                {{cat}}
-              </label>
+
+          <div class="skills-section">
+            <!-- Search Input -->
+            <div class="skills-search">
+              <div class="search-input-wrapper">
+                <span class="search-icon">⌕</span>
+                <input
+                  type="text"
+                  [(ngModel)]="categorySearch"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Search categories or add a custom category..."
+                  (keydown.enter)="$event.preventDefault(); onCategorySearchEnter()"
+                  autocomplete="off"
+                />
+              </div>
+
+              <!-- Search Results Dropdown -->
+              @if (categorySearch.trim()) {
+                <div class="skills-dropdown">
+                  @for (cat of filteredCategories; track cat) {
+                    <button type="button" class="skill-option" (click)="addCategory(cat)">
+                      <span>{{ cat }}</span>
+                      <span class="add-label">+ Add</span>
+                    </button>
+                  }
+
+                  @if (canAddCustomCategory) {
+                    <button type="button" class="skill-option custom-skill" (click)="addCustomCategory()">
+                      <span>Add custom category: "{{ categorySearch.trim() }}"</span>
+                      <span class="add-label">+</span>
+                    </button>
+                  }
+
+                  @if (isCategorySelected(categorySearch)) {
+                    <div class="no-skills-found">This category is already selected.</div>
+                  }
+
+                  @if (filteredCategories.length === 0 && !canAddCustomCategory && !isCategorySelected(categorySearch)) {
+                    <div class="no-skills-found">No matching categories found.</div>
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- Selected Categories -->
+            <div class="selected-skills-header">
+              Selected Categories ({{ categories.length }})
+            </div>
+
+            @if (categories.length > 0) {
+              <div class="selected-skills">
+                @for (cat of categories.controls; track cat; let i = $index) {
+                  <span class="skill-chip">
+                    {{ cat.value }}
+                    <button type="button" (click)="removeCategory(i)" [attr.aria-label]="'Remove ' + cat.value">×</button>
+                  </span>
+                }
+              </div>
+            }
+
+            @if (categories.length === 0) {
+              <p class="empty-hint">No categories selected yet. Search above to add one.</p>
             }
           </div>
         </div>
+        <!-- END UPDATED CATEGORIES SECTION -->
 
+        <!-- UPDATED SKILLS SECTION -->
         <div class="selection-column">
           <label>Tech Stack / Skills</label>
-          <div formArrayName="skills" class="checkbox-list">
-            @for (skill of skills; track skill; let i = $index) {
-              <label class="check-container">
-                <input type="checkbox" [formControlName]="i"> 
-                <span class="custom-check"></span>
-                {{skill}}
-              </label>
+
+          <div class="skills-section">
+            <!-- Search Input -->
+            <div class="skills-search">
+              <div class="search-input-wrapper">
+                <span class="search-icon">⌕</span>
+                <input
+                  type="text"
+                  [(ngModel)]="skillSearch"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Search skills or add a custom skill..."
+                  (keydown.enter)="$event.preventDefault(); onSkillSearchEnter()"
+                  autocomplete="off"
+                />
+              </div>
+
+              <!-- Search Results Dropdown -->
+              @if (skillSearch.trim()) {
+                <div class="skills-dropdown">
+                  @for (skill of filteredSkills; track skill) {
+                    <button type="button" class="skill-option" (click)="addSkill(skill)">
+                      <span>{{ skill }}</span>
+                      <span class="add-label">+ Add</span>
+                    </button>
+                  }
+
+                  @if (canAddCustomSkill) {
+                    <button type="button" class="skill-option custom-skill" (click)="addCustomSkill()">
+                      <span>Add custom skill: "{{ skillSearch.trim() }}"</span>
+                      <span class="add-label">+</span>
+                    </button>
+                  }
+
+                  @if (skillAlreadySelected) {
+                    <div class="no-skills-found">This skill is already selected.</div>
+                  }
+
+                  @if (filteredSkills.length === 0 && !canAddCustomSkill && !skillAlreadySelected) {
+                    <div class="no-skills-found">No matching skills found.</div>
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- Selected Skills -->
+            <div class="selected-skills-header">
+              Selected Skills ({{ skills.length }})
+            </div>
+
+            @if (skills.length > 0) {
+              <div class="selected-skills">
+                @for (skill of skills.controls; track skill; let i = $index) {
+                  <span class="skill-chip">
+                    {{ skill.value }}
+                    <button type="button" (click)="removeSkill(i)" [attr.aria-label]="'Remove ' + skill.value">×</button>
+                  </span>
+                }
+              </div>
+            }
+
+            @if (skills.length === 0) {
+              <p class="empty-hint">No skills selected yet. Search above to add one.</p>
             }
           </div>
         </div>
+        <!-- END UPDATED SKILLS SECTION -->
       </div>
 
       <div class="image-section">
-        
+
         <div class="input-group">
           <label>Main Project Image (Thumbnail)</label>
           <div class="file-input-wrapper">
             <input type="file" (change)="onFileSelected($event)" accept="image/*" class="file-btn">
-            
+
             @if (keyImagePreview) {
               <div class="preview-box">
                 <img [src]="keyImagePreview" alt="Project Preview">
@@ -75,13 +188,13 @@
         <div class="input-group">
           <label>Gallery Images (Multiple)</label>
           <input type="file" (change)="onGallerySelected($event)" accept="image/*" multiple class="file-btn">
-          
+
           @if (galleryFiles.length > 0) {
             <div class="gallery-status">
               <span class="status-badge">{{ galleryFiles.length }} new files ready to upload</span>
             </div>
           }
-          
+
           @if (editingId && existingData?.gallery?.length) {
             <p class="existing-count">Project currently has {{ existingData?.gallery?.length }} images in gallery.</p>
           }

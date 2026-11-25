@@ -16,6 +16,7 @@ import { HostListener } from '@angular/core';
 export class PortfolioComponent implements OnInit, OnDestroy {
   selectedCard: Project | null = null;
   selectedFilter = 'All';
+  filterMenuOpen = false;
 
   projects: Project[] = [];
   filteredProjects: Project[] = [];
@@ -37,9 +38,9 @@ export class PortfolioComponent implements OnInit, OnDestroy {
     // Live subscription to your 'projects' collection
     this.portfolioSubscription = this.portfolioService.getProjects().subscribe({
       next: (projects) => {
-        
+
         this.projects = projects;
-        
+
         // Sync filtered list with new incoming data
         this.applyFilter();
 
@@ -54,9 +55,19 @@ export class PortfolioComponent implements OnInit, OnDestroy {
     });
   }
 
+  toggleFilterMenu(): void {
+    this.filterMenuOpen = !this.filterMenuOpen;
+  }
+
   onCategoryClick(category: string): void {
     this.selectedFilter = category;
+    this.filterMenuOpen = false;
     this.applyFilter();
+  }
+
+  @HostListener('document:click')
+  closeFilterMenu(): void {
+    this.filterMenuOpen = false;
   }
 
   private applyFilter(): void {
@@ -112,7 +123,7 @@ export class PortfolioComponent implements OnInit, OnDestroy {
 
   renderMarkdown(text: string | undefined): SafeHtml {
   if (!text) return '';
-   const html: string = marked.parse(text, { async: false }); 
+   const html: string = marked.parse(text, { async: false });
 
   return this.sanitizer.bypassSecurityTrustHtml(html);
 }
@@ -139,5 +150,3 @@ ngOnDestroy(): void {
 }
 
 }
-
-

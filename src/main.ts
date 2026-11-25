@@ -14,6 +14,7 @@ import { environment } from './environments/environment';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { provideStorage, getStorage } from '@angular/fire/storage';
 
 if (environment.production) {
   enableProdMode();
@@ -32,6 +33,7 @@ bootstrapApplication(AppComponent, {
     ),
     provideFirebaseApp(() => initializeApp(environment.firebase)), // initialize Firebase
     provideAuth(() => getAuth()), // inject Auth
-    provideFirestore(() => getFirestore()) // inject Firestore
+    provideFirestore(() => getFirestore()), // inject Firestore
+    provideStorage(() => getStorage())
   ]
 }).catch(err => console.error('Bootstrap error:', err));

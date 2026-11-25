@@ -1,13 +1,40 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { PortfolioService, Project } from '../../services/portfolio.service';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
+// Predefined Categories
+const PORTFOLIO_CATEGORIES = [
+  'Web Development',
+  'Cloud & Infrastructure',
+  'Automation'
+];
+
+// Predefined skills catalogue
+const SKILLS_CATALOGUE = [
+  // Programming Languages
+  'PHP', 'JavaScript', 'TypeScript', 'Python', 'Java', 'Go', 'C#',
+  // Frontend
+  'Angular', 'React', 'Vue.js', 'HTML', 'CSS', 'SCSS', 'Tailwind CSS', 'Bootstrap',
+  // Backend
+  'Node.js', 'Express.js', 'FastAPI', 'Django', 'Laravel', 'REST APIs', 'GraphQL',
+  // CMS & E-commerce
+  'WordPress', 'WooCommerce', 'Shopify',
+  // Databases
+  'MySQL', 'PostgreSQL', 'MongoDB', 'Firebase', 'Firestore', 'Redis',
+  // Cloud & Infrastructure
+  'AWS', 'Docker', 'Linux', 'Nginx',
+  // Tools
+  'Git', 'GitHub', 'Postman', 'Figma',
+  // Development Practices
+  'API Integration', 'Webhook Integration', 'Database Design', 'Authentication', 'Role-Based Access Control', 'Responsive Design', 'CI/CD'
+];
+
 @Component({
   selector: 'app-project-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './project-form.component.html',
   styleUrls: ['./project-form.component.css']
 })
@@ -23,8 +50,15 @@ export class ProjectFormComponent implements OnInit {
   isUploading = false;
 
   // Master Data
-  categories: string[] = ['Web Development', 'Web Design', 'Graphic Design', 'Mobile App'];
-  skills: string[] = ['Angular', 'CSS', 'HTML', 'JS', 'Firebase', 'TypeScript', 'Node.js', 'WordPress'];
+  projects: Project[] = []; // Used to pull in old categories/skills
+
+  // Categories Selector State
+  categorySearch = '';
+  customCategories: string[] = [];
+
+  // Skills Selector State
+  skillSearch = '';
+  customSkills: string[] = [];
 
   // File Handling
   keyImageFile: File | null = null;
@@ -33,6 +67,7 @@ export class ProjectFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+    this.loadProjects();
 
     // Check Service for a project to edit
     const projectToEdit = this.portfolioService.getEditingProject();
@@ -46,8 +81,15 @@ export class ProjectFormComponent implements OnInit {
       title: ['', Validators.required],
       highlight: ['', Validators.required],
       description: ['', Validators.required],
-      categories: this.fb.array(this.categories.map(() => this.fb.control(false))),
-      skills: this.fb.array(this.skills.map(() => this.fb.control(false))),
+      categories: this.fb.array([]), // Now holds string values
+      skills: this.fb.array([]),     // Now holds string values
+    });
+  }
+
+  private loadProjects(): void {
+    this.portfolioService.getProjects().subscribe({
+      next: (data) => this.projects = data,
+      error: (err) => console.error('Error loading projects:', err)
     });
   }
 
@@ -63,29 +105,205 @@ export class ProjectFormComponent implements OnInit {
       description: project.description
     });
 
-    // 2. Map existing category strings to FormArray booleans
-    const categoryValues = this.categories.map(cat => 
-      project.categories ? project.categories.includes(cat) : false
-    );
-    this.categoriesFormArray.setValue(categoryValues);
+    // 2. Map existing category strings to FormArray
+    this.categoriesFormArray.clear();
+    if (project.categories) {
+      project.categories.forEach(cat => {
+        this.categoriesFormArray.push(this.fb.control(cat));
+      });
+    }
 
-    // 3. Map existing skill strings to FormArray booleans
-    const skillValues = this.skills.map(skill => 
-      project.skills ? project.skills.includes(skill) : false
-    );
-    this.skillsFormArray.setValue(skillValues);
+    // 3. Map existing skill strings to FormArray
+    this.skillsFormArray.clear();
+    if (project.skills) {
+      project.skills.forEach(skill => {
+        this.skillsFormArray.push(this.fb.control(skill));
+      });
+    }
   }
 
   // --- Getters ---
   get categoriesFormArray() { return this.projectForm.get('categories') as FormArray; }
   get skillsFormArray() { return this.projectForm.get('skills') as FormArray; }
+  get categories() { return this.categoriesFormArray; } // Alias for template
+  get skills() { return this.skillsFormArray; }         // Alias for template
+
+  // ==========================================
+  // CATEGORY SELECTOR LOGIC
+  // ==========================================
+
+  private buildCategoryPool(): string[] {
+    const pool = new Set<string>();
+
+    // 1. Master list
+    PORTFOLIO_CATEGORIES.forEach(c => pool.add(c));
+
+    // 2. Categories across existing projects
+    this.projects.forEach(p => {
+      if (p.categories) p.categories.forEach(c => pool.add(c));
+    });
+
+    // 3. Custom categories created this session
+    this.customCategories.forEach(c => pool.add(c));
+
+    // 4. Existing categories for the current project (if editing)
+    if (this.existingData?.categories) {
+      this.existingData.categories.forEach(c => pool.add(c));
+    }
+
+    return Array.from(pool).sort((a, b) => a.localeCompare(b));
+  }
+
+  get filteredCategories(): string[] {
+    if (!this.projectForm?.get('categories')) return [];
+
+    const search = this.categorySearch.trim().toLowerCase();
+    const selectedKeys = new Set(
+      this.categoriesFormArray.controls.map(c => String(c.value ?? '').toLowerCase().trim())
+    );
+
+    return this.buildCategoryPool()
+      .filter(cat => !selectedKeys.has(cat.toLowerCase()))
+      .filter(cat => !search || cat.toLowerCase().includes(search));
+  }
+
+  isCategorySelected(cat: string): boolean {
+    if (!this.projectForm?.get('categories')) return false;
+    const key = cat.toLowerCase().trim();
+    return this.categoriesFormArray.controls.some(c => String(c.value ?? '').toLowerCase().trim() === key);
+  }
+
+  get canAddCustomCategory(): boolean {
+    const search = this.categorySearch.trim();
+    if (!search || this.isCategorySelected(search)) return false;
+    return !this.buildCategoryPool().some(c => c.toLowerCase() === search.toLowerCase());
+  }
+
+  addCategory(cat: string): void {
+    if (!cat || this.isCategorySelected(cat)) return;
+    this.categoriesFormArray.push(this.fb.control(cat.trim()));
+    this.categorySearch = '';
+  }
+
+  addCustomCategory(): void {
+    const cat = this.categorySearch.trim();
+    if (!cat || !this.canAddCustomCategory) return;
+
+    const key = cat.toLowerCase();
+    if (!this.customCategories.some(c => c.toLowerCase() === key)) {
+      this.customCategories.push(cat);
+    }
+    this.addCategory(cat);
+  }
+
+  removeCategory(index: number): void {
+    this.categoriesFormArray.removeAt(index);
+  }
+
+  onCategorySearchEnter(): void {
+    if (!this.categorySearch.trim()) return;
+    const topMatch = this.filteredCategories[0];
+    if (topMatch) {
+      this.addCategory(topMatch);
+    } else {
+      this.addCustomCategory();
+    }
+  }
+
+  // ==========================================
+  // SKILLS SELECTOR LOGIC
+  // ==========================================
+
+  private buildSkillPool(): string[] {
+    const pool = new Set<string>();
+
+    // 1. Catalogue
+    SKILLS_CATALOGUE.forEach(s => pool.add(s));
+
+    // 2. Skills across existing projects
+    this.projects.forEach(p => {
+      if (p.skills) {
+        p.skills.forEach(s => pool.add(s));
+      }
+    });
+
+    // 3. Custom skills created this session
+    this.customSkills.forEach(s => pool.add(s));
+
+    // 4. Existing skills for the current project (if editing)
+    if (this.existingData?.skills) {
+      this.existingData.skills.forEach(s => pool.add(s));
+    }
+
+    return Array.from(pool).sort((a, b) => a.localeCompare(b));
+  }
+
+  get availableSkills(): string[] {
+    return this.buildSkillPool();
+  }
+
+  get filteredSkills(): string[] {
+    if (!this.projectForm?.get('skills')) return [];
+
+    const search = this.skillSearch.trim().toLowerCase();
+    const selectedKeys = new Set(
+      this.skillsFormArray.controls.map(c => String(c.value ?? '').toLowerCase().trim())
+    );
+
+    return this.availableSkills
+      .filter(skill => !selectedKeys.has(skill.toLowerCase()))
+      .filter(skill => !search || skill.toLowerCase().includes(search));
+  }
+
+  isSkillSelected(skill: string): boolean {
+    if (!this.projectForm?.get('skills')) return false;
+    const key = skill.toLowerCase().trim();
+    return this.skillsFormArray.controls.some(c => String(c.value ?? '').toLowerCase().trim() === key);
+  }
+
+  get canAddCustomSkill(): boolean {
+    const search = this.skillSearch.trim();
+    if (!search || this.isSkillSelected(search)) return false;
+
+    return !this.availableSkills.some(s => s.toLowerCase() === search.toLowerCase());
+  }
+
+  addSkill(skill: string): void {
+    if (!skill || this.isSkillSelected(skill)) return;
+    this.skillsFormArray.push(this.fb.control(skill.trim()));
+    this.skillSearch = '';
+  }
+
+  addCustomSkill(): void {
+    const skill = this.skillSearch.trim();
+    if (!skill || !this.canAddCustomSkill) return;
+
+    const key = skill.toLowerCase();
+    if (!this.customSkills.some(s => s.toLowerCase() === key)) {
+      this.customSkills.push(skill);
+    }
+    this.addSkill(skill);
+  }
+
+  removeSkill(index: number): void {
+    this.skillsFormArray.removeAt(index);
+  }
+
+  onSkillSearchEnter(): void {
+    if (!this.skillSearch.trim()) return;
+    const topMatch = this.filteredSkills[0];
+    if (topMatch) {
+      this.addSkill(topMatch);
+    } else {
+      this.addCustomSkill();
+    }
+  }
 
   // --- Image Selection ---
   onFileSelected(event: any): void {
     const file = event.target.files[0];
     if (file) {
       this.keyImageFile = file;
-      // Generate a local preview URL
       const reader = new FileReader();
       reader.onload = () => (this.keyImagePreview = reader.result as string);
       reader.readAsDataURL(file);
@@ -109,8 +327,6 @@ export class ProjectFormComponent implements OnInit {
 
   // --- Submission ---
   async onSubmit() {
-    // If we're not editing, a main image is mandatory. 
-    // If we ARE editing, we can reuse the existing one.
     if (this.projectForm.invalid || (!this.keyImageFile && !this.editingId)) {
       alert('Please fill all required fields.');
       return;
@@ -125,7 +341,7 @@ export class ProjectFormComponent implements OnInit {
         keyImgUrl = await this.uploadFile(this.keyImageFile, 'main');
       }
 
-      // 2. Handle Gallery (Appends new uploads to existing if editing)
+      // 2. Handle Gallery
       let galleryUrls = this.existingData?.gallery || [];
       if (this.galleryFiles.length > 0) {
         const newGalleryUrls = await Promise.all(
@@ -134,14 +350,9 @@ export class ProjectFormComponent implements OnInit {
         galleryUrls = [...galleryUrls, ...newGalleryUrls];
       }
 
-      // 3. Convert FormArray booleans back to string arrays
-      const selectedCats = this.projectForm.value.categories
-        .map((checked: boolean, i: number) => checked ? this.categories[i] : null)
-        .filter((v: any) => v !== null);
-
-      const selectedSkills = this.projectForm.value.skills
-        .map((checked: boolean, i: number) => checked ? this.skills[i] : null)
-        .filter((v: any) => v !== null);
+      // 3. Get the arrays directly from the form (no more boolean mapping!)
+      const selectedCats = this.projectForm.value.categories;
+      const selectedSkills = this.projectForm.value.skills;
 
       // 4. Construct Data Object
       const projectData: Project = {
@@ -180,10 +391,14 @@ export class ProjectFormComponent implements OnInit {
     this.keyImageFile = null;
     this.keyImagePreview = null;
     this.galleryFiles = [];
+
+    this.categorySearch = '';
+    this.skillSearch = '';
+
     this.portfolioService.setEditingProject(null);
-    
-    // Explicitly reset the form arrays to false
-    this.categoriesFormArray.controls.forEach(c => c.setValue(false));
-    this.skillsFormArray.controls.forEach(c => c.setValue(false));
+
+    // Clear both form arrays
+    this.categoriesFormArray.clear();
+    this.skillsFormArray.clear();
   }
 }

@@ -43,7 +43,7 @@
     <div class="portfolio-header">
       <h2>Projects</h2>
 
-      <ul id="filters">
+      <ul id="filters" class="filters-pills">
         <li
           class="filter"
           [class.active]="selectedFilter === project_category"
@@ -52,6 +52,29 @@
           {{ project_category }}
         </li>
       </ul>
+
+      <div class="filter-dropdown" [class.open]="filterMenuOpen" (click)="$event.stopPropagation()">
+        <button
+          type="button"
+          class="filter-dropdown-trigger"
+          (click)="toggleFilterMenu()"
+          [attr.aria-expanded]="filterMenuOpen"
+          aria-haspopup="listbox"
+          aria-label="Filter projects by category">
+          {{ selectedFilter }}
+        </button>
+
+        <ul class="filter-dropdown-menu" role="listbox" *ngIf="filterMenuOpen">
+          <li
+            *ngFor="let project_category of project_filter_categories"
+            role="option"
+            [attr.aria-selected]="selectedFilter === project_category"
+            [class.active]="selectedFilter === project_category"
+            (click)="onCategoryClick(project_category)">
+            {{ project_category }}
+          </li>
+        </ul>
+      </div>
     </div>
 
     <div class="projects-grid">
@@ -250,7 +273,7 @@
 
   </section>
 
-  
+
 
   <!-- LIGHTBOX -->
   <div class="lightbox" *ngIf="lightboxOpen">

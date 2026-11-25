@@ -44,7 +44,7 @@
 }
 
 /* ===============================
-   LOGO (RESTORED FIX)
+   LOGO
 ================================ */
 .desktop-nav .logo img {
   max-width: 11rem;
@@ -157,197 +157,455 @@
   display: none;
 }
 
-/* ===============================
-   MOBILE NAV BAR
-================================ */
-.mobile-nav-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  z-index: 1000;
+/* =====================================================
+   MOBILE NAV DESIGN
+   Desktop styles above remain unchanged
+===================================================== */
 
-  display: flex;
-  align-items: stretch;
-  min-height: 68px;
-  padding: 0;
-  box-sizing: border-box;
-}
+@media (max-width: 768px) {
 
-.mobile-cta {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  min-height: 68px;
-  padding: 0.85rem 4.5rem 0.85rem 1.5rem;
-  box-sizing: border-box;
-  background: var(--gradient-primary);
-  color: var(--white);
-  font-size: 0.95rem;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  box-shadow: 0 10px 28px rgba(94, 16, 41, 0.22);
-}
+  /* ===============================
+     HIDE DESKTOP NAV
+  ================================ */
+  .desktop-nav {
+    display: none !important;
+  }
 
-.mobile-cta-arrow {
-  margin-left: 0.55rem;
-  font-size: 1.1rem;
-  transition: transform var(--transition-fast);
-}
+  .mobile-nav-wrapper {
+    display: block;
+  }
 
-.mobile-cta:hover .mobile-cta-arrow {
-  transform: translateX(3px);
-}
+  /* ===============================
+     MOBILE HEADER BAR
+  ================================ */
+  .mobile-nav-bar {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    right: 12px;
 
-/* INNER CONTAINER (REAL NAV SURFACE) */
-.mobile-nav-bar-inner {
-  width: 100%;
+    width: auto;
+    height: 60px;
+    min-height: 60px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
 
-  position: relative;
+    padding: 0;
+    box-sizing: border-box;
 
-  padding: 0.85rem 1rem;
+    z-index: 1000;
+  }
 
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(18px) saturate(180%);
-  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  /* ===============================
+     MOBILE CTA
+  ================================ */
+  .mobile-cta {
+    flex: 1;
+    min-width: 0;
 
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  border-radius: 16px;
+    height: 60px;
+    min-height: 60px;
 
-  box-shadow:
-    0 20px 50px rgba(0, 0, 0, 0.10),
-    0 6px 20px rgba(0, 0, 0, 0.06);
-}
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-/* ===============================
-   LOGO (CENTERED FOCUS)
-================================ */
-.mobile-logo {
-  padding: 0.4rem 1rem;
+    padding: 0 1rem;
+    box-sizing: border-box;
 
-  border-radius: 14px;
+    background: var(--gradient-primary);
+    color: var(--white);
 
-  background: rgba(255, 255, 255, 0.92);
+    border: none;
+    border-radius: 16px;
 
-  border: 1px solid rgba(0, 0, 0, 0.08);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.025em;
 
-  box-shadow:
-    0 10px 25px rgba(0, 0, 0, 0.10);
-}
+    text-decoration: none;
 
-.mobile-logo img {
-  height: 60px;   /* FIX: prevents oversized logo */
-  width: auto;
-  display: block;
-  transition: transform 0.25s ease;
-}
+    box-shadow:
+      0 10px 25px rgba(94, 16, 41, 0.16);
 
-.mobile-logo img:hover {
-  transform: scale(1.05);
-}
+    transition:
+      transform 0.25s ease,
+      opacity 0.25s ease,
+      box-shadow 0.25s ease;
 
-/* ===============================
-   TOGGLE BUTTON (RIGHT EDGE)
-================================ */
-.nav-toggle {
-  position: absolute;
-  right: 0.9rem;
-  top: 50%;
-  transform: translateY(-50%);
+    -webkit-tap-highlight-color: transparent;
+  }
 
-  width: 42px;
-  height: 42px;
+  .mobile-cta:hover {
+    opacity: 0.95;
+  }
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  .mobile-cta:active {
+    transform: scale(0.98);
+  }
 
-  border-radius: 12px;
+  .mobile-cta-arrow {
+    margin-left: 9px;
 
-  border: 1px solid rgba(255, 255, 255, 0.35);
+    font-size: 1rem;
 
-  background: rgba(255, 255, 255, 0.14);
+    transition: transform 0.25s ease;
+  }
 
-  color: var(--white);
+  .mobile-cta:hover .mobile-cta-arrow {
+    transform: translateX(3px);
+  }
 
-  cursor: pointer;
+  /* ===============================
+     SQUARE MENU TOGGLE
+  ================================ */
+  .nav-toggle {
+    position: relative;
+    top: auto;
+    right: auto;
 
-  transition: all 0.25s ease;
-}
+    transform: none;
 
-.nav-toggle:hover {
-  transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.24);
-}
+    flex: 0 0 60px;
 
-.nav-toggle span {
-  font-size: 1.2rem;
-  transition: transform 0.3s ease;
-}
+    width: 60px;
+    height: 60px;
 
-.nav-toggle span.open {
-  transform: rotate(180deg);
-}
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-/* ===============================
-   MOBILE DRAWER (IMPROVED UX)
+    padding: 0;
+    box-sizing: border-box;
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+
+    background: #473163;
+    color: #FFFFFF;
+
+    box-shadow:
+      0 10px 25px rgba(120, 20, 20, 0.18);
+
+    cursor: pointer;
+
+    -webkit-tap-highlight-color: transparent;
+
+    transition:
+      background 0.25s ease,
+      box-shadow 0.25s ease,
+      transform 0.25s ease;
+  }
+
+  .nav-toggle:hover,
+  .nav-toggle:focus-visible {
+    background: #921616;
+    transform: none;
+  }
+
+  .nav-toggle:active {
+    transform: scale(0.96);
+  }
+
+  /* ===============================
+     HAMBURGER ICON
+  ================================ */
+  .nav-toggle span {
+    position: relative;
+
+    width: 24px;
+    height: 18px;
+
+    display: block;
+
+    font-size: 0;
+
+    background: none;
+
+    transition: transform 0.3s ease;
+  }
+
+  .nav-toggle span::before,
+  .nav-toggle span::after {
+    content: "";
+
+    position: absolute;
+    left: 0;
+
+    width: 24px;
+    height: 2.5px;
+
+    display: block;
+
+    border-radius: 10px;
+
+    background: #FFFFFF;
+
+    transition:
+      transform 0.3s ease,
+      top 0.3s ease;
+  }
+
+  .nav-toggle span::before {
+    top: 2px;
+  }
+
+  .nav-toggle span::after {
+    top: 14px;
+  }
+
+  /* Middle hamburger line */
+  .nav-toggle span {
+    background: linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 8px,
+      #FFFFFF 8px,
+      #FFFFFF 10.5px,
+      transparent 10.5px
+    );
+  }
+
+  /* ===============================
+     OPEN STATE - CLOSE ICON
+  ================================ */
+  .nav-toggle span.open {
+    background: none;
+  }
+
+  .nav-toggle span.open::before {
+    top: 8px;
+    transform: rotate(45deg);
+  }
+
+  .nav-toggle span.open::after {
+    top: 8px;
+    transform: rotate(-45deg);
+  }
+
+  /* ===============================
+     MOBILE DRAWER
+  ================================ */
+  .mobile-drawer {
+    position: fixed;
+    top: 80px;
+    right: 12px;
+
+    width: min(300px, calc(100% - 24px));
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    padding: 14px;
+    box-sizing: border-box;
+
+    background: rgba(255, 255, 255, 0.96);
+
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    border-radius: 20px;
+
+    box-shadow:
+      0 20px 60px rgba(25, 15, 35, 0.18),
+      0 5px 18px rgba(25, 15, 35, 0.06);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transform: translateY(-10px) scale(0.97);
+    transform-origin: top right;
+
+    transition:
+      opacity 0.25s ease,
+      transform 0.25s ease,
+      visibility 0.25s ease;
+
+    z-index: 1500;
+  }
+
+  /* ===============================
+     DRAWER OPEN STATE
+  ================================ */
+  .mobile-drawer.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+
+    transform: translateY(0) scale(1);
+  }
+
+  /* ===============================
+     REMOVE DUPLICATE CONTACT CTA
+  ================================ */
+  .mobile-drawer > a:first-child {
+    display: none;
+  }
+
+  /* ===============================
+   MOBILE DRAWER
 ================================ */
 .mobile-drawer {
   position: fixed;
-  top: 68px;
-  right: -100%;
 
-  width: 82%;
-  max-width: 340px;
+  top: calc(12px + 60px + 0.45rem);
+  left: 12px;
+  right: 12px;
+
+  width: auto;
+  max-width: 100%;
 
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0;
 
-  padding: 1.5rem;
+  margin: 0;
+  padding: 0.4rem;
 
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(22px) saturate(180%);
+  box-sizing: border-box;
+  list-style: none;
 
-  border-radius: 18px 0 0 18px;
+  background: rgba(255, 255, 255, 0.96);
 
-  box-shadow:
-    -20px 30px 70px rgba(0, 0, 0, 0.18);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
 
-  transition: right 0.35s ease;
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+
+  box-shadow: var(--shadow-medium);
+
+  overflow: hidden;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transform: translateY(-8px);
+
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease,
+    visibility 0.25s ease;
 
   z-index: 1500;
 }
 
-/* OPEN STATE */
+/* ===============================
+   OPEN STATE
+================================ */
 .mobile-drawer.open {
-  right: 0;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+
+  transform: translateY(0);
 }
 
 /* ===============================
-   DRAWER BUTTONS
+   REMOVE DUPLICATE CTA
 ================================ */
+.mobile-drawer > a:first-child {
+  display: none;
+}
+
+/* ===============================
+   DRAWER LINKS & BUTTONS
+================================ */
+.mobile-drawer > a {
+  display: block;
+  width: 100%;
+  text-decoration: none;
+}
+
+/* Shared button styling */
 .mobile-drawer .btn {
   width: 100%;
+  min-height: 48px;
 
-  justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 
-  padding: 0.95rem 1rem;
+  padding: 0.85rem 1rem;
 
-  border-radius: 12px;
+  box-sizing: border-box;
 
+  border-radius: 0.9rem;
+
+  font-family: inherit;
+  font-size: 0.9rem;
   font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* ===============================
-   BACKDROP (OPTIONAL BUT RECOMMENDED)
+   MANAGE PROJECTS
+================================ */
+.mobile-drawer .btn.primary {
+  background: transparent;
+  color: var(--primary);
+
+  border: none;
+  box-shadow: none;
+}
+
+.mobile-drawer .btn.primary:hover {
+  background: rgba(139, 30, 63, 0.06);
+}
+
+/* ===============================
+   SIGN IN
+================================ */
+.mobile-drawer .sign-in-btn {
+  background: transparent;
+  color: var(--dark-gray);
+
+  border: none;
+  box-shadow: none;
+}
+
+.mobile-drawer .sign-in-btn:hover {
+  background: rgba(31, 41, 55, 0.04);
+}
+
+/* ===============================
+   SIGN OUT
+================================ */
+.mobile-drawer .sign-out-btn {
+  background: transparent;
+  color: var(--dark-gray);
+
+  border: none;
+  box-shadow: none;
+}
+
+.mobile-drawer .sign-out-btn:hover {
+  background: rgba(31, 41, 55, 0.04);
+}
+
+/* ===============================
+   BUTTON ACTIVE STATE
+================================ */
+.mobile-drawer .btn:active {
+  transform: scale(0.98);
+}
+
+/* ===============================
+   BACKDROP
 ================================ */
 .mobile-drawer::before {
   content: "";
@@ -355,12 +613,14 @@
   position: fixed;
   inset: 0;
 
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(20, 12, 30, 0.28);
 
   opacity: 0;
   pointer-events: none;
 
-  transition: opacity 0.3s ease;
+  transition: opacity 0.25s ease;
+
+  z-index: -1;
 }
 
 .mobile-drawer.open::before {
@@ -369,14 +629,126 @@
 }
 
 /* ===============================
-   RESPONSIVE SWITCH
+   SMALLER PHONES
 ================================ */
-@media (max-width: 768px) {
-  .desktop-nav {
-    display: none !important;
+@media (max-width: 380px) {
+
+  .mobile-drawer {
+    top: calc(10px + 54px + 0.45rem);
+    left: 10px;
+    right: 10px;
   }
 
-  .mobile-nav-wrapper {
-    display: block;
+}
+  /* ===============================
+     MANAGE PROJECTS
+  ================================ */
+  .mobile-drawer .btn.primary {
+    box-shadow:
+      0 8px 20px rgba(139, 30, 63, 0.15);
   }
+
+  /* ===============================
+     SIGN IN
+  ================================ */
+  .mobile-drawer .sign-in-btn {
+    background: rgba(139, 30, 63, 0.05);
+    color: var(--primary);
+
+    border: 1px solid rgba(139, 30, 63, 0.18);
+
+    box-shadow: none;
+  }
+
+  /* ===============================
+     SIGN OUT
+  ================================ */
+  .mobile-drawer .sign-out-btn {
+    background: rgba(0, 0, 0, 0.035);
+    color: var(--dark-gray);
+
+    border: 1px solid rgba(0, 0, 0, 0.08);
+
+    box-shadow: none;
+  }
+
+  /* ===============================
+     DRAWER BACKDROP
+  ================================ */
+  .mobile-drawer::before {
+    content: "";
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    background: rgba(20, 12, 30, 0.28);
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity 0.25s ease;
+
+    z-index: -1;
+  }
+
+  .mobile-drawer.open::before {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* ===============================
+     SMALLER PHONES
+  ================================ */
+  @media (max-width: 380px) {
+
+    .mobile-nav-bar {
+      top: 10px;
+      left: 10px;
+      right: 10px;
+
+      height: 54px;
+      min-height: 54px;
+
+      gap: 7px;
+    }
+
+    .mobile-cta {
+      height: 54px;
+      min-height: 54px;
+
+      font-size: 0.88rem;
+
+      border-radius: 14px;
+    }
+
+    .nav-toggle {
+      flex-basis: 54px;
+
+      width: 54px;
+      height: 54px;
+
+      border-radius: 14px;
+    }
+
+    .nav-toggle span {
+      width: 22px;
+    }
+
+    .nav-toggle span::before,
+    .nav-toggle span::after {
+      width: 22px;
+    }
+
+    .mobile-drawer {
+      top: 74px;
+      right: 10px;
+
+      width: min(280px, calc(100% - 20px));
+    }
+
+  }
+
 }
