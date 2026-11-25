@@ -1,71 +1,182 @@
-
 <div class="dashboard-layout">
-  <aside class="dashboard-sidebar">
+
+  <!-- Mobile backdrop -->
+  <div
+    class="sidebar-backdrop"
+    [class.visible]="isSidebarOpen"
+    (click)="closeSidebar()"
+    aria-hidden="true">
+  </div>
+
+  <!-- Dashboard Sidebar -->
+  <aside
+    id="dashboard-sidebar"
+    class="dashboard-sidebar"
+    aria-label="Dashboard sidebar"
+    [class.sidebar-open]="isSidebarOpen">
+
+    <!-- Sidebar Brand -->
     <div class="sidebar-brand">
-      <span class="brand-mark"><mat-icon>dashboard</mat-icon></span>
+      <span class="brand-mark">
+        <mat-icon>dashboard</mat-icon>
+      </span>
+
       <span>
         <strong>Fortune</strong>
         <small>Portfolio Studio</small>
       </span>
+
+      <!-- Mobile Close Button -->
+      <button
+        mat-icon-button
+        class="sidebar-close"
+        type="button"
+        aria-label="Close dashboard navigation"
+        (click)="closeSidebar()">
+        <mat-icon>close</mat-icon>
+      </button>
     </div>
 
+    <!-- Sidebar Search -->
     <label class="sidebar-search" for="dashboard-search">
       <mat-icon aria-hidden="true">search</mat-icon>
-      <input id="dashboard-search" type="search" placeholder="Search" aria-label="Search dashboard">
+
+      <input
+        id="dashboard-search"
+        type="search"
+        placeholder="Search"
+        aria-label="Search dashboard">
     </label>
 
+    <!-- Navigation -->
     <nav class="sidebar-nav" aria-label="Dashboard navigation">
+
+      <!-- Dashboard Links -->
       <section class="nav-group">
+
         <p class="nav-label">Dashboard</p>
-        <a mat-button class="nav-link" routerLink="/dashboard"
-           routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+
+        <a
+          mat-button
+          class="nav-link"
+          routerLink="/dashboard"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact:true}"
+          (click)="closeSidebar()">
+
           <mat-icon>space_dashboard</mat-icon>
           <span>Overview</span>
         </a>
-        <a mat-button class="nav-link" routerLink="/dashboard/manage"
-           routerLinkActive="active">
+
+        <a
+          mat-button
+          class="nav-link"
+          routerLink="/dashboard/manage"
+          routerLinkActive="active"
+          (click)="closeSidebar()">
+
           <mat-icon>folder_copy</mat-icon>
           <span>Manage Projects</span>
         </a>
-        <a mat-button class="nav-link" routerLink="/dashboard/add"
-           routerLinkActive="active">
+
+        <a
+          mat-button
+          class="nav-link"
+          routerLink="/dashboard/add"
+          routerLinkActive="active"
+          (click)="closeSidebar()">
+
           <mat-icon>add_box</mat-icon>
           <span>Add Project</span>
         </a>
-        <button mat-button class="nav-link nav-control" type="button" disabled>
+
+        <button
+          mat-button
+          class="nav-link nav-control"
+          type="button"
+          disabled>
+
           <mat-icon>account_circle</mat-icon>
           <span>Users</span>
           <span class="coming-soon">Soon</span>
         </button>
-        <button mat-button class="nav-link nav-control" type="button" disabled>
+
+        <button
+          mat-button
+          class="nav-link nav-control"
+          type="button"
+          disabled>
+
           <mat-icon>settings</mat-icon>
           <span>Settings</span>
           <span class="coming-soon">Soon</span>
         </button>
+
       </section>
 
+      <!-- External Pages -->
       <section class="nav-group external-group">
+
         <p class="nav-label">External Pages</p>
-        <a mat-button class="nav-link external-link" routerLink="/portfolio">
+
+        <a
+          mat-button
+          class="nav-link external-link"
+          routerLink="/portfolio"
+          (click)="closeSidebar()">
+
           <mat-icon>public</mat-icon>
           <span>Portfolio</span>
-          <mat-icon class="external-icon">open_in_new</mat-icon>
+          <mat-icon class="external-icon">north_east</mat-icon>
         </a>
-        <a mat-button class="nav-link external-link" routerLink="/">
+
+        <a
+          mat-button
+          class="nav-link external-link"
+          routerLink="/"
+          (click)="closeSidebar()">
+
           <mat-icon>home</mat-icon>
           <span>Back to Home</span>
-          <mat-icon class="external-icon">open_in_new</mat-icon>
+          <mat-icon class="external-icon">north_east</mat-icon>
         </a>
+
       </section>
+
     </nav>
 
+    <!-- Sidebar Footer -->
     <div class="sidebar-footer">
       <span class="status-dot"></span>
       <span>Workspace online</span>
     </div>
+
   </aside>
 
+  <!-- Dashboard Main Content -->
   <main class="dashboard-content">
+
+    <!-- Sticky Mobile Menu Toggle -->
+    <div class="mobile-dashboard-toolbar">
+
+      <button
+        mat-icon-button
+        type="button"
+        class="menu-toggle"
+        aria-label="Open dashboard navigation"
+        aria-controls="dashboard-sidebar"
+        [attr.aria-expanded]="isSidebarOpen"
+        (click)="openSidebar()">
+
+        <mat-icon>dashboard</mat-icon>
+
+      </button>
+
+    </div>
+
+    <!-- Routed Dashboard Pages -->
     <router-outlet></router-outlet>
+
   </main>
+
 </div>

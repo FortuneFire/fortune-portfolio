@@ -1,10 +1,13 @@
-
 .dashboard-layout {
   display: flex;
   min-height: 100vh;
   width: 100%;
   background: var(--bg-main);
 }
+
+/* =========================================
+   SIDEBAR
+========================================= */
 
 .dashboard-sidebar {
   width: var(--sidebar-width);
@@ -30,8 +33,15 @@
 }
 
 .sidebar-brand strong,
-.sidebar-brand small { display: block; }
-.sidebar-brand strong { font-size: 1rem; letter-spacing: 0.01em; }
+.sidebar-brand small {
+  display: block;
+}
+
+.sidebar-brand strong {
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+}
+
 .sidebar-brand small {
   margin-top: 2px;
   color: rgba(255, 255, 255, 0.52);
@@ -39,6 +49,10 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
+
+/* =========================================
+   SIDEBAR SEARCH
+========================================= */
 
 .sidebar-search {
   display: flex;
@@ -69,7 +83,13 @@
   font-size: 0.78rem;
 }
 
-.sidebar-search input::placeholder { color: rgba(255, 255, 255, 0.4); }
+.sidebar-search input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* =========================================
+   BRAND MARK
+========================================= */
 
 .brand-mark {
   display: grid;
@@ -82,7 +102,15 @@
   box-shadow: 0 8px 18px rgba(139, 30, 63, 0.28);
 }
 
-.brand-mark mat-icon { font-size: 21px; width: 21px; height: 21px; }
+.brand-mark mat-icon {
+  font-size: 21px;
+  width: 21px;
+  height: 21px;
+}
+
+/* =========================================
+   SIDEBAR NAVIGATION
+========================================= */
 
 .sidebar-nav {
   display: flex;
@@ -90,7 +118,11 @@
   gap: 34px;
 }
 
-.nav-group { display: grid; gap: 5px; }
+.nav-group {
+  display: grid;
+  gap: 5px;
+}
+
 .nav-label {
   margin: 0 12px 8px;
   color: rgba(255, 255, 255, 0.4);
@@ -124,7 +156,11 @@
   transform: translateX(3px);
 }
 
-.nav-link.active { background: rgba(199, 67, 109, 0.16); color: var(--white) !important; }
+.nav-link.active {
+  background: rgba(199, 67, 109, 0.16);
+  color: var(--white) !important;
+}
+
 .nav-link.active::before {
   content: "";
   position: absolute;
@@ -137,14 +173,50 @@
   border-radius: 0 6px 6px 0;
 }
 
-.nav-link mat-icon { width: 20px; height: 20px; color: rgba(255, 255, 255, 0.52); font-size: 19px; }
-.nav-link.active mat-icon,
-.nav-link:hover:not(:disabled) mat-icon { color: var(--primary-light); }
-.nav-control:disabled { opacity: 0.48; cursor: default; }
-.coming-soon { margin-left: auto; color: rgba(255, 255, 255, 0.35); font-size: 0.62rem; text-transform: uppercase; }
+.nav-link mat-icon {
+  width: 20px;
+  height: 20px;
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 19px;
+}
 
-.external-group { padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.08); }
-.external-icon { width: 15px !important; height: 15px !important; margin-left: auto; color: rgba(255, 255, 255, 0.35) !important; font-size: 15px !important; }
+.nav-link.active mat-icon,
+.nav-link:hover:not(:disabled) mat-icon {
+  color: var(--primary-light);
+}
+
+.nav-control:disabled {
+  opacity: 0.48;
+  cursor: default;
+}
+
+.coming-soon {
+  margin-left: auto;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+}
+
+/* =========================================
+   EXTERNAL LINKS
+========================================= */
+
+.external-group {
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.external-icon {
+  width: 15px !important;
+  height: 15px !important;
+  margin-left: auto;
+  color: rgba(255, 255, 255, 0.35) !important;
+  font-size: 15px !important;
+}
+
+/* =========================================
+   SIDEBAR FOOTER
+========================================= */
 
 .sidebar-footer {
   display: flex;
@@ -157,7 +229,18 @@
   font-size: 0.7rem;
 }
 
-.status-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #56c596; box-shadow: 0 0 0 4px rgba(86, 197, 150, 0.12); }
+.status-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #56c596;
+  box-shadow: 0 0 0 4px rgba(86, 197, 150, 0.12);
+}
+
+/* =========================================
+   DASHBOARD CONTENT
+========================================= */
 
 .dashboard-content {
   flex: 1;
@@ -173,7 +256,146 @@
   background-size: 24px 24px, auto;
 }
 
+/* =========================================
+   MOBILE ELEMENTS - HIDDEN ON DESKTOP
+========================================= */
+
+.sidebar-close,
+.sidebar-backdrop,
+.mobile-dashboard-toolbar {
+  display: none;
+}
+
+/* =========================================
+   MOBILE DASHBOARD DRAWER
+========================================= */
+
 @media (max-width: 900px) {
-  .dashboard-sidebar { display: none; }
-  .dashboard-content { margin-left: 0; padding: 28px 20px; }
+
+  /* Sidebar drawer */
+
+  .dashboard-sidebar {
+    display: flex;
+    width: min(var(--sidebar-width), 85vw);
+    min-width: min(var(--sidebar-width), 85vw);
+    transform: translateX(-110%);
+    /* Closed drawer is removed from tab order and screen readers */
+    visibility: hidden;
+    transition: transform 0.3s ease, visibility 0.3s ease;
+    z-index: 1002;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .dashboard-sidebar.sidebar-open {
+    transform: translateX(0);
+    visibility: visible;
+  }
+
+  /* Close button */
+
+  .sidebar-close {
+    display: inline-flex;
+    margin-left: auto;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .sidebar-close:hover {
+    color: var(--white);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  /* Backdrop */
+
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 15, 25, 0.55);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 1001;
+  }
+
+  .sidebar-backdrop.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  /* Main content */
+
+  .dashboard-content {
+    margin-left: 0;
+    padding: 20px;
+    min-height: 100vh;
+    width: 100%;
+    /* overflow-y: auto would make this the scroll container and
+       stop the sticky toolbar from sticking to the screen */
+    overflow: visible;
+  }
+
+  /* Mobile toolbar */
+
+  /* Just the size of the icon button, floating at the top left */
+  .mobile-dashboard-toolbar {
+    position: sticky;
+    top: 8px;
+    z-index: 5;
+    display: flex;
+    width: fit-content;
+    margin-bottom: 24px;
+    padding: 0;
+    border-radius: 14px;
+    background: var(--gradient-primary);
+    box-shadow: var(--shadow-glow);
+  }
+
+  .menu-toggle {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+  }
+
+}
+
+/* =========================================
+   SMALL MOBILE SCREENS
+========================================= */
+
+@media (max-width: 480px) {
+
+  .dashboard-content {
+    padding: 14px;
+  }
+
+  .mobile-dashboard-toolbar {
+    margin-bottom: 18px;
+    top: 8px;
+  }
+
+}
+
+/* =========================================
+   REDUCED MOTION
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .dashboard-sidebar,
+  .sidebar-backdrop,
+  .nav-link {
+    transition: none;
+  }
+
+  .nav-link:hover:not(:disabled) {
+    transform: none;
+  }
+
 }

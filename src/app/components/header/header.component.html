@@ -1,46 +1,78 @@
+
 <!-- ===============================
      DESKTOP NAV
 ================================ -->
 <div class="nav-wrapper desktop-nav">
-  <nav>
+  <nav class="nav-container">
 
     <!-- LOGO -->
-    <a routerLink="/" class="logo">
-      <img src="../../../assets/images/logo.png" alt="logo">
+    <a routerLink="/" class="logo" aria-label="Home">
+      <img src="../../../assets/images/logo.png" alt="Fortune Mlilo">
     </a>
 
-    <!-- DESKTOP ACTIONS -->
+    <!-- PUBLIC NAVIGATION -->
     <div class="navLinks">
 
-      <a routerLink="/contact">
-        <button type="button" class="btn primary nav-btn">
-          Let's Chat
-        </button>
+      <a routerLink="/" routerLinkActive="active-link"
+         [routerLinkActiveOptions]="{ exact: true }" class="nav-link">
+        Home
+      </a>
+
+      <a routerLink="/portfolio" routerLinkActive="active-link" class="nav-link">
+        Portfolio
+      </a>
+
+      <a routerLink="/about" routerLinkActive="active-link" class="nav-link">
+        About
+      </a>
+
+      <a routerLink="/contact" routerLinkActive="active-link" class="nav-link">
+        Contact
       </a>
 
       <!-- LOGGED IN -->
-      <div *ngIf="isLoggedIn$ | async; else loginBtn" class="auth-actions">
+      <ng-container *ngIf="isLoggedIn$ | async; else loginBtn">
 
-        <a routerLink="/dashboard">
-          <button class="btn primary nav-btn">
-            Manage Projects
-          </button>
+        <a
+          routerLink="/dashboard"
+          routerLinkActive="active-link"
+          class="nav-link dashboard-link dashboard-icon-link"
+          aria-label="Dashboard"
+          title="Dashboard">
+
+          <i class="fa-regular fa-user" aria-hidden="true"></i>
+           <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true">
+
+            <circle cx="12" cy="8" r="5"></circle>
+            <path d="M20 21a8 8 0 0 0-16 0"></path>
+
+          </svg>
         </a>
 
         <button
+          type="button"
           (click)="logout()"
-          class="btn secondary nav-btn sign-out-btn">
+          class="nav-link auth-link sign-out-btn">
           Sign Out
         </button>
 
-      </div>
+      </ng-container>
 
       <!-- LOGGED OUT -->
       <ng-template #loginBtn>
-        <a routerLink="/sign-in">
-          <button class="btn secondary nav-btn sign-in-btn">
-            Sign In
-          </button>
+        <a routerLink="/sign-in" routerLinkActive="active-link"
+           class="nav-link auth-link sign-in-btn">
+          Sign In
         </a>
       </ng-template>
 
@@ -55,39 +87,78 @@
 ================================ -->
 <div class="mobile-nav-wrapper">
 
+  <!-- MOBILE BAR -->
   <div class="mobile-nav-bar">
-    <a routerLink="/contact" class="mobile-cta" (click)="closeMobileNav()">
-      <span>Let's Chat</span>
-      <span class="mobile-cta-arrow" aria-hidden="true">&#8594;</span>
+
+    <a routerLink="/" class="mobile-logo" aria-label="Home">
+      <img src="../../../assets/images/logo.png" alt="Fortune Mlilo">
     </a>
 
-    <button class="nav-toggle" type="button" (click)="toggleMobileNav()" aria-label="Toggle navigation menu">
-      <span [class.open]="mobileNavOpen">&#10094;</span>
+    <button
+      class="nav-toggle"
+      type="button"
+      (click)="toggleMobileNav()"
+      [attr.aria-expanded]="mobileNavOpen"
+      aria-label="Toggle navigation menu">
+
+      <span [class.open]="mobileNavOpen"></span>
+
     </button>
 
   </div>
 
-  <!-- DRAWER -->
-  <div class="mobile-drawer" [class.open]="mobileNavOpen">
+  <!-- MOBILE DRAWER -->
+  <nav class="mobile-drawer" [class.open]="mobileNavOpen">
 
-    <a routerLink="/contact" (click)="closeMobileNav()">
-      <button type="button" class="btn primary nav-btn">
-        Let's Chat
-      </button>
+    <!-- PUBLIC LINKS -->
+    <a
+      routerLink="/"
+      routerLinkActive="active-link"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="mobile-nav-link"
+      (click)="closeMobileNav()">
+      Home
+    </a>
+
+    <a
+      routerLink="/portfolio"
+      routerLinkActive="active-link"
+      class="mobile-nav-link"
+      (click)="closeMobileNav()">
+      Portfolio
+    </a>
+
+    <a
+      routerLink="/about"
+      routerLinkActive="active-link"
+      class="mobile-nav-link"
+      (click)="closeMobileNav()">
+      About
+    </a>
+
+    <a
+      routerLink="/contact"
+      routerLinkActive="active-link"
+      class="mobile-nav-link"
+      (click)="closeMobileNav()">
+      Contact
     </a>
 
     <!-- LOGGED IN -->
     <ng-container *ngIf="isLoggedIn$ | async; else mobileLogin">
 
-      <a routerLink="/dashboard" (click)="closeMobileNav()">
-        <button class="btn primary nav-btn">
-          Manage Projects
-        </button>
+      <a
+        routerLink="/dashboard"
+        routerLinkActive="active-link"
+        class="mobile-nav-link dashboard-link"
+        (click)="closeMobileNav()">
+        Dashboard
       </a>
 
       <button
+        type="button"
         (click)="logout(); closeMobileNav()"
-        class="btn secondary nav-btn sign-out-btn">
+        class="mobile-nav-link mobile-auth-link sign-out-btn">
         Sign Out
       </button>
 
@@ -96,14 +167,23 @@
     <!-- LOGGED OUT -->
     <ng-template #mobileLogin>
 
-      <a routerLink="/sign-in" (click)="closeMobileNav()">
-        <button class="btn secondary nav-btn sign-in-btn">
-          Sign In
-        </button>
+      <a
+        routerLink="/sign-in"
+        routerLinkActive="active-link"
+        class="mobile-nav-link mobile-auth-link sign-in-btn"
+        (click)="closeMobileNav()">
+        Sign In
       </a>
 
     </ng-template>
 
+  </nav>
+
+  <!-- BACKDROP -->
+  <div
+    class="mobile-backdrop"
+    [class.open]="mobileNavOpen"
+    (click)="closeMobileNav()">
   </div>
 
 </div>

@@ -4,16 +4,17 @@
       <span class="section-tag">Contact</span>
       <h1>Let's Chat</h1>
       <p>
-        Have a project in mind, a collaboration idea, or a question about my work?
-        Send a message and I'll get back to you as soon as I can.
+        If you have a project, an idea you'd like to talk through, or a
+        question about my work, send me a message. I read everything and
+        reply by email.
       </p>
 
       <div class="contact-details" aria-label="Contact details">
-        <a href="mailto:hello@fortunemlilo.com" class="contact-detail">
+        <a href="mailto:fmlilo15@outlook.com" class="contact-detail">
           <span class="detail-icon" aria-hidden="true">@</span>
           <span>
-            <small>Email me</small>
-            fmlilo@outlook.com
+            <small>Email</small>
+            fmlilo15@outlook.com
           </span>
         </a>
         <span class="contact-detail">
@@ -29,9 +30,8 @@
     <div class="contact-card glass-card">
       @if (!submitted) {
         <div class="form-heading">
-          <span class="form-kicker">Start a conversation</span>
-          <h2>Tell me about your project</h2>
-          <p>Share a few details and I'll come back to you with the next steps.</p>
+          <h2>Tell me what you're working on</h2>
+          <p>A few details are enough to get us started.</p>
         </div>
 
         <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" novalidate>
@@ -68,16 +68,16 @@
             <textarea
               id="message"
               formControlName="message"
-              placeholder="Tell me a little about what you have in mind..."
+              placeholder="What are you working on, and how can I help?"
               rows="6"
             ></textarea>
             @if (message?.touched && message?.invalid) {
-              <p class="field-error">Please write a short message (at least 10 characters).</p>
+              <p class="field-error">Please write at least 10 characters so I have something to reply to.</p>
             }
           </div>
 
           <button type="submit" class="btn primary submit-btn">
-            <span>Send Message</span>
+            <span>Send message</span>
             <span class="submit-arrow" aria-hidden="true">&#8594;</span>
           </button>
         </form>
@@ -85,7 +85,7 @@
         <div class="success-state">
           <span class="section-tag">Sent</span>
           <h2>Thanks for reaching out.</h2>
-          <p>Your message is ready — I'll be in touch soon.</p>
+          <p>I've got your message and will reply by email as soon as I can.</p>
           <button type="button" class="btn secondary" (click)="sendAnother()">
             Send another message
           </button>

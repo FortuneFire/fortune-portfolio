@@ -1,3 +1,10 @@
+/* ===============================
+   CONTACT PAGE
+   Relies on your existing variables:
+   --gradient-bg, --bg-alt, --dark-gray, --gray, --text, --white,
+   --primary, --primary-light, --gradient-primary, --shadow-glow,
+   --radius-sm, --radius-lg, --transition-fast
+================================ */
 :host {
   display: block;
 }
@@ -5,18 +12,31 @@
 .contact-page {
   width: 100%;
   min-height: 100vh;
+  display: flex;
+  align-items: center;
   background: var(--gradient-bg), var(--bg-alt);
   color: var(--dark-gray);
+  padding: 12rem 1.5rem 4rem;
+  box-sizing: border-box;
 }
 
 .container {
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 8.5rem 2.5rem 7rem;
   box-sizing: border-box;
 }
 
+/* Visible keyboard focus on links and buttons */
+.contact-page a:focus-visible,
+.contact-page button:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 3px;
+}
+
+/* ===============================
+   LAYOUT
+================================ */
 .contact-hero {
   display: grid;
   grid-template-columns: minmax(280px, 0.82fr) minmax(460px, 1.18fr);
@@ -24,19 +44,23 @@
   align-items: center;
 }
 
+/* ===============================
+   INTRO
+================================ */
 .contact-intro h1 {
   margin: 1.2rem 0 1.4rem;
   color: var(--dark-gray);
-  font-size: clamp(3rem, 5vw, 5.2rem);
+  font-size: clamp(2.2rem, 4.5vw, 4.5rem);
   font-weight: 650;
-  line-height: 0.98;
+  line-height: 1.05;
   letter-spacing: -0.03em;
 }
 
 .contact-intro p {
   max-width: 500px;
+  margin: 0;
   color: var(--gray);
-  font-size: 1.04rem;
+  font-size: 1.05rem;
   line-height: 1.85;
 }
 
@@ -53,23 +77,29 @@
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
 }
 
+/* ===============================
+   CONTACT DETAILS
+================================ */
 .contact-details {
   display: grid;
   gap: 1rem;
-  margin-top: 2.6rem;
+  margin-top: 2.5rem;
 }
 
 .contact-detail {
   display: flex;
   align-items: center;
-  gap: 0.85rem;
+  gap: 0.9rem;
   width: fit-content;
   color: var(--dark-gray);
-  font-size: 0.88rem;
+  font-size: 0.95rem;
   line-height: 1.35;
+  text-decoration: none;
 }
 
-a.contact-detail:hover { color: var(--primary); }
+a.contact-detail:hover {
+  color: var(--primary);
+}
 
 .contact-detail > span:last-child {
   display: grid;
@@ -78,25 +108,27 @@ a.contact-detail:hover { color: var(--primary); }
 
 .contact-detail small {
   color: var(--gray);
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 500;
 }
 
 .detail-icon {
   display: grid;
-  width: 36px;
-  height: 36px;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
   place-items: center;
-  border: 1px solid rgba(139, 30, 63, 0.12);
+  border: 1px solid color-mix(in srgb, var(--primary) 18%, transparent);
   border-radius: 12px;
-  background: rgba(139, 30, 63, 0.08);
+  background: color-mix(in srgb, var(--primary) 9%, rgba(255, 255, 255, 0.7));
   color: var(--primary);
   font-size: 1rem;
   font-weight: 700;
 }
 
+/* ===============================
+   FORM CARD
+================================ */
 .glass-card {
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(18px);
@@ -108,71 +140,91 @@ a.contact-detail:hover { color: var(--primary); }
     0 8px 18px rgba(0, 0, 0, 0.05);
 }
 
+/* Same brand tint as the About page cards, plus a short accent bar */
 .contact-card {
-  padding: clamp(1.5rem, 4vw, 3rem);
-  border-radius: var(--radius-lg);
+  position: relative;
+  padding: clamp(1.5rem, 4vw, 2.75rem);
+  border-radius: var(--radius-lg, 24px);
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.85) 0%,
+    color-mix(in srgb, var(--primary) 8%, rgba(255, 255, 255, 0.7)) 100%
+  );
+  border-color: color-mix(in srgb, var(--primary) 14%, rgba(255, 255, 255, 0.6));
+}
+
+.contact-card::before {
+  content: "";
+  display: block;
+  width: 2.5rem;
+  height: 4px;
+  margin-bottom: 1.5rem;
+  border-radius: 999px;
+  background: var(--primary);
 }
 
 .form-heading {
-  margin-bottom: 2rem;
-}
-
-.form-kicker {
-  color: var(--primary);
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
+  margin-bottom: 1.75rem;
 }
 
 .form-heading h2 {
-  margin: 0.55rem 0 0.5rem;
+  margin: 0 0 0.5rem;
   color: var(--dark-gray);
   font-size: clamp(1.5rem, 2.5vw, 2rem);
   font-weight: 650;
+  line-height: 1.2;
   letter-spacing: -0.02em;
 }
 
 .form-heading p {
+  margin: 0;
   color: var(--gray);
-  font-size: 0.88rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
 }
 
+/* ===============================
+   FIELDS
+================================ */
 .field {
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
-  margin-bottom: 1.25rem;
+  gap: 0.5rem;
+  margin-bottom: 1.15rem;
 }
 
 .field label {
   color: var(--dark-gray);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
+  font-size: 0.9rem;
+  font-weight: 600;
 }
 
 .field input,
 .field textarea {
   width: 100%;
-  padding: 0.95rem 1rem;
-  border: 1px solid rgba(31, 41, 55, 0.11);
-  border-radius: var(--radius-sm);
-  background: rgba(247, 248, 252, 0.72);
+  box-sizing: border-box;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(31, 41, 55, 0.14);
+  border-radius: var(--radius-sm, 12px);
+  background: rgba(255, 255, 255, 0.85);
   color: var(--text);
-  font-size: 0.9rem;
+  font: inherit;
+  font-size: 0.95rem;
   outline: none;
-  transition: border-color var(--transition-fast), background var(--transition-fast), box-shadow var(--transition-fast);
+  transition:
+    border-color var(--transition-fast),
+    background var(--transition-fast),
+    box-shadow var(--transition-fast);
 }
 
 .field input::placeholder,
 .field textarea::placeholder {
-  color: rgba(107, 114, 128, 0.72);
+  color: rgba(107, 114, 128, 0.75);
 }
 
 .field textarea {
-  resize: vertical;
   min-height: 140px;
+  resize: vertical;
   line-height: 1.6;
 }
 
@@ -180,21 +232,31 @@ a.contact-detail:hover { color: var(--primary); }
 .field textarea:focus {
   border-color: var(--primary-light);
   background: var(--white);
-  box-shadow: 0 0 0 4px rgba(139, 30, 63, 0.1);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 12%, transparent);
+}
+
+/* Angular adds these classes, so errors show on the field itself too */
+.field input.ng-touched.ng-invalid,
+.field textarea.ng-touched.ng-invalid {
+  border-color: var(--primary);
 }
 
 .field-error {
-  font-size: 0.8rem;
+  margin: 0;
+  font-size: 0.85rem;
   color: var(--primary);
 }
 
+/* ===============================
+   SUBMIT
+================================ */
 .submit-btn {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.65rem;
   width: 100%;
-  margin-top: 0.6rem;
+  margin-top: 0.5rem;
   border-radius: 999px;
   background: var(--gradient-primary);
   box-shadow: var(--shadow-glow);
@@ -209,54 +271,99 @@ a.contact-detail:hover { color: var(--primary); }
   transform: translateX(3px);
 }
 
+/* ===============================
+   SUCCESS STATE
+================================ */
 .success-state {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: center;
   gap: 1rem;
   min-height: 280px;
-  justify-content: center;
 }
 
 .success-state h2 {
+  margin: 0;
   font-size: clamp(1.8rem, 3vw, 2.4rem);
   line-height: 1.15;
+  letter-spacing: -0.02em;
 }
 
 .success-state p {
+  max-width: 44ch;
+  margin: 0 0 0.5rem;
   color: var(--gray);
   line-height: 1.8;
-  margin-bottom: 0.5rem;
 }
 
+/* ===============================
+   MOBILE + TABLET
+================================ */
 @media (max-width: 834px) {
-  .container {
-    padding: 7.5rem 1.25rem 4rem;
+
+  .contact-page {
+    display: block;
+    min-height: auto;
+    padding: 1.5rem 1.25rem 3rem;
   }
 
   .contact-hero {
     grid-template-columns: 1fr;
-    gap: 2.5rem;
+    gap: 2rem;
   }
 
   .contact-intro {
-    text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
+  }
+
+  .contact-intro h1 {
+    margin: 1rem 0 1rem;
+    font-size: clamp(2rem, 9vw, 2.6rem);
   }
 
   .contact-intro p {
     font-size: 1rem;
+    line-height: 1.75;
   }
 
+  /* One left-aligned block, centred on the page, so both icons line up */
   .contact-details {
-    justify-items: center;
-    margin-top: 2rem;
+    justify-items: start;
+    width: fit-content;
+    margin: 1.75rem auto 0;
+    gap: 0.85rem;
+  }
+
+  .contact-detail {
+    text-align: left;
+  }
+
+  .detail-icon {
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
   }
 
   .contact-card {
-    padding: 1.75rem 1.35rem;
+    padding: 1.5rem 1.25rem 1.75rem;
+  }
+
+  .form-heading {
+    margin-bottom: 1.35rem;
+  }
+
+  /* 16px stops iOS Safari zooming the page when a field is tapped */
+  .field input,
+  .field textarea {
+    font-size: 1rem;
+  }
+
+  .field textarea {
+    min-height: 120px;
   }
 
   .success-state {
@@ -265,53 +372,17 @@ a.contact-detail:hover { color: var(--primary); }
   }
 }
 
-@media (min-width: 835px) {
-  :host {
-    height: 100vh;
-    overflow: hidden;
-  }
-
-  .contact-page {
-    height: 100%;
-    min-height: 0;
-    overflow: hidden;
-  }
-
-  .container {
-    height: 100%;
-    padding: 4rem 2.5rem 2rem;
-  }
-
-  .contact-hero {
-    height: 100%;
-    min-height: 0;
-  }
-
-  .contact-card {
-    padding: 2rem 2.5rem;
-  }
-
-  .form-heading {
-    margin-bottom: 1.35rem;
-  }
-
-  .field {
-    gap: 0.4rem;
-    margin-bottom: 0.8rem;
-  }
-
+/* ===============================
+   REDUCED MOTION
+================================ */
+@media (prefers-reduced-motion: reduce) {
+  .submit-arrow,
   .field input,
   .field textarea {
-    padding: 0.72rem 1rem;
+    transition: none;
   }
 
-  .field textarea {
-    height: 112px;
-    min-height: 112px;
-    resize: none;
-  }
-
-  .submit-btn {
-    margin-top: 0.35rem;
+  .submit-btn:hover .submit-arrow {
+    transform: none;
   }
 }

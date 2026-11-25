@@ -1,6 +1,8 @@
-/* ===============================
+
+/* =====================================================
    DESKTOP NAV WRAPPER
-================================ */
+===================================================== */
+
 .desktop-nav {
   position: fixed;
   top: 1.5rem;
@@ -10,29 +12,32 @@
   display: flex;
   justify-content: center;
 
-  z-index: 1000;
-  pointer-events: none;
-
   padding: 0 1rem;
   box-sizing: border-box;
+
+  z-index: 1000;
+  pointer-events: none;
 }
 
-/* ===============================
-   DESKTOP NAV CONTAINER
-================================ */
-.desktop-nav nav {
-  pointer-events: auto;
 
+/* =====================================================
+   DESKTOP NAV CONTAINER
+===================================================== */
+
+.desktop-nav .nav-container {
   width: 100%;
   max-width: 1400px;
 
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 
-  padding: 0.55rem 2rem;
+  padding: 0.65rem 2rem;
+
+  box-sizing: border-box;
 
   background: rgba(255, 255, 255, 0.65);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
   backdrop-filter: blur(18px) saturate(180%);
 
   border: 1px solid rgba(255, 255, 255, 0.4);
@@ -41,15 +46,21 @@
   box-shadow:
     0 25px 60px rgba(0, 0, 0, 0.10),
     0 8px 25px rgba(0, 0, 0, 0.06);
+
+  pointer-events: auto;
 }
 
-/* ===============================
+
+/* =====================================================
    LOGO
-================================ */
+===================================================== */
+
 .desktop-nav .logo img {
   max-width: 11rem;
   height: auto;
+
   display: block;
+
   transition: transform 0.3s ease;
 }
 
@@ -57,116 +68,158 @@
   transform: scale(1.03);
 }
 
-/* ===============================
+
+/* =====================================================
    NAV LINKS
-================================ */
+===================================================== */
+
 .navLinks {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  justify-content: flex-end;
+
+  gap: 0.5rem;
 }
 
-.auth-actions {
-  display: flex;
+.nav-link {
+  display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
-}
+  justify-content: center;
 
-/* ===============================
-   NAV BUTTON BASE
-================================ */
-.navLinks button {
-  font-size: 0.85rem;
-  font-weight: 600;
-
-  padding: 0.65rem 1.2rem;
+  padding: 0.7rem 1.1rem;
 
   border-radius: 12px;
 
-  cursor: pointer;
+  color: var(--dark-gray);
+  background: transparent;
+
+  border: 1px solid transparent;
+
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  text-decoration: none;
   white-space: nowrap;
 
-  transition: all 0.25s ease;
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
-/* ===============================
-   PRIMARY BUTTON
-================================ */
-.dashboard {
-  background: var(--gradient-primary);
-  color: #fff;
-
-  border: none;
-
-  box-shadow: 0 10px 25px rgba(229, 57, 53, 0.25);
+.dashboard-icon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 50%;
+  transition: all 0.2s ease;
 }
 
-.dashboard:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+.dashboard-icon-link:hover {
+  background: rgba(71, 49, 99, 0.08);
 }
 
-/* ===============================
+.dashboard-icon-link i {
+  line-height: 1;
+}
+
+
+/* =====================================================
+   PUBLIC LINKS
+===================================================== */
+
+.nav-link:hover {
+  background: rgba(139, 30, 63, 0.06);
+  color: var(--primary);
+}
+
+.nav-link.active-link {
+  color: var(--primary);
+  background: rgba(139, 30, 63, 0.07);
+}
+
+
+/* =====================================================
+   DASHBOARD
+===================================================== */
+
+.dashboard-link {
+  color: var(--primary);
+  background: rgba(139, 30, 63, 0.06);
+}
+
+.dashboard-link:hover {
+  background: rgba(139, 30, 63, 0.12);
+  transform: translateY(-1px);
+}
+
+
+/* =====================================================
    SIGN IN
-================================ */
+===================================================== */
+
 .sign-in-btn {
-  background: rgba(255, 255, 255, 0.8);
   color: var(--primary);
 
-  border: 1px solid rgba(139, 30, 63, 0.25);
+  background: rgba(255, 255, 255, 0.75);
+  border-color: rgba(139, 30, 63, 0.2);
 
-  box-shadow: 0 6px 14px rgba(139, 30, 63, 0.10);
+  box-shadow: 0 6px 14px rgba(139, 30, 63, 0.08);
 }
 
 .sign-in-btn:hover {
   background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(139, 30, 63, 0.4);
 
-  border-color: rgba(139, 30, 63, 0.5);
+  transform: translateY(-1px);
 
-  transform: translateY(-2px);
-
-  box-shadow: 0 14px 30px rgba(139, 30, 63, 0.18);
+  box-shadow: 0 12px 25px rgba(139, 30, 63, 0.12);
 }
 
-/* ===============================
+
+/* =====================================================
    SIGN OUT
-================================ */
+===================================================== */
+
 .sign-out-btn {
-  background: rgba(0, 0, 0, 0.03);
   color: var(--dark-gray);
 
-  border: 1px solid rgba(0, 0, 0, 0.12);
-
-  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.06);
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.08);
 }
 
 .sign-out-btn:hover {
   background: rgba(0, 0, 0, 0.06);
+  border-color: rgba(0, 0, 0, 0.14);
 
-  border-color: rgba(0, 0, 0, 0.2);
-
-  transform: translateY(-2px);
-
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+  transform: translateY(-1px);
 }
 
-/* ===============================
-   MOBILE NAV WRAPPER
-================================ */
+
+/* =====================================================
+   MOBILE NAV
+===================================================== */
+
 .mobile-nav-wrapper {
   display: none;
 }
 
+
 /* =====================================================
-   MOBILE NAV DESIGN
-   Desktop styles above remain unchanged
+   RESPONSIVE NAVIGATION
 ===================================================== */
 
 @media (max-width: 768px) {
 
-  /* ===============================
-     HIDE DESKTOP NAV
-  ================================ */
+  /* Hide desktop navigation */
   .desktop-nav {
     display: none !important;
   }
@@ -175,154 +228,130 @@
     display: block;
   }
 
-  /* ===============================
+
+  /* ===================================================
      MOBILE HEADER BAR
-  ================================ */
+  =================================================== */
+
   .mobile-nav-bar {
     position: fixed;
     top: 12px;
     left: 12px;
     right: 12px;
 
-    width: auto;
     height: 60px;
-    min-height: 60px;
 
     display: flex;
-    align-items: stretch;
-    gap: 8px;
+    align-items: center;
+    justify-content: space-between;
 
-    padding: 0;
+    gap: 12px;
+
+    padding: 0.5rem 0.85rem;
+
     box-sizing: border-box;
 
-    z-index: 1000;
+    background: rgba(255, 255, 255, 0.72);
+    -webkit-backdrop-filter: blur(18px) saturate(180%);
+    backdrop-filter: blur(18px) saturate(180%);
+
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 16px;
+
+    box-shadow:
+      0 15px 35px rgba(0, 0, 0, 0.10),
+      0 5px 15px rgba(0, 0, 0, 0.05);
+
+    z-index: 1300;
   }
 
-  /* ===============================
-     MOBILE CTA
-  ================================ */
-  .mobile-cta {
-    flex: 1;
-    min-width: 0;
 
-    height: 60px;
-    min-height: 60px;
+  /* ===================================================
+     MOBILE LOGO
+  =================================================== */
+
+  .mobile-logo {
+    display: flex;
+    align-items: center;
+
+    min-width: 0;
+  }
+
+  .mobile-logo img {
+    display: block;
+
+    max-width: 10rem;
+    max-height: 42px;
+
+    height: auto;
+    width: auto;
+  }
+
+
+  /* ===================================================
+     MOBILE MENU TOGGLE
+  =================================================== */
+
+  .nav-toggle {
+    flex: 0 0 44px;
+
+    width: 44px;
+    height: 44px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    padding: 0 1rem;
-    box-sizing: border-box;
-
-    background: var(--gradient-primary);
-    color: var(--white);
+    padding: 0;
 
     border: none;
-    border-radius: 16px;
-
-    font-size: 0.95rem;
-    font-weight: 700;
-    letter-spacing: 0.025em;
-
-    text-decoration: none;
-
-    box-shadow:
-      0 10px 25px rgba(94, 16, 41, 0.16);
-
-    transition:
-      transform 0.25s ease,
-      opacity 0.25s ease,
-      box-shadow 0.25s ease;
-
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .mobile-cta:hover {
-    opacity: 0.95;
-  }
-
-  .mobile-cta:active {
-    transform: scale(0.98);
-  }
-
-  .mobile-cta-arrow {
-    margin-left: 9px;
-
-    font-size: 1rem;
-
-    transition: transform 0.25s ease;
-  }
-
-  .mobile-cta:hover .mobile-cta-arrow {
-    transform: translateX(3px);
-  }
-
-  /* ===============================
-     SQUARE MENU TOGGLE
-  ================================ */
-  .nav-toggle {
-    position: relative;
-    top: auto;
-    right: auto;
-
-    transform: none;
-
-    flex: 0 0 60px;
-
-    width: 60px;
-    height: 60px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 0;
-    box-sizing: border-box;
-
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 16px;
+    border-radius: 12px;
 
     background: #473163;
-    color: #FFFFFF;
+    color: #fff;
 
-    box-shadow:
-      0 10px 25px rgba(120, 20, 20, 0.18);
+    box-shadow: 0 8px 20px rgba(120, 20, 20, 0.14);
 
     cursor: pointer;
 
-    -webkit-tap-highlight-color: transparent;
-
     transition:
       background 0.25s ease,
-      box-shadow 0.25s ease,
       transform 0.25s ease;
+
+    -webkit-tap-highlight-color: transparent;
   }
 
   .nav-toggle:hover,
   .nav-toggle:focus-visible {
     background: #921616;
-    transform: none;
   }
 
   .nav-toggle:active {
     transform: scale(0.96);
   }
 
-  /* ===============================
+
+  /* ===================================================
      HAMBURGER ICON
-  ================================ */
+  =================================================== */
+
   .nav-toggle span {
     position: relative;
 
-    width: 24px;
+    width: 22px;
     height: 18px;
 
     display: block;
 
-    font-size: 0;
-
-    background: none;
+    background:
+      linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent 7px,
+        #fff 7px,
+        #fff 9.5px,
+        transparent 9.5px
+      );
 
     transition: transform 0.3s ease;
   }
@@ -334,14 +363,13 @@
     position: absolute;
     left: 0;
 
-    width: 24px;
+    width: 22px;
     height: 2.5px;
 
     display: block;
 
     border-radius: 10px;
-
-    background: #FFFFFF;
+    background: #fff;
 
     transition:
       transform 0.3s ease,
@@ -349,28 +377,13 @@
   }
 
   .nav-toggle span::before {
-    top: 2px;
+    top: 1px;
   }
 
   .nav-toggle span::after {
     top: 14px;
   }
 
-  /* Middle hamburger line */
-  .nav-toggle span {
-    background: linear-gradient(
-      to bottom,
-      transparent 0,
-      transparent 8px,
-      #FFFFFF 8px,
-      #FFFFFF 10.5px,
-      transparent 10.5px
-    );
-  }
-
-  /* ===============================
-     OPEN STATE - CLOSE ICON
-  ================================ */
   .nav-toggle span.open {
     background: none;
   }
@@ -385,21 +398,28 @@
     transform: rotate(-45deg);
   }
 
-  /* ===============================
+
+  /* ===================================================
      MOBILE DRAWER
-  ================================ */
+  =================================================== */
+
   .mobile-drawer {
     position: fixed;
-    top: 80px;
+
+    top: 84px;
+    left: 12px;
     right: 12px;
 
-    width: min(300px, calc(100% - 24px));
+    width: auto;
+    max-width: 100%;
 
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 4px;
 
-    padding: 14px;
+    margin: 0;
+    padding: 0.6rem;
+
     box-sizing: border-box;
 
     background: rgba(255, 255, 255, 0.96);
@@ -418,337 +438,186 @@
     visibility: hidden;
     pointer-events: none;
 
-    transform: translateY(-10px) scale(0.97);
-    transform-origin: top right;
+    transform: translateY(-10px);
 
     transition:
       opacity 0.25s ease,
       transform 0.25s ease,
       visibility 0.25s ease;
 
-    z-index: 1500;
+    z-index: 1200;
   }
 
-  /* ===============================
-     DRAWER OPEN STATE
-  ================================ */
   .mobile-drawer.open {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
 
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
   }
 
-  /* ===============================
-     REMOVE DUPLICATE CONTACT CTA
-  ================================ */
-  .mobile-drawer > a:first-child {
-    display: none;
+
+  /* ===================================================
+     MOBILE DRAWER LINKS
+  =================================================== */
+
+  .mobile-nav-link {
+    width: 100%;
+    min-height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    padding: 0.85rem 1rem;
+
+    box-sizing: border-box;
+
+    border: none;
+    border-radius: 12px;
+
+    background: transparent;
+    color: var(--dark-gray);
+
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    text-align: left;
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+      background 0.2s ease,
+      color 0.2s ease,
+      transform 0.2s ease;
+
+    -webkit-tap-highlight-color: transparent;
   }
 
-  /* ===============================
-   MOBILE DRAWER
-================================ */
-.mobile-drawer {
-  position: fixed;
+  .mobile-nav-link:hover,
+  .mobile-nav-link.active-link {
+    background: rgba(139, 30, 63, 0.07);
+    color: var(--primary);
+  }
 
-  top: calc(12px + 60px + 0.45rem);
-  left: 12px;
-  right: 12px;
+  .mobile-nav-link:active {
+    transform: scale(0.98);
+  }
 
-  width: auto;
-  max-width: 100%;
 
-  display: flex;
-  flex-direction: column;
-  gap: 0;
+  /* ===================================================
+     MOBILE DASHBOARD
+  =================================================== */
 
-  margin: 0;
-  padding: 0.4rem;
+  .mobile-nav-link.dashboard-link {
+    color: var(--primary);
+    background: rgba(139, 30, 63, 0.05);
+  }
 
-  box-sizing: border-box;
-  list-style: none;
+  .mobile-nav-link.dashboard-link:hover {
+    background: rgba(139, 30, 63, 0.10);
+  }
 
-  background: rgba(255, 255, 255, 0.96);
 
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
+  /* ===================================================
+     MOBILE AUTH LINKS
+  =================================================== */
 
-  border: 1px solid var(--border);
-  border-radius: 1.25rem;
+  .mobile-auth-link {
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    margin-top: 4px;
+  }
 
-  box-shadow: var(--shadow-medium);
+  .mobile-nav-link.sign-in-btn {
+    color: var(--primary);
+  }
 
-  overflow: hidden;
+  .mobile-nav-link.sign-out-btn {
+    color: var(--dark-gray);
+  }
 
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
 
-  transform: translateY(-8px);
+  /* ===================================================
+     MOBILE BACKDROP
+  =================================================== */
 
-  transition:
-    opacity 0.25s ease,
-    transform 0.25s ease,
-    visibility 0.25s ease;
+  .mobile-backdrop {
+    position: fixed;
+    inset: 0;
 
-  z-index: 1500;
+    background: rgba(20, 12, 30, 0.28);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition:
+      opacity 0.25s ease,
+      visibility 0.25s ease;
+
+    z-index: 1100;
+  }
+
+  .mobile-backdrop.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
 }
 
-/* ===============================
-   OPEN STATE
-================================ */
-.mobile-drawer.open {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
 
-  transform: translateY(0);
-}
-
-/* ===============================
-   REMOVE DUPLICATE CTA
-================================ */
-.mobile-drawer > a:first-child {
-  display: none;
-}
-
-/* ===============================
-   DRAWER LINKS & BUTTONS
-================================ */
-.mobile-drawer > a {
-  display: block;
-  width: 100%;
-  text-decoration: none;
-}
-
-/* Shared button styling */
-.mobile-drawer .btn {
-  width: 100%;
-  min-height: 48px;
-
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-
-  padding: 0.85rem 1rem;
-
-  box-sizing: border-box;
-
-  border-radius: 0.9rem;
-
-  font-family: inherit;
-  font-size: 0.9rem;
-  font-weight: 600;
-
-  cursor: pointer;
-
-  transition:
-    background 0.2s ease,
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* ===============================
-   MANAGE PROJECTS
-================================ */
-.mobile-drawer .btn.primary {
-  background: transparent;
-  color: var(--primary);
-
-  border: none;
-  box-shadow: none;
-}
-
-.mobile-drawer .btn.primary:hover {
-  background: rgba(139, 30, 63, 0.06);
-}
-
-/* ===============================
-   SIGN IN
-================================ */
-.mobile-drawer .sign-in-btn {
-  background: transparent;
-  color: var(--dark-gray);
-
-  border: none;
-  box-shadow: none;
-}
-
-.mobile-drawer .sign-in-btn:hover {
-  background: rgba(31, 41, 55, 0.04);
-}
-
-/* ===============================
-   SIGN OUT
-================================ */
-.mobile-drawer .sign-out-btn {
-  background: transparent;
-  color: var(--dark-gray);
-
-  border: none;
-  box-shadow: none;
-}
-
-.mobile-drawer .sign-out-btn:hover {
-  background: rgba(31, 41, 55, 0.04);
-}
-
-/* ===============================
-   BUTTON ACTIVE STATE
-================================ */
-.mobile-drawer .btn:active {
-  transform: scale(0.98);
-}
-
-/* ===============================
-   BACKDROP
-================================ */
-.mobile-drawer::before {
-  content: "";
-
-  position: fixed;
-  inset: 0;
-
-  background: rgba(20, 12, 30, 0.28);
-
-  opacity: 0;
-  pointer-events: none;
-
-  transition: opacity 0.25s ease;
-
-  z-index: -1;
-}
-
-.mobile-drawer.open::before {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* ===============================
+/* =====================================================
    SMALLER PHONES
-================================ */
+===================================================== */
+
 @media (max-width: 380px) {
 
+  .mobile-nav-bar {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+
+    height: 54px;
+  }
+
+  .mobile-logo img {
+    max-width: 8.5rem;
+    max-height: 38px;
+  }
+
+  .nav-toggle {
+    flex-basis: 42px;
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: 12px;
+  }
+
   .mobile-drawer {
-    top: calc(10px + 54px + 0.45rem);
+    top: 74px;
     left: 10px;
     right: 10px;
   }
 
 }
-  /* ===============================
-     MANAGE PROJECTS
-  ================================ */
-  .mobile-drawer .btn.primary {
-    box-shadow:
-      0 8px 20px rgba(139, 30, 63, 0.15);
-  }
 
-  /* ===============================
-     SIGN IN
-  ================================ */
-  .mobile-drawer .sign-in-btn {
-    background: rgba(139, 30, 63, 0.05);
-    color: var(--primary);
 
-    border: 1px solid rgba(139, 30, 63, 0.18);
+/* =====================================================
+   REDUCED MOTION
+===================================================== */
 
-    box-shadow: none;
-  }
+@media (prefers-reduced-motion: reduce) {
 
-  /* ===============================
-     SIGN OUT
-  ================================ */
-  .mobile-drawer .sign-out-btn {
-    background: rgba(0, 0, 0, 0.035);
-    color: var(--dark-gray);
-
-    border: 1px solid rgba(0, 0, 0, 0.08);
-
-    box-shadow: none;
-  }
-
-  /* ===============================
-     DRAWER BACKDROP
-  ================================ */
-  .mobile-drawer::before {
-    content: "";
-
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-
-    background: rgba(20, 12, 30, 0.28);
-
-    opacity: 0;
-    pointer-events: none;
-
-    transition: opacity 0.25s ease;
-
-    z-index: -1;
-  }
-
-  .mobile-drawer.open::before {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  /* ===============================
-     SMALLER PHONES
-  ================================ */
-  @media (max-width: 380px) {
-
-    .mobile-nav-bar {
-      top: 10px;
-      left: 10px;
-      right: 10px;
-
-      height: 54px;
-      min-height: 54px;
-
-      gap: 7px;
-    }
-
-    .mobile-cta {
-      height: 54px;
-      min-height: 54px;
-
-      font-size: 0.88rem;
-
-      border-radius: 14px;
-    }
-
-    .nav-toggle {
-      flex-basis: 54px;
-
-      width: 54px;
-      height: 54px;
-
-      border-radius: 14px;
-    }
-
-    .nav-toggle span {
-      width: 22px;
-    }
-
-    .nav-toggle span::before,
-    .nav-toggle span::after {
-      width: 22px;
-    }
-
-    .mobile-drawer {
-      top: 74px;
-      right: 10px;
-
-      width: min(280px, calc(100% - 20px));
-    }
-
+  .nav-link,
+  .mobile-nav-link,
+  .nav-toggle,
+  .mobile-drawer,
+  .mobile-backdrop {
+    transition: none;
   }
 
 }
